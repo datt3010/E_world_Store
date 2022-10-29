@@ -1,0 +1,8 @@
+package com.example.eworld.constant;
+
+public enum ProductStatus {
+	
+	ACTIVE,
+	INACTIVE,
+	ARCHIVED
+}

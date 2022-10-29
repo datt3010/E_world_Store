@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.eworld.contstant.OrderStatus"/>
+    <fullyQualifiedTypeName name="com.eworld.contstant.ProductStatus"/>
+    <fullyQualifiedTypeName name="com.eworld.repository.AccountRepository"/>
+    <fullyQualifiedTypeName name="com.eworld.entity.Account"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,8 @@
+package com.eworld.repository;
+
+public enum ProductStatus {
+	
+	ACTIVE,
+	INACTIVE,
+	ARCHIVED
+}

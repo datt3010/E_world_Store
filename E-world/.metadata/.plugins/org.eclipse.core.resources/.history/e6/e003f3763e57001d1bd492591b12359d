@@ -1,0 +1,8 @@
+package com.eworld.controller;
+
+public enum ProductStatus {
+	
+	ACTIVE,
+	INACTIVE,
+	ARCHIVED
+}
