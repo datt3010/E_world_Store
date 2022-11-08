@@ -19,7 +19,7 @@ status VARCHAR(255) NOT NULL,
 UNIQUE(models),
 FOREIGN KEY(category_id) REFERENCES category(id)
 );
-go
+
 CREATE TABLE orders(
 created_at DATE NOT NULL,
 id INT IDENTITY(1,1) PRIMARY KEY,
@@ -29,7 +29,7 @@ address VARCHAR(255) NOT NULL,
 total_price FLOAT NOT NULL,
 FOREIGN KEY(user_id) REFERENCES users(id)
 );
-go
+
 CREATE TABLE order_detail(
 id INT IDENTITY(1,1) PRIMARY KEY,
 order_id INT NOT NULL,
@@ -46,13 +46,13 @@ id INT IDENTITY(1,1) PRIMARY KEY,
 name VARCHAR(255) NOT NULL,
 logo VARCHAR(255) NOT NULL
 );
-go
+
 CREATE TABLE brand(
 id INT IDENTITY(1,1) PRIMARY KEY,
 name VARCHAR(255) NOT NULL,
 logo VARCHAR(255) NOT NULL
 );
-go
+
 CREATE TABLE category_brand(
 id  INT IDENTITY(1,1) PRIMARY KEY,
 category_id INT NOT NULL,
@@ -60,7 +60,7 @@ brand_id INT NOT NULL,
 FOREIGN KEY (category_id) REFERENCES category(id),
 FOREIGN KEY (brand_id) REFERENCES brand(id)
 );
-go
+
 CREATE TABLE users(
 id INT IDENTITY(1,1) PRIMARY KEY,
 username VARCHAR(100) NOT NULL,
@@ -69,12 +69,11 @@ authorities_id INT NOT NULL,
 UNIQUE(password),
 FOREIGN KEY (authorities_id) REFERENCES authorities(id)
 );
-go
+
 CREATE TABLE authorities(
 id INT IDENTITY(1,1) PRIMARY KEY,
 name VARCHAR(255) NOT NULL
 );
-go
 CREATE TABLE personal_information(
 id INT IDENTITY(1,1) PRIMARY KEY,
 user_id  INT NOT NULL,

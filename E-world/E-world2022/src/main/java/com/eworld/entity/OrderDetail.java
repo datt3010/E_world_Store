@@ -9,18 +9,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.eworld.contstant.OrderStatus;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,9 +28,9 @@ public class OrderDetail {
 	
 	private Integer quantity;
 	
-	private Double totalPrice;
+	private Double productPrice;
 	
-	private OrderStatus status;
+	private Double discount;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "productId", referencedColumnName = "id", updatable = false)

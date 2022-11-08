@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-envelope menu-icon"></i> <span class="nav-text">Sản phẩm</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/admin/listproduct}">Danh sách sản phẩm</a></li>
+                            <li><a th:href="@{/admin/product}">Quản lý sản phẩm</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-note menu-icon"></i><span class="nav-text">Nhân viên</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/admin/liststaff}">Danh sách nhân viên</a></li>
+                            <li><a th:href="@{/admin/staff}">Quản lý nhân viên</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-menu menu-icon"></i><span class="nav-text">Khách hàng</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/admin/customer}" aria-expanded="false">Danh sách khách hàng</a></li>
+                            <li><a th:href="@{/admin/listcustomer}" aria-expanded="false">Quản lý khách hàng</a></li>
+                        </ul>
+                    </li>
+                        <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-menu menu-icon"></i><span class="nav-text">Nhãn hàng</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/admin/listbrand}" aria-expanded="false">Danh sách nhãn hàng</a></li>
+                            <li><a th:href="@{/admin/brand}" aria-expanded="false">Quản lý nhãn hàng</a></li>
+                        </ul>
+                    </li>
+                                <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-menu menu-icon"></i><span class="nav-text">Blog</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/admin/listblog}" aria-expanded="false">Danh sách blog</a></li>
+                            <li><a th:href="@{/admin/blog}" aria-expanded="false">Quản lý blog</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-notebook menu-icon"></i><span class="nav-text">Pages</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="./page-login.html">Login</a></li>
+                            <li><a href="./page-register.html">Register</a></li>
+                            <li><a href="./page-lock.html">Lock Screen</a></li>
+                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
+                                <ul aria-expanded="false">
+                                    <li><a href="./page-error-404.html">Error 404</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</body>
+</html>

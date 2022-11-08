@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xlms:th="https://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quixlab - Bootstrap Admin Dashboard Template by
+	Themefisher.com</title>
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/admin/images/favicon.png">
+<!-- Custom Stylesheet -->
+<link
+	href="/admin/plugins/tables/css/datatable/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
+<link href="/admin/css/style.css" rel="stylesheet">
+</head>
+<body ng-controller="product-ctrl">
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+		</div>
+	</div>
+	<div id="main-wrapper">
+		<div class="nav-header">
+			<div class="brand-logo">
+				<a th:href="@{/admin}"> <b class="logo-abbr"><img
+						src="/admin/images/logo.png" alt=""> </b> <span
+					class="logo-compact"><img
+						src="/admin/images/logo-compact.png" alt=""></span> <span
+					class="brand-title"> <img src="/admin/images/logo-text.png"
+						alt="">
+				</span>
+				</a>
+			</div>
+		</div>
+		<div th:replace="/layout/admin/header.html"></div>
+		<div th:replace="/layout/admin/sidebarnk.html"></div>
+		<div class="content-body">
+
+			<div class="row page-titles mx-0">
+				<div class="col p-md-0">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+						<li class="breadcrumb-item active"><a
+							href="javascript:void(0)">Home</a></li>
+					</ol>
+				</div>
+			</div>
+			<!-- row -->
+
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+							<form>
+						  <div class="form-group">
+						    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
+						  </div>
+						</form>
+								<h4 class="card-title">Danh sách sản phẩm</h4>
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th scope="col">Tên sản phẩm</th>
+												<th scope="col">Giá sản phẩm</th>
+												<th scope="col">Loại sản phẩm</th>
+												<th scope="col">Giá sản phẩm</th>
+												<th scope="col">Ngày bảo hành</th>
+												<th scope="col">Model</th>
+												<th scope="col"> Ảnh</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="p in items">
+												<td>{{item.name}}</td>
+												<td>{{item.price | number:2}}</td>
+												<td>{{item.category.name}}</td>
+												<td>{{item.price}}</td>
+												<td>{{item.ngaybaohanh}}</td>
+												<td>{{item.model}}</td>
+												<td><img src="/images/product/small-size/1.jpg" width="100" height="80"></td>
+												<td><a href="">Edit</a></td>
+												<td><a href="">Delete</a></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<nav aria-label="Page navigation example" style="margin-left: 88rem;">
+								<ul class="pagination">
+									<li class="page-item"><a class="page-link" href="#"
+										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+									</a></li>
+									<li class="page-item"><a class="page-link" href="#">1</a></li>
+									<li class="page-item"><a class="page-link" href="#">2</a></li>
+									<li class="page-item"><a class="page-link" href="#">3</a></li>
+									<li class="page-item"><a class="page-link" href="#"
+										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+									</a></li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="/layout/admin/footer.html"></div>
+	</div>
+
+	<!--**********************************
+        Scripts
+    ***********************************-->
+	<script src="/admin/plugins/common/common.min.js"></script>
+
+	<script src="/admin/js/custom.min.js"></script>
+
+	<script src="/admin/js/settings.js"></script>
+
+	<script src="/admin/js/gleek.js"></script>
+
+	<script src="/admin/js/styleSwitcher.js"></script>
+
+	<script src="/admin/plugins/tables/js/jquery.dataTables.min.js"></script>
+
+	<script src="/admin/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+
+	<script src="/admin/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+
+		<script src="/js/admin/product.js"></script>
+</body>
+
+</html>

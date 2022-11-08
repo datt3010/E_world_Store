@@ -1,8 +1,0 @@
-package com.eworld.repository;
-
-public enum OrderStatus {
-	
-	IN_PROCRESS,
-	DELIVERING,
-	SUCESSFULLY
-}

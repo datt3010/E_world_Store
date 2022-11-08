@@ -2,6 +2,11 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="/home/dathuynh1/Downloads/Webspring/E_world_Store/E-world/E-world2022"/>
+			<item value="/home/dathuynh1/Documents/security"/>
+			<item value="/home/dathuynh1/Documents/jpa"/>
+			<item value="/home/dathuynh1/Documents/service"/>
+			<item value="/home/dathuynh1/Downloads/Webspring/security"/>
 			<item value="D:\DuAnTotNghiep\E-world2022-develope"/>
 		</list>
 		<list key="projectNameTemplate">
@@ -12,5 +17,9 @@
 			<item value="[groupId].[artifactId]-[version]"/>
 			<item value="[name]"/>
 		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
 	</section>
 </section>

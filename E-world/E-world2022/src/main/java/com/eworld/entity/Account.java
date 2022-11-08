@@ -7,34 +7,36 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.eworld.contstant.Gender;
+import com.eworld.contstant.UserStatus;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@SuppressWarnings("serial")
 @Entity
-@Table(name = "Users")
-@Getter
-@Setter
-@Builder
+@Table(name = "users")
 @NoArgsConstructor
-@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Account {
+@Data
+public class Account  {
 	
 	@CreatedDate 
 	@Column(updatable = false)
@@ -42,19 +44,41 @@ public class Account {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	private String username;
 	
 	private String password;
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Order> orders;
+	private String email;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "authoritiesId", referencedColumnName = "id", updatable = false)
-	private Authority authority;
+	private Integer age;
 	
-	@OneToOne(mappedBy = "user")
-	private PersonalInformation personalInformation;
+	private String phone;
+	
+	@Enumerated(EnumType.STRING)
+	private Gender gioitinh;
+	
+	private String firstName;
+	
+	private String lastName;
+	
+	private Date dateOfBirth;
+	
+	private String address;
+	
+	private String nationality;
+	
+	@Enumerated(EnumType.STRING)
+	private UserStatus status;
+	
+	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	 Set<Order> orders;
+	
+	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	 Set<UserRole> userRoles;
+	
+	public Account(OAuth2User socialUser) {
+		this.username = socialUser.getName();
+	}
 }
