@@ -90,30 +90,29 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-validation">
-                                    <form class="form-valide" action="#" method="post">
+                                    <form class="form-valide" th:action="@{/admin/category/insert}" th:object="${category}" method="post" enctype="multipart/form-data">
                                     <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-email">Tên sản phẩm <span class="text-danger">*</span>
+                                            <label class="col-lg-4 col-form-label" for="val-email">Tên loại sản phẩm <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-email" name="nameProduct" placeholder="Nhập tên sản phẩm...">
+                                                <input th:field="*{name}" type="text" class="form-control" id="val-email"  placeholder="Nhập tên sản phẩm...">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-skill">Ảnh sản phẩm <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                           <input type="file" class="form-control" id="val-confirm-password" name="images" placeholder="Số lượng sản phẩm">
-                                           <img src="/images/product/large-size/1.jpg" width="200" height="100">
+                                           <input  th:field="*{logo}" type="file" onchange="readURL(this);" class="form-control" id="val-confirm-password" name="image" placeholder="Số lượng sản phẩm">
+                                           <img id="image" src="/images/product/large-size/1.jpg">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-phoneus">Status <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-												   <select class="form-control" id="val-skill" name="val-skill">
-                                                    <option value="">Please select</option>
-                                                    <option value="html">Active</option>
-                                                    <option value="css">Inactive</option>
+												   <select th:field="*{status}" class="form-control" id="val-skill" name="status">
+                                                    <option value="ACTIVE">Active</option>
+                                                    <option value="INACTIVE">Inactive</option>
                                                 </select>                                           
                                                  </div>
                                         </div>
@@ -126,6 +125,7 @@
                                             </div>
                                         </div>
                                     </form>
+                                    <p> Messenger</p>
                                 </div>
                             </div>
                         </div>
@@ -162,7 +162,7 @@
 
     <script src="/admin/plugins/validation/jquery.validate.min.js"></script>
     <script src="/admin/plugins/validation/jquery.validate-init.js"></script>
-
+	<script src="/js/category.js"></script>
 </body>
 
 </html>

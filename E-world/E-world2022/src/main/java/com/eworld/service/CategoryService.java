@@ -8,4 +8,6 @@ import com.eworld.entity.Category;
 public interface CategoryService {
 	
 	public List<Category> findAll(CategoryStatus status);
+	
+	public void create(Category category);
 }

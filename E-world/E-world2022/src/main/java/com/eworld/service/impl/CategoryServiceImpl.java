@@ -21,4 +21,9 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryRepo.findByInStatus(status);
 	}
 
+	@Override
+	public void create(Category category) {
+		categoryRepo.save(category);
+	}
+
 }
