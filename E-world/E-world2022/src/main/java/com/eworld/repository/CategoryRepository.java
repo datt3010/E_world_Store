@@ -13,4 +13,5 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	
 	@Query("FROM Category c WHERE c.status LIKE :status")
 	List<Category> findByInStatus( @Param(value = "status") CategoryStatus status);
+	
 }

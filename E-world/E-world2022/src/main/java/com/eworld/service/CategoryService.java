@@ -10,4 +10,6 @@ public interface CategoryService {
 	public List<Category> findAll(CategoryStatus status);
 	
 	public void create(Category category);
+	
+	public void update(Category category);
 }

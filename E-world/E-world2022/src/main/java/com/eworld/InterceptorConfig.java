@@ -18,6 +18,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
 		
 		registry.addInterceptor(globalInterceptor)
 		.addPathPatterns("/**")
-		.excludePathPatterns("/rest/**","/admin/**","/assets/**");
+		.excludePathPatterns("/rest/**","/admin/customer/**","/admin/**","/assets/**");
 	}
 }
