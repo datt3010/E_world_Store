@@ -90,9 +90,9 @@
                     <div class="col-12">
                         <div class="card">
                          	<div class="card-body">
-							<form>
+							<form th:action="@{/admin/listcategory/search}" method="get">
 						  <div class="form-group">
-						    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
+						    <input name="keyword" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
 						  </div>
 						</form>
 								<h4 class="card-title">Danh sách sản phẩm</h4>
@@ -106,7 +106,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="c: ${cates}">
+											<tr th:each="c: ${listCate}">
 												<td>[[${c.name}]]</td>
 												<td><img th:src="@{|/images/product/${c.logo}|}" width="80" height="50"/></td>
 												<td>[[${c.status}]]</td>

@@ -5,6 +5,10 @@ import java.io.IOException;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eworld.entity.Category;
+import com.eworld.repository.CategoryRepository;
 import com.eworld.service.CategoryService;
 import com.eworld.service.UploadService;
 
@@ -27,6 +32,9 @@ public class CategoryController {
 	
 	@Autowired
 	private UploadService uploadService;
+	
+	@Autowired
+	private CategoryRepository cateRepo;
 	
 	ServletContext application;
 	
@@ -46,13 +54,28 @@ public class CategoryController {
 	
 	@RequestMapping("/brand")
 	public String crudBrand(Model model) {
+		
 		model.addAttribute("category", new Category());
+		
 		return "admin/brand/BrandDashBoard";
 	}
 	
+	@RequestMapping("/listcategory/search")
+	public String listBrand(Model model, @RequestParam("keyword") String keyword) {
+		
+		Pageable page = PageRequest.of(0,10, Direction.ASC,"name");
+		Page<Category> listCate = categorySerivce.findByKeyWord(keyword, page);
+		model.addAttribute("listCate", listCate);
+		
+		return "admin/brand/listBrand";
+	}
+	
 	@RequestMapping("/listcategory")
-	public String listBrand() {
-		return "admin/brand/ListBrand";
+	public String listBrand(Model model) {
+		Pageable page = PageRequest.of(0, 10, Direction.ASC,"name");
+		Page<Category> listCate = cateRepo.findAll(page);
+		model.addAttribute("listCate", listCate);
+		return "admin/brand/listBrand";
 	}
 	
 }

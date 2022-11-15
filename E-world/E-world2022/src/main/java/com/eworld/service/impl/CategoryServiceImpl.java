@@ -3,6 +3,8 @@ package com.eworld.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.eworld.contstant.CategoryStatus;
@@ -29,6 +31,11 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public void update(Category category) {
 		categoryRepo.save(category);
+	}
+
+	@Override
+	public Page<Category> findByKeyWord(String keyword, Pageable pageable) {
+		return categoryRepo.findByKeyWord(keyword, pageable);
 	}
 
 }
