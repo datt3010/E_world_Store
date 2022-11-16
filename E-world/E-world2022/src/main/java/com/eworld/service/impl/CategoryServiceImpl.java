@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eworld.contstant.CategoryStatus;
 import com.eworld.entity.Category;
 import com.eworld.repository.CategoryRepository;
+import com.eworld.schema.category.CategoryDto;
+import com.eworld.schema.category.CategoryInput;
+import com.eworld.schema.category.CategoryUpdate;
 import com.eworld.service.CategoryService;
 
 @Service
+@Transactional(readOnly = true)
 public class CategoryServiceImpl implements CategoryService {
 	
 	@Autowired
@@ -24,13 +29,37 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void create(Category category) {
+	@Transactional
+	public CategoryDto create(CategoryInput input) {
+		
+		Category category = Category.builder()
+				.name(input.getName())
+				.logo(input.getLogo())
+				.status(input.getStatus())
+				.build();
+		
 		categoryRepo.save(category);
+		
+		return CategoryDto.builder()
+				.id(category.getId())
+				.build();
 	}
-
+	
 	@Override
-	public void update(Category category) {
+	@Transactional
+	public CategoryDto update(CategoryUpdate input) {
+
+		Category category = Category.builder()
+				.name(input.getName())
+				.logo(input.getLogo())
+				.status(input.getStatus())
+				.build();
+		
 		categoryRepo.save(category);
+		
+		return CategoryDto.builder()
+				.id(category.getId())
+				.build();
 	}
 
 	@Override
@@ -38,4 +67,9 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryRepo.findByKeyWord(keyword, pageable);
 	}
 
+	@Override
+	@Transactional
+	public void deleteById(Integer id) {
+		 categoryRepo.deleteById(id);
+	}
 }

@@ -110,8 +110,8 @@
 												<td>[[${c.name}]]</td>
 												<td><img th:src="@{|/images/product/${c.logo}|}" width="80" height="50"/></td>
 												<td>[[${c.status}]]</td>
-												<td><a href="">Edit</a></td>
-												<td><a href="">Delete</a></td>
+												<td><a th:href="@{|/admin/category/${c.id}|}">Edit</a></td>
+												<td><a th:href="@{|/admin/category/delete/${c.id}|}">Delete</a></td>
 											</tr>
 										</tbody>
 									</table>
