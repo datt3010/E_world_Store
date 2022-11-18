@@ -12,10 +12,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -96,7 +96,7 @@ public class CategoryController {
 	}
 	
 	@PostMapping("/category/{id}")
-	public String update(@RequestBody CategoryUpdate input, Model model, @RequestParam("image") MultipartFile file, @PathVariable("id") Integer id) throws IOException {
+	public String update(@ModelAttribute("category") CategoryUpdate input, Model model, @RequestParam("image") MultipartFile file, @PathVariable("id") Integer id) throws IOException {
 		
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		input.setLogo(fileName);
@@ -106,6 +106,6 @@ public class CategoryController {
 		uploadService.save(file, uploadDirectory);
 		model.addAttribute("message","Update thành công ^-^");
 		
-		return "forward:/admin/category";
+		return "forward:/admin/listcategory";
 	}
 }
