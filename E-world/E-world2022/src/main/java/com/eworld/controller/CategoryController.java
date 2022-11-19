@@ -3,6 +3,7 @@ package com.eworld.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletContext;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,7 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +44,11 @@ public class CategoryController {
 	ServletContext application;
 	
 	@PostMapping("/category/insert")
-	public String create (@ModelAttribute("category") CategoryInput input, Model model, @RequestParam("image") MultipartFile file) throws IOException {
+	public String create (@ModelAttribute("category") @Valid CategoryInput input, BindingResult result, Model model, @RequestParam("image") MultipartFile file) throws IOException {
+		
+		if(result.hasErrors()) {
+			return "admin/brand/BrandDashBoard";
+		}
 		
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		input.setLogo(fileName);
@@ -53,7 +58,7 @@ public class CategoryController {
 		uploadService.save(file, uploadDirectory);
 		model.addAttribute("message","Thêm mới thành công ^-^");
 		
-		return "forward:/admin/category";
+		return "admin/brand/BrandDashBoard";
 	}
 	
 	@RequestMapping("/category")
@@ -84,7 +89,6 @@ public class CategoryController {
 	
 	@RequestMapping("category/{id}")
 	public String edit(@PathVariable("id") Integer id, Model model) {
-//		categorySerivce.getDetail(id);
 		model.addAttribute("category",cateRepo.findById(id).get());
 		return "admin/brand/BrandDashBoard";
 	}
@@ -96,16 +100,20 @@ public class CategoryController {
 	}
 	
 	@PostMapping("/category/{id}")
-	public String update(@ModelAttribute("category") CategoryUpdate input, Model model, @RequestParam("image") MultipartFile file, @PathVariable("id") Integer id) throws IOException {
+	public String update(@ModelAttribute("category") @Valid  CategoryUpdate input, BindingResult result, Model model, @RequestParam("image") MultipartFile file, @PathVariable("id") Integer id) throws IOException {
+		
+		if(result.hasErrors()) {
+			return "admin/brand/BrandDashBoard";
+		}
 		
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		input.setLogo(fileName);
 		
-		categorySerivce.update(input);
+		categorySerivce.update(id,input);
 		String uploadDirectory = "src/main/resources/static/images/product/";
 		uploadService.save(file, uploadDirectory);
 		model.addAttribute("message","Update thành công ^-^");
 		
-		return "forward:/admin/listcategory";
+		return "forward:/admin/category";
 	}
 }

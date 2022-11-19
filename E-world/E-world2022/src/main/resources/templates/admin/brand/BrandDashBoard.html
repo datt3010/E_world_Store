@@ -51,22 +51,23 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-validation">
-                                    <form class="form-valide" th:action="@{/admin/category}" th:object="${category}" method="post" enctype="multipart/form-data">
+                                    <form class="form-valide" th:action="@{admin}" th:object="${category}" method="post" enctype="multipart/form-data">
                                     <p th:text="${message}" style="color: red; font-size: 20"></p>
-                               <input th:field="*{id}" name="id" type="hidden" class="form-control" id="val-email"  placeholder="Nhập tên sản phẩm...">
                                     <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-email">Tên loại sản phẩm <span class="text-danger">*</span>
+                                            <label class="col-lg-4 col-form-label" for="val-email">Tên loại sản phẩm  <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
                                                 <input th:field="*{name}" type="text" class="form-control" id="val-email"  placeholder="Nhập tên sản phẩm...">
+                                                <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-skill">Ảnh sản phẩm <span class="text-danger">*</span>
+                                            <label class="col-lg-4 col-form-label" for="val-skill">Ảnh sản phẩm  <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
                                            <input  type="file" onchange="readURL(this);" class="form-control" id="val-confirm-password" name="image">
                                            <img id="image" th:src="@{|/images/product/*{logo}}">
+                                        <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('logo')}" th:errors="*{logo}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -81,10 +82,9 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-lg-8 ml-auto">
-                                                <button type="submit" class="btn btn-primary">Insert</button>
-                                                <button type="submit"  class="btn btn-primary">Update</button>
-                                                <button type="submit" class="btn btn-primary">Delete</button>
-                                                <button type="submit" class="btn btn-primary">Reset</button>
+                                                <button th:formaction="@{/admin/category/insert}" formmethod="post" type="submit" class="btn btn-primary">Insert</button>
+                                                <button th:formaction="@{|/admin/category/${id}|}" formmethod="post" type="submit"  class="btn btn-primary">Update</button>
+                                                <button th:formaction="@{|/admin/category/delete/${id}|}" formmethod="get" type="submit" class="btn btn-primary">Delete</button>
                                             </div>
                                         </div>
                                     </form>

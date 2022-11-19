@@ -47,19 +47,15 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	@Override
 	@Transactional
-	public CategoryDto update(CategoryUpdate input) {
-
-		Category category = Category.builder()
-				.name(input.getName())
-				.logo(input.getLogo())
-				.status(input.getStatus())
-				.build();
+	public CategoryDto update(Integer id , CategoryUpdate  input) {
 		
-		categoryRepo.save(category);
+		Category category = categoryRepo.findById(id).get();
 		
-		return CategoryDto.builder()
-				.id(category.getId())
-				.build();
+		category.setName(input.getName());
+		category.setLogo(input.getLogo());
+		category.setStatus(input.getStatus());
+		
+		return CategoryDto.builder().id(category.getId()).build();
 	}
 
 	@Override

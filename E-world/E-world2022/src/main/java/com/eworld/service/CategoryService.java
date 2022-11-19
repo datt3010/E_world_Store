@@ -17,7 +17,7 @@ public interface CategoryService {
 	
 	public  CategoryDto create(CategoryInput input);
 	
-	public 	CategoryDto update(CategoryUpdate input);
+	public 	CategoryDto update(Integer id, CategoryUpdate input);
 	
 	public Page<Category> findByKeyWord(String keyword, Pageable pageable);
 		
