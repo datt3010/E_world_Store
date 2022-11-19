@@ -1,4 +1,4 @@
-package com.eworld.schema.category;
+package com.eworld.schema;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,9 +16,7 @@ public class CategoryUpdate {
 	@NotBlank(message = "{Size.Category.name}")
 	@Size(max = 100)
 	private String name;
-	
-	@NotBlank(message = "{Size.Category.logo}")
-	@Size(max = 255)
+
 	private String logo;
 	
 	@NotNull

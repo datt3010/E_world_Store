@@ -23,8 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.eworld.entity.Category;
 import com.eworld.repository.CategoryRepository;
-import com.eworld.schema.category.CategoryInput;
-import com.eworld.schema.category.CategoryUpdate;
+import com.eworld.schema.CategoryInput;
+import com.eworld.schema.CategoryUpdate;
 import com.eworld.service.CategoryService;
 import com.eworld.service.UploadService;
 

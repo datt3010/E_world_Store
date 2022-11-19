@@ -1,4 +1,4 @@
-package com.eworld.schema.category;
+package com.eworld.schema;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
