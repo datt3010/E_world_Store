@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.eworld.contstant.CategoryStatus;
 import com.eworld.entity.Category;
 import com.eworld.repository.CategoryRepository;
-import com.eworld.schema.category.CategoryDto;
-import com.eworld.schema.category.CategoryInput;
-import com.eworld.schema.category.CategoryUpdate;
+import com.eworld.schema.CategoryDto;
+import com.eworld.schema.CategoryInput;
+import com.eworld.schema.CategoryUpdate;
 import com.eworld.service.CategoryService;
 
 @Service

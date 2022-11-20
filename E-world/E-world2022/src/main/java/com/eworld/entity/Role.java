@@ -1,4 +1,4 @@
-package com.eworld.entity;
+	package com.eworld.entity;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,7 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name= "Roles")
+@Table
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,5 +27,5 @@ public class Role {
 	private String name;
 	
 	@OneToMany(mappedBy = "role",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
-	private Set<UserRole> authorities;
+	private Set<AccountRole> accountRoles;
 }

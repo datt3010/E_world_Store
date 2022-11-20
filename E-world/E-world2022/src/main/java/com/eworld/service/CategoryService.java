@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 
 import com.eworld.contstant.CategoryStatus;
 import com.eworld.entity.Category;
-import com.eworld.schema.category.CategoryDto;
-import com.eworld.schema.category.CategoryInput;
-import com.eworld.schema.category.CategoryUpdate;
+import com.eworld.schema.CategoryDto;
+import com.eworld.schema.CategoryInput;
+import com.eworld.schema.CategoryUpdate;
 
 public interface CategoryService {
 	

@@ -15,18 +15,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name= "Authorities")
+@Table
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRole {
+public class AccountRole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId", referencedColumnName = "id", updatable = false)
+	@JoinColumn(name = "accountId", referencedColumnName = "id", updatable = false)
 	private Account account;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

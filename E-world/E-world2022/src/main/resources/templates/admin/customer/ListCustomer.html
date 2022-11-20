@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-
+<html lang="en" xlmns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +40,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a  th:href="@{/admin}">
+                <a href="index.html">
                     <b class="logo-abbr"><img src="/admin/images/logo.png" alt=""> </b>
                     <span class="logo-compact"><img src="/admin/images/logo-compact.png" alt=""></span>
                     <span class="brand-title">
@@ -57,7 +56,7 @@
         <!--**********************************
             Header start
         ***********************************-->
-       <div th:replace="/layout/admin/header.html"></div>
+       	<div th:replace="/layout/admin/header.html"></div>
         <!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -89,10 +88,10 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                           	<div class="card-body">
-							<form>
+                      	<div class="card-body">
+							<form th:action="@{/admin/listcustomer}" method="get">
 						  <div class="form-group">
-						    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
+						    <input name="keyword" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
 						  </div>
 						</form>
 								<h4 class="card-title">Danh sách sản phẩm</h4>
@@ -100,24 +99,24 @@
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th scope="col">Tên sản phẩm</th>
-												<th scope="col">Giá sản phẩm</th>
-												<th scope="col">Loại sản phẩm</th>
-												<th scope="col">Giá sản phẩm</th>
-												<th scope="col">Ngày bảo hành</th>
-												<th scope="col">Model</th>
+											<th scope="col">Mã khách hàng</th>
+												<th scope="col">Tên khách hàng</th>
+												<th scope="col">Tuổi</th>
+												<th scope="col">Ngày sinh</th>
+												<th scope="col">Giói tính</th>
 												<th scope="col"> Ảnh</th>
+												<th scope="col"></th>
+												<th scope="col"></th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="p in items">
-												<td>{{item.name}}</td>
-												<td>{{item.price | number:2}}</td>
-												<td>{{item.category.name}}</td>
-												<td>{{item.price}}</td>
-												<td>{{item.ngaybaohanh}}</td>
-												<td>{{item.model}}</td>
-												<td><img src="/images/product/small-size/1.jpg" width="100" height="80"></td>
+											<tr th:each="c: ${listCustomer}">
+												<td>[[${c.id}]]</td>
+												<td>[[${c.firstName} +' '+ ${c.lastName}]]</td>
+												<td>[[${c.age}]]</td>
+												<td>[[${c.dateOfBirth}]]</td>
+												<td>[[${c.gioitinh}]]</td>
+												<td><img th:src="@{|/images/staff/${c.image}|}" width="80" height="50"/></td>
 												<td><a href="">Edit</a></td>
 												<td><a href="">Delete</a></td>
 											</tr>
@@ -152,7 +151,7 @@
         <!--**********************************
             Footer start
         ***********************************-->
-      <div th:replace="/layout/admin/footer.html"></div>
+        <div th:replace="/layout/admin/footer.html"></div>
         <!--**********************************
             Footer end
         ***********************************-->

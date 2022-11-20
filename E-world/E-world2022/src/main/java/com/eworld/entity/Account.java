@@ -14,33 +14,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.eworld.contstant.Gender;
 import com.eworld.contstant.UserStatus;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@SuppressWarnings("serial")
 @Entity
-@Table(name = "users")
-@NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
+@Table
 @Data
-public class Account  {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+public class Account{
 	
 	@CreatedDate 
 	@Column(updatable = false)
-	private Date createdAt;
+	private Date createAt;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,6 +67,8 @@ public class Account  {
 	
 	private String nationality;
 	
+	private String image;
+	
 	@Enumerated(EnumType.STRING)
 	private UserStatus status;
 	
@@ -76,9 +76,7 @@ public class Account  {
 	 Set<Order> orders;
 	
 	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	 Set<UserRole> userRoles;
+	 Set<AccountRole> accountRoles;
 	
-	public Account(OAuth2User socialUser) {
-		this.username = socialUser.getName();
-	}
+
 }

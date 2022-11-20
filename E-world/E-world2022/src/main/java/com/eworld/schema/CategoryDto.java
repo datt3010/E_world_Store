@@ -1,4 +1,4 @@
-package com.eworld.schema.category;
+package com.eworld.schema;
 
 import com.eworld.contstant.CategoryStatus;
 

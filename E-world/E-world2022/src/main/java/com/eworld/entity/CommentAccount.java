@@ -20,14 +20,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Data
-public class CommentUser {
+public class CommentAccount {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId", referencedColumnName = "id", updatable = false)
+	@JoinColumn(name = "accountId", referencedColumnName = "id", updatable = false)
 	private Account account;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
