@@ -49,7 +49,7 @@ public class CustomerDto {
 	
 	private String nationality;
 	
-	private String image;
+	private String logo;
 	
 	private UserStatus status;
 	

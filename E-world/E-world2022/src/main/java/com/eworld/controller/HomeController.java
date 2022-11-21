@@ -82,11 +82,6 @@ public class HomeController {
 		return "admin/product/ProductDashBoard";
 	}
 	
-	@RequestMapping("/admin/customer")
-	public String crudCustomer() {
-		return "admin/customer/CustomerDashBoard";
-	}
-	
 	@RequestMapping("/admin/listcustomer")
 	public String listCustomer() {
 		return "admin/customer/ListCustomer";

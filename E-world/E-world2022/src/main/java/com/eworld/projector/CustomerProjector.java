@@ -5,6 +5,8 @@ import com.eworld.schema.CustomerDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
+
 public class CustomerProjector {
 	
 	public static CustomerDto convertToPageDto(Account entity) {
@@ -23,7 +25,7 @@ public class CustomerProjector {
 				.phone(entity.getPhone())
 				.nationality(entity.getNationality())
 				.status(entity.getStatus())
-				.image(entity.getImage())
+				.logo(entity.getImage())
 				.age(entity.getAge())
 				.build();
 	}
@@ -32,5 +34,22 @@ public class CustomerProjector {
 		return entities.stream()
 				.map(e -> convertToPageDto(e))
 				.collect(Collectors.toList());
+	}
+	
+	public static CustomerDto convertToDetailDto(Account entity) {
+		return CustomerDto.builder()
+				.createdAt(entity.getCreateAt())
+				.firstName(entity.getFirstName())
+				.lastName(entity.getLastName())
+				.age(entity.getAge())
+				.address(entity.getAddress())
+				.nationality(entity.getNationality())
+				.dateOfBirth(entity.getDateOfBirth())
+				.email(entity.getEmail())
+				.phone(entity.getPhone())
+				.logo(entity.getImage())
+				.gioitinh(entity.getGioitinh())
+				.status(entity.getStatus())
+				.build();
 	}
 }

@@ -4,6 +4,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.eworld.contstant.Gender;
+import com.eworld.contstant.UserStatus;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,9 +30,10 @@ public class CustomerInput {
 	
 	private String nationality;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateOfBirth ;
 	
-	private String emai;
+	private String email;
 	
 	private String phone;
 	
@@ -35,7 +41,11 @@ public class CustomerInput {
 	
 	private String password;
 	
-	private String image;
+	private String logo;
+	
+	private UserStatus status;
+	
+	private Gender gioitinh;
 	
 	private Set<Integer> roleIds= new HashSet<>();
 }

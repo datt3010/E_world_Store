@@ -13,4 +13,9 @@ public interface CustomerService {
 	public Page<CustomerDto> findPaging(CustomerFilter filter, Pageable pageable);
 	
 	public CustomerDto create(CustomerInput input);
+	
+	public CustomerDto getDetails(Integer id);
+	
+	public void delete(Integer id);
+
 }

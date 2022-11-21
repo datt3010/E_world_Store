@@ -20,4 +20,13 @@ public class CategoryProjector {
 				.status(entity.getStatus())
 				.build();
 	}
+	
+	public static CategoryDto convertToDetailDto(Category entity) {
+		
+		return CategoryDto.builder()
+				.name(entity.getName())
+				.logo(entity.getLogo())
+				.status(entity.getStatus())
+				.build();
+	}
 }

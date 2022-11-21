@@ -6,4 +6,7 @@ public class Sortable {
 
 	public static final List<String> CUSTOMER = Arrays.asList(
 			"id", "firstName", "lastName");
+	
+	public static final List<String> CATEGORY = Arrays.asList(
+			"id", "name", "status");
 }

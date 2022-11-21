@@ -90,78 +90,106 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-validation">
-                                    <form class="form-valide" action="#" method="post">
+                                    <form class="form-valide" th:action="@{admin}" th:object="${customer}" method="post" enctype="multipart/form-data">
                                          <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-username">First Name <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-username" name="firstName" placeholder="Enter your First name">
+                                                <input th:field="*{firstName}" type="text" class="form-control" id="val-username" name="firstName" placeholder="Enter your First name">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-email">Last Name<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-email" name="lastName" placeholder="Enter your Last name">
+                                                <input th:field="*{lastName}" type="text" class="form-control" id="val-email" name="lastName" placeholder="Enter your Last name">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-password">Tuổi <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="number" class="form-control" id="val-password" name="val-password" placeholder="Nhập tuổi của bạn..">
+                                                <input th:field="*{age}" type="text" class="form-control" id="val-password" name="val-password" placeholder="Nhập tuổi của bạn..">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-confirm-password">Địa chỉ<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <textarea class="form-control" id="val-suggestions" name="address" rows="5" placeholder="Địa chỉ của bạn..."></textarea>
+                                                <textarea th:field="*{address}" class="form-control" id="val-suggestions" name="address" rows="5" placeholder="Địa chỉ của bạn..."></textarea>
                                             </div>
                                         </div>
                                              <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-currency">Quốc tịch<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-    										  <select class="form-control" id="val-skill" name="val-skill">
+    										  <select th:field="*{nationality}" class="form-control" id="val-skill" name="val-skill">
                                                     <option value="">Please select</option>
-                                                    <option value="html">Việt Nam</option>
-                                                    <option value="css">American</option>
-                                                    <option value="javascript">Japan</option>
-                                                    <option value="angular">China</option>
-                                                    <option value="angular">Germany</option>
-                                                    <option value="vuejs">England</option>
-                                                    <option value="ruby">Dandmarks</option>
-                                                    <option value="php">Poland</option>
-                                                    <option value="asp">Neitherland</option>
-                                                    <option value="python">ThaiLand</option>
-                                                    <option value="mysql">Indonesia</option>
+                                                    <option value="VN">Việt Nam</option>
+                                                    <option value="USA">American</option>
+                                                    <option value="JP">Japan</option>
+                                                    <option value="CN">China</option>
+                                                    <option value="GY">Germany</option>
+                                                    <option value="USK">England</option>
+                                                    <option value="DS">Dandmarks</option>
+                                                    <option value="PL">Poland</option>
+                                                    <option value="ND">Neitherland</option>
+                                                    <option value="TD">ThaiLand</option>
+                                                    <option value="IA">Indonesia</option>
                                                 </select>                                            </div>
                                         </div>
                                               <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-suggestions">Ngày sinh <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="date" class="form-control" id="val-password" name="dateOfBirth" placeholder="Nhập email của bạn..">
+                                                <input th:field="*{dateOfBirth}" type="date" class="form-control" id="val-password" name="dateOfBirth" placeholder="Nhập email của bạn..">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-suggestions">Email <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="email" class="form-control" id="val-password" name="email" placeholder="Nhập email của bạn..">
+                                                <input th:field="*{email}" type="email" class="form-control" id="val-password" name="email" placeholder="Nhập email của bạn..">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-currency">Phone <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-currency" name="phoneNumber" placeholder="0909442487">
+                                                <input th:field="*{phone}" type="text" class="form-control" id="val-currency" name="phoneNumber" placeholder="0909442487">
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                              <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-skill">Ảnh sản phẩm  <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                           <input  type="file" onchange="readURL(this);" class="form-control" id="val-confirm-password" name="image">
+                                           <img id="image" th:src="@{|/images/staff/*{logo}}">
+                                            </div>
+                                        </div>
+                                             <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-currency">Giới tính<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+    										  <select th:field="*{gioitinh}" class="form-control" id="val-skill" name="val-skill">
+                                                    <option value="">Please select</option>
+                                                    <option value="Nam">Nam</option>
+                                                    <option value="Nu">Nữ</option>
+                                                </select>                                            </div>
+                                        </div>
+                                             <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-currency">Trạng thái<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+    										  <select th:field="*{status}" class="form-control" id="val-skill" name="val-skill">
+                                                    <option value="">Please select</option>
+                                                    <option value="ACTIVE">Active</option>
+                                                    <option value="INACTIVE">Inactive</option>
+                                                </select>                                            </div>
+                                        </div>
+                                            <div class="form-group row">
                                             <div class="col-lg-8 ml-auto">
-                                                <button type="submit" class="btn btn-primary">Insert</button>
+                                                <button th:formaction="@{/admin/customer/insert}" formmethod="post" type="submit" class="btn btn-primary">Insert</button>
                                                 <button type="submit" class="btn btn-primary">Update</button>
                                                 <button type="submit" class="btn btn-primary">Delete</button>
                                                 <button type="submit" class="btn btn-primary">Reset</button>
@@ -204,6 +232,7 @@
 
     <script src="/admin/plugins/validation/jquery.validate.min.js"></script>
     <script src="/admin/plugins/validation/jquery.validate-init.js"></script>
+	<script src="/js/category.js"></script>
 
 </body>
 

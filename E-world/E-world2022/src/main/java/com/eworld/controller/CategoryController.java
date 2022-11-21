@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eworld.entity.Category;
-import com.eworld.repository.CategoryRepository;
+import com.eworld.filter.CategoryFilter;
+import com.eworld.schema.CategoryDto;
 import com.eworld.schema.CategoryInput;
 import com.eworld.schema.CategoryUpdate;
 import com.eworld.service.CategoryService;
@@ -37,9 +38,6 @@ public class CategoryController {
 	
 	@Autowired
 	private UploadService uploadService;
-	
-	@Autowired
-	private CategoryRepository cateRepo;
 	
 	ServletContext application;
 	
@@ -69,27 +67,25 @@ public class CategoryController {
 		return "admin/brand/BrandDashBoard";
 	}
 	
-	@RequestMapping("/listcategory/search")
-	public String listBrand(Model model, @RequestParam("keyword") String keyword) {
-		
-		Pageable page = PageRequest.of(0,10, Direction.ASC,"name");
-		Page<Category> listCate = categorySerivce.findByKeyWord(keyword, page);
-		model.addAttribute("listCate", listCate);
-		
-		return "admin/brand/ListBrand";
-	}
-	
 	@RequestMapping("/listcategory")
-	public String listBrand(Model model) {
-		Pageable page = PageRequest.of(0, 10, Direction.ASC,"name");
-		Page<Category> listCate = cateRepo.findAll(page);
-		model.addAttribute("listCate", listCate);
+	public String listBrand(Model model, @RequestParam(name = "keyword", required = false)String keyword) {
+		Pageable pageable = PageRequest.of(0, 10, Direction.ASC,"name");
+		
+		CategoryFilter filter = CategoryFilter.builder()
+				.keyword(keyword)
+				.build();
+		
+		Page<CategoryDto> listCategory = categorySerivce.findPaging(filter, pageable);
+		model.addAttribute("listCategory", listCategory);
 		return "admin/brand/ListBrand";
 	}
 	
 	@RequestMapping("category/{id}")
 	public String edit(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("category",cateRepo.findById(id).get());
+		
+		CategoryDto category = categorySerivce.getDetail(id);
+		
+		model.addAttribute("category",category);
 		return "admin/brand/BrandDashBoard";
 	}
 	

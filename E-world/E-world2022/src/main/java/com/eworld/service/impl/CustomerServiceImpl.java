@@ -1,10 +1,11 @@
 package com.eworld.service.impl;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,7 +26,6 @@ import com.eworld.service.CustomerService;
 
 @Service
 @Transactional(readOnly = true)
-
 public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
@@ -50,7 +50,13 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	public CustomerDto create(CustomerInput input) {
 		
+		
+		Instant instant = Instant.now();
+		
+		Date date = Date.from(instant);
+		
 		Account account = Account.builder()
+				.createAt(date)
 				.username("sa")
 				.password("123")
 				.firstName(input.getFirstName())
@@ -59,9 +65,11 @@ public class CustomerServiceImpl implements CustomerService {
 				.address(input.getAddress())
 				.nationality(input.getNationality())
 				.dateOfBirth(input.getDateOfBirth())
-				.email(input.getEmai())
+				.email(input.getEmail())
 				.phone(input.getPhone())
-				.image(input.getImage())
+				.image(input.getLogo())
+				.status(input.getStatus())
+				.gioitinh(input.getGioitinh())
 				.build();
 		
 		List<Role> roles = roleRepository.findByIdIn(input.getRoleIds());
@@ -77,6 +85,21 @@ public class CustomerServiceImpl implements CustomerService {
 		return CustomerDto.builder()
 				.id(account.getId())
 				.build();
+	}
+
+	@Override
+	public CustomerDto getDetails(Integer id) {
+		
+		Account account = customerRepo.findById(id).get();
+		CustomerDto dto = CustomerProjector.convertToDetailDto(account);
+		
+		return dto;
+	}
+
+	@Override
+	@Transactional()
+	public void delete(Integer id) {
+		customerRepo.deleteById(id);
 	}
 	
 }
