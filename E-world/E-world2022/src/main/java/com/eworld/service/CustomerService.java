@@ -2,10 +2,11 @@ package com.eworld.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.eworld.dto.CustomerDto;
+import com.eworld.dto.CustomerInput;
+import com.eworld.dto.CustomerUpdate;
 import com.eworld.entity.Account;
 import com.eworld.filter.CustomerFilter;
-import com.eworld.schema.CustomerDto;
-import com.eworld.schema.CustomerInput;
 public interface CustomerService {
 	
 	public Account findById(Integer id);
@@ -17,5 +18,7 @@ public interface CustomerService {
 	public CustomerDto getDetails(Integer id);
 	
 	public void delete(Integer id);
+	
+	public CustomerDto update(Integer id, CustomerUpdate input);
 
 }

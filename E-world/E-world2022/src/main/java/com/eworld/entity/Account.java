@@ -55,6 +55,7 @@ public class Account{
 	private String phone;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(name = "gender")
 	private Gender gioitinh;
 	
 	private String firstName;

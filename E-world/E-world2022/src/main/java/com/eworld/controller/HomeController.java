@@ -72,15 +72,6 @@ public class HomeController {
 	public String homeAdmin() {
 		return "admin/index";
 	}
-	@RequestMapping("/admin/listproduct")
-	public String listProduct() {
-		return "admin/product/ListProduct";
-	}
-	
-	@RequestMapping("/admin/product")
-	public String crudProduct() {
-		return "admin/product/ProductDashBoard";
-	}
 	
 	@RequestMapping("/admin/listcustomer")
 	public String listCustomer() {

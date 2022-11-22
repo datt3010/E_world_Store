@@ -9,5 +9,5 @@ import com.eworld.entity.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 
-	List<Role> findByIdIn(Collection<Integer> ids);
+	public List<Role> findByIdIn(Collection<Integer> ids);
 }

@@ -97,13 +97,7 @@
                                             </label>
                                              <div class="col-lg-6">
                                                 <select class="form-control" id="val-skill" name="val-skill">
-                                                    <option value="">Please select</option>
-                                                    <option value="html">Laptop</option>
-                                                    <option value="css">Ipad</option>
-                                                    <option value="javascript">Mobilephone</option>
-                                                    <option value="angular">Another device</option>
-                                                    <option value="angular">Camera</option>
-                                                    <option value="vuejs">Sound device</option>
+                                                    <option  th:each="c: ${listCate}" th:value="${c.id}">[[${c.name}]]</option>
                                                 </select>
                                             </div>
                                         </div>

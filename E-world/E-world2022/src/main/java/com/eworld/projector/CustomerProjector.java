@@ -1,11 +1,10 @@
 package com.eworld.projector;
 
-import com.eworld.entity.Account;
-import com.eworld.schema.CustomerDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
+import com.eworld.dto.CustomerDto;
+import com.eworld.entity.Account;
 
 public class CustomerProjector {
 	
@@ -39,6 +38,8 @@ public class CustomerProjector {
 	public static CustomerDto convertToDetailDto(Account entity) {
 		return CustomerDto.builder()
 				.createdAt(entity.getCreateAt())
+				.username(entity.getUsername())
+				.password(entity.getPassword())
 				.firstName(entity.getFirstName())
 				.lastName(entity.getLastName())
 				.age(entity.getAge())

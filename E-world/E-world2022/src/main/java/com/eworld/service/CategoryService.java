@@ -6,11 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.eworld.contstant.CategoryStatus;
+import com.eworld.dto.CategoryDto;
+import com.eworld.dto.CategoryInput;
+import com.eworld.dto.CategoryUpdate;
 import com.eworld.entity.Category;
 import com.eworld.filter.CategoryFilter;
-import com.eworld.schema.CategoryDto;
-import com.eworld.schema.CategoryInput;
-import com.eworld.schema.CategoryUpdate;
 
 public interface CategoryService {
 	

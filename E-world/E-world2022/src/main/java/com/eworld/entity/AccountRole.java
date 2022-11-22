@@ -1,5 +1,6 @@
 package com.eworld.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,7 +30,14 @@ public class AccountRole {
 	@JoinColumn(name = "accountId", referencedColumnName = "id", updatable = false)
 	private Account account;
 	
+	@Column(insertable = false, updatable = false)
+	private Integer accountId;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "roleId", referencedColumnName = "id", updatable = false)
 	private Role role;
+	
+	@Column(insertable = false, updatable = false)
+	private Integer roleId;
+	
 }

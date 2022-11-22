@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eworld.dto.CategoryDto;
+import com.eworld.dto.CategoryInput;
+import com.eworld.dto.CategoryUpdate;
 import com.eworld.entity.Category;
 import com.eworld.filter.CategoryFilter;
-import com.eworld.schema.CategoryDto;
-import com.eworld.schema.CategoryInput;
-import com.eworld.schema.CategoryUpdate;
 import com.eworld.service.CategoryService;
 import com.eworld.service.UploadService;
 
@@ -42,7 +42,10 @@ public class CategoryController {
 	ServletContext application;
 	
 	@PostMapping("/category/insert")
-	public String create (@ModelAttribute("category") @Valid CategoryInput input, BindingResult result, Model model, @RequestParam("image") MultipartFile file) throws IOException {
+	public String create (@ModelAttribute("category") @Valid CategoryInput input, 
+			BindingResult result,
+			Model model, 
+			@RequestParam("image") MultipartFile file) throws IOException {
 		
 		if(result.hasErrors()) {
 			return "admin/brand/BrandDashBoard";

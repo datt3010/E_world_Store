@@ -2,8 +2,8 @@ package com.eworld.projector;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.eworld.dto.CategoryDto;
 import com.eworld.entity.Category;
-import com.eworld.schema.CategoryDto;
 public class CategoryProjector {
 	
 	public static List<CategoryDto> convertToPageDto(List<Category> entities){

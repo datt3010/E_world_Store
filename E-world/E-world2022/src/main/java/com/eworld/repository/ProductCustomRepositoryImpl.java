@@ -11,46 +11,50 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.eword.util.Sortable;
-import com.eworld.entity.Account;
-import com.eworld.filter.CustomerFilter;
+import com.eworld.entity.Product;
+import com.eworld.filter.ProductFilter;
 import com.eworld.provider.FindPagingJpaRepository;
 
-public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPagingJpaRepository<Account> {
-
-	@PersistenceContext
-	private EntityManager em;
+public class ProductCustomRepositoryImpl implements ProductCustomRepository, FindPagingJpaRepository<Product> {
 	
+	@PersistenceContext
+	EntityManager em;
 	
 	@Override
-	public Page<Account> findPaging(CustomerFilter filter, Pageable pageable) {
+	public EntityManager getEntityManager() {
+		return em;
+	}
+
+	@Override
+	public Page<Product> findPaging(ProductFilter filter, Pageable pageable) {
 		
 		StringBuilder countSqlBuilder = new StringBuilder(100)
-				.append("SELECT COUNT(c.id) FROM Account c");
+				.append("SELECT COUNT(p.id) FROM Product p");
 		
 		StringBuilder selectSqlBuilder = new StringBuilder(100)
-				.append(" SELECT c FROM Account c");
+				.append(" SELECT p FROM Product p");
 		
 		StringBuilder whereClauseSqlBuilder = new StringBuilder(50)
 				.append(" WHERE 1=1");
-
+		
 		Map<String, Object> parameterMap = new LinkedHashMap<>();
 		
 		if(StringUtils.isNotBlank(filter.getKeyword())) {
 			whereClauseSqlBuilder.append(" AND(");
 			
 			if(StringUtils.isNumeric(filter.getKeyword())) {
-				whereClauseSqlBuilder.append(" c.id = :keywordId OR");
+				whereClauseSqlBuilder.append(" p.id = :keywordId OR");
 				parameterMap.put("keywordId", Integer.parseInt(filter.getKeyword()));
 				
-				whereClauseSqlBuilder.append(" c.age = :keywordAge OR");
-				parameterMap.put("keywordAge", Integer.parseInt(filter.getKeyword()));
+				whereClauseSqlBuilder.append(" p.model = :keywordModel OR");
+				parameterMap.put("keywordModel", Integer.parseInt(filter.getKeyword()));
 			}
 			
-			whereClauseSqlBuilder.append(" c.firstName LIKE :keyword OR c.lastName LIKE :keyword)");
+			whereClauseSqlBuilder.append(" p.name LIKE :keyword OR p.status LIKE :keyword)");
 			parameterMap.put("keyword", "%" + filter.getKeyword() + "%");
 		}
 		
-		String orderClause = makeOrderClause(pageable.getSort(), Sortable.CUSTOMER, "c");
+		String orderClause = makeOrderClause(pageable.getSort(), Sortable.PRODUCT, "p");
 		
 		countSqlBuilder.append(whereClauseSqlBuilder);
 		
@@ -59,12 +63,6 @@ public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPag
 		.append(orderClause);
 		
 		return findPaging(countSqlBuilder.toString(), selectSqlBuilder.toString(), pageable, parameterMap);
-	}
-
-
-	@Override
-	public EntityManager getEntityManager() {
-		return em;
 	}
 
 }

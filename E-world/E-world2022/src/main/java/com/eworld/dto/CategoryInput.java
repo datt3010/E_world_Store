@@ -1,4 +1,4 @@
-package com.eworld.schema;
+package com.eworld.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,15 +14,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoryInput {
 	
-	@NotNull
 	private Integer id;
 	
 	@NotBlank(message = "{Size.Category.name}")
 	@Size(max = 100)
 	private String name;
 	
-	@NotBlank(message = "{Size.Category.logo}")
-	@Size(max = 100)
 	private String logo;
 	
 	@NotNull

@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eworld.contstant.CategoryStatus;
+import com.eworld.dto.CategoryDto;
+import com.eworld.dto.CategoryInput;
+import com.eworld.dto.CategoryUpdate;
 import com.eworld.entity.Category;
 import com.eworld.filter.CategoryFilter;
 import com.eworld.projector.CategoryProjector;
 import com.eworld.repository.CategoryRepository;
-import com.eworld.schema.CategoryDto;
-import com.eworld.schema.CategoryInput;
-import com.eworld.schema.CategoryUpdate;
 import com.eworld.service.CategoryService;
 
 @Service

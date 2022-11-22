@@ -10,10 +10,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/admin/images/favicon.png">
     <!-- Custom Stylesheet -->
     <link href="/admin/css/style.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    
 </head>
 
-<body>
+<body onload="show()">
 
     <!--*******************
         Preloader start
@@ -91,11 +92,30 @@
                             <div class="card-body">
                                 <div class="form-validation">
                                     <form class="form-valide" th:action="@{admin}" th:object="${customer}" method="post" enctype="multipart/form-data">
+                                    <p th:text="${message}" style="color: red; font-size: 20"></p>
+                                      <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-suggestions">Username
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input th:field="*{username}" type="text" class="form-control">
+                                                 <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                                            </div>
+                                        </div>
+                                           <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-suggestions">Password <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input th:value="*{password}" th:field="*{password}" type="text" class="form-control" id="val-password" name="password">
+                                                <i style="float:left;" class="fa fa-eye" id="eye"></i>
+                                           <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                                            </div>
+                                        </div>
                                          <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-username">First Name <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
                                                 <input th:field="*{firstName}" type="text" class="form-control" id="val-username" name="firstName" placeholder="Enter your First name">
+                                          <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -103,6 +123,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input th:field="*{lastName}" type="text" class="form-control" id="val-email" name="lastName" placeholder="Enter your Last name">
+                                        <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -110,6 +131,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input th:field="*{age}" type="text" class="form-control" id="val-password" name="val-password" placeholder="Nhập tuổi của bạn..">
+                                        <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -117,6 +139,15 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <textarea th:field="*{address}" class="form-control" id="val-suggestions" name="address" rows="5" placeholder="Địa chỉ của bạn..."></textarea>
+                                             <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                                            </div>
+                                        </div>
+                                               <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-suggestions">Ngày sinh <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input th:field="*{dateOfBirth}" type="date" class="form-control" id="val-password" name="dateOfBirth" placeholder="Nhập email của bạn..">
+                                                   <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
                                             </div>
                                         </div>
                                              <div class="form-group row">
@@ -136,14 +167,32 @@
                                                     <option value="ND">Neitherland</option>
                                                     <option value="TD">ThaiLand</option>
                                                     <option value="IA">Indonesia</option>
-                                                </select>                                            </div>
+                                                </select>  
+                                                <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>
+                                                                                          </div>
                                         </div>
-                                              <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-suggestions">Ngày sinh <span class="text-danger">*</span>
+                                           <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-currency">Giới tính
                                             </label>
                                             <div class="col-lg-6">
-                                                <input th:field="*{dateOfBirth}" type="date" class="form-control" id="val-password" name="dateOfBirth" placeholder="Nhập email của bạn..">
-                                            </div>
+    										  <select th:field="*{gioitinh}" class="form-control" id="val-skill" name="val-skill">
+                                                    <option value="">Please select</option>
+                                                    <option value="Nam">Nam</option>
+                                                    <option value="Nu">Nữ</option>
+                                                </select>         
+                                                                                   </div>
+                                        </div>
+                                             <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-currency">Trạng thái<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+    										  <select th:field="*{status}" class="form-control" id="val-skill" name="val-skill">
+                                                    <option value="">Please select</option>
+                                                    <option value="ACTIVE">Active</option>
+                                                    <option value="INACTIVE">Inactive</option>
+                                                </select>    
+                                     <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></span>
+                                                                                        </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-suggestions">Email <span class="text-danger">*</span>
@@ -157,6 +206,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input th:field="*{phone}" type="text" class="form-control" id="val-currency" name="phoneNumber" placeholder="0909442487">
+                                        <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
                                             </div>
                                         </div>
                                               <div class="form-group row">
@@ -165,36 +215,15 @@
                                             <div class="col-lg-6">
                                            <input  type="file" onchange="readURL(this);" class="form-control" id="val-confirm-password" name="image">
                                            <img id="image" th:src="@{|/images/staff/*{logo}}">
-                                            </div>
-                                        </div>
-                                             <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-currency">Giới tính<span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-    										  <select th:field="*{gioitinh}" class="form-control" id="val-skill" name="val-skill">
-                                                    <option value="">Please select</option>
-                                                    <option value="Nam">Nam</option>
-                                                    <option value="Nu">Nữ</option>
-                                                </select>                                            </div>
-                                        </div>
-                                             <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-currency">Trạng thái<span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-    										  <select th:field="*{status}" class="form-control" id="val-skill" name="val-skill">
-                                                    <option value="">Please select</option>
-                                                    <option value="ACTIVE">Active</option>
-                                                    <option value="INACTIVE">Inactive</option>
-                                                </select>                                            </div>
-                                        </div>
-                                            <div class="form-group row">
+                                            </div>                                       
+                                           </div>
+                                            	<div class="form-group row">
                                             <div class="col-lg-8 ml-auto">
                                                 <button th:formaction="@{/admin/customer/insert}" formmethod="post" type="submit" class="btn btn-primary">Insert</button>
-                                                <button type="submit" class="btn btn-primary">Update</button>
-                                                <button type="submit" class="btn btn-primary">Delete</button>
-                                                <button type="submit" class="btn btn-primary">Reset</button>
+                                                <button th:formaction="@{|/admin/listcustomer/${id}|}" formmethod="post" type="submit" class="btn btn-primary">Update</button>
+                                                <button th:formaction="@{|/admin/listcustomer/delete/${id}|}" formmethod="get" type="submit" class="btn btn-primary">Delete</button>
                                             </div>
-                                        </div>
+                                        </div> 
                                     </form>
                                 </div>
                             </div>
