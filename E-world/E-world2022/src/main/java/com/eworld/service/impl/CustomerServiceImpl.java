@@ -108,7 +108,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		Account account = findById(id);
 		account.setCreateAt(date);
-		account.setUsername("sa");
+		account.setUsername(input.getUsername());
 		account.setPassword(input.getPassword());
 		account.setFirstName(input.getFirstName());
 		account.setLastName(input.getLastName());

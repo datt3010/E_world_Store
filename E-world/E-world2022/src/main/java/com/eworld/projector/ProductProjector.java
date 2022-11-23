@@ -15,10 +15,11 @@ public class ProductProjector {
 				.id(entity.getId())
 				.name(entity.getName())
 				.quantity(entity.getQuantity())
-				.models(entity.getModel())
+				.models(entity.getModels())
 				.description(entity.getDescription())
 				.urlVideo(entity.getUrlVideo())
-				.ngayBaoHanh(entity.getNgaybaohanh())
+				.ngaybaohanh(entity.getNgaybaohanh())
+				.price(entity.getPrice())
 				.status(entity.getStatus())
 				.category(CategoryDto.builder()
 						.id(entity.getCategory().getId())
@@ -37,5 +38,19 @@ public class ProductProjector {
 				
 	}
 	
-	
+	public static ProductDto convertToDetailDto(Product entity) {
+			return ProductDto.builder()
+					.name(entity.getName())
+					.quantity(entity.getQuantity())
+					.models(entity.getModels())
+					.description(entity.getDescription())
+					.urlVideo(entity.getUrlVideo())
+					.ngaybaohanh(entity.getNgaybaohanh())
+					.status(entity.getStatus())
+					.category(CategoryDto.builder()
+						.id(entity.getCategory().getId())
+						.name(entity.getCategory().getName())
+						.build())
+					.build();
+	}
 }

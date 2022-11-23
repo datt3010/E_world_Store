@@ -46,11 +46,14 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository, Fin
 				whereClauseSqlBuilder.append(" p.id = :keywordId OR");
 				parameterMap.put("keywordId", Integer.parseInt(filter.getKeyword()));
 				
-				whereClauseSqlBuilder.append(" p.model = :keywordModel OR");
-				parameterMap.put("keywordModel", Integer.parseInt(filter.getKeyword()));
+				whereClauseSqlBuilder.append(" p.models = :keywordModels OR");
+				parameterMap.put("keywordModels", Integer.parseInt(filter.getKeyword()));
+				
+				whereClauseSqlBuilder.append(" p.quantity = :keywordQuantity OR");
+				parameterMap.put("keywordQuantity", Integer.parseInt(filter.getKeyword()));
 			}
 			
-			whereClauseSqlBuilder.append(" p.name LIKE :keyword OR p.status LIKE :keyword)");
+			whereClauseSqlBuilder.append(" p.name LIKE :keyword OR p.category.name LIKE :keyword OR p.status LIKE :keyword)");
 			parameterMap.put("keyword", "%" + filter.getKeyword() + "%");
 		}
 		

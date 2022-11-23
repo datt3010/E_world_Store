@@ -91,12 +91,12 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-validation">
-                                    <form class="form-valide" action="#" method="post">
+                                    <form class="form-valide" th:action="@{admin}" th:object="${product}" method="post" enctype="multipart/form-data">
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-username">Loại sản phẩm <span class="text-danger">*</span>
                                             </label>
                                              <div class="col-lg-6">
-                                                <select class="form-control" id="val-skill" name="val-skill">
+                                                <select th:field= "*{categoryId}" class="form-control" id="val-skill" name="val-skill">
                                                     <option  th:each="c: ${listCate}" th:value="${c.id}">[[${c.name}]]</option>
                                                 </select>
                                             </div>
@@ -105,69 +105,67 @@
                                             <label class="col-lg-4 col-form-label" for="val-email">Tên sản phẩm <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-email" name="nameProduct" placeholder="Nhập tên sản phẩm...">
+                                                <input th:field="*{name}" type="text" class="form-control" id="val-email" name="nameProduct" placeholder="Nhập tên sản phẩm...">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-password">Giá sản phẩm <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-password" name="price" placeholder="Nhập giá sản phẩm">
+                                                <input th:field="*{price}" type="text" class="form-control" id="val-password" name="price" placeholder="Nhập giá sản phẩm">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-confirm-password">Số lượng<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="number" class="form-control" id="val-confirm-password" name="quality" placeholder="Số lượng sản phẩm">
+                                                <input th:field="*{quantity}" type="number" class="form-control" id="val-confirm-password" name="quality" placeholder="Số lượng sản phẩm">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-suggestions">Mô tả <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <textarea class="form-control" id="val-suggestions" name="val-suggestions" rows="5" placeholder="Sản phẩm..."></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-skill">Ảnh sản phẩm <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                           <input type="file" class="form-control" id="val-confirm-password" name="images" placeholder="Số lượng sản phẩm">
-                                           <img src="/images/product/large-size/1.jpg" width="200" height="100">
+                                                <textarea th:field="*{description}" class="form-control" id="val-suggestions" name="val-suggestions" rows="5" placeholder="Sản phẩm..."></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-currency">Ngày bảo hành <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="date" class="form-control" id="val-currency" name="val-currency" placeholder="$21.60">
+                                                <input th:field="*{ngaybaohanh}" type="date" class="form-control" id="val-currency" name="val-currency" placeholder="$21.60">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-website">Model<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-website" name="val-website" placeholder="1231231">
+                                                <input th:field="*{models}" type="text" class="form-control" id="val-website" name="val-website" placeholder="1231231">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-phoneus">Status <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-												   <select class="form-control" id="val-skill" name="val-skill">
-                                                    <option value="">Please select</option>
-                                                    <option value="html">Active</option>
-                                                    <option value="css">Inactive</option>
+												   <select th:field="*{status}" class="form-control" id="val-skill" name="val-skill">
+                                                    <option value="" >Please select</option>
+                                                    <option value="ACTIVE">Active</option>
+                                                    <option value="INACTIVE">Inactive</option>
                                                 </select>                                           
                                                  </div>
                                         </div>
+                                 			 <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-skill">Ảnh sản phẩm <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                           <input type="file" class="form-control" id="val-confirm-password" name="image" multiple="multiple">
+                                            </div>
+                                        </div>
                                         <div class="form-group row">
                                             <div class="col-lg-8 ml-auto">
-                                                <button type="submit" class="btn btn-primary">Insert</button>
+                                                <button th:formaction="@{/admin/product/insert}" formmethod="post" type="submit" class="btn btn-primary">Insert</button>
                                                 <button type="submit" class="btn btn-primary">Update</button>
                                                 <button type="submit" class="btn btn-primary">Delete</button>
-                                                <button type="submit" class="btn btn-primary">Reset</button>
                                             </div>
                                         </div>
                                     </form>

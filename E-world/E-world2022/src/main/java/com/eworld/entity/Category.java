@@ -1,6 +1,6 @@
 package com.eworld.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -39,8 +39,8 @@ public class Category {
 	private CategoryStatus status;
 	
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<CategoryBrand> categories;
+	private List<CategoryBrand> categories;
 	
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Product> products;
+	private List<Product> products;
 }

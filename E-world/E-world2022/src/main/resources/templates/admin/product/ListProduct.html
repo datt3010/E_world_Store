@@ -60,7 +60,7 @@
 							<div class="card-body">
 							<form>
 						  <div class="form-group">
-						    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
+						    <input name="keyword" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
 						  </div>
 						</form>
 								<h4 class="card-title">Danh sách sản phẩm</h4>
@@ -68,24 +68,25 @@
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th scope="col">Tên sản phẩm</th>
-												<th scope="col">Giá sản phẩm</th>
-												<th scope="col">Loại sản phẩm</th>
-												<th scope="col">Giá sản phẩm</th>
+												<th scope="col">Tên</th>
+												<th scope="col">Giá </th>
+												<th scope="col">Loại</th>
+												<th scope="col">Số lượng</th>
 												<th scope="col">Ngày bảo hành</th>
 												<th scope="col">Model</th>
 												<th scope="col"> Ảnh</th>
+												<th scope="col"> </th>
+												<th scope="col"> </th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="p in items">
-												<td>{{item.name}}</td>
-												<td>{{item.price | number:2}}</td>
-												<td>{{item.category.name}}</td>
-												<td>{{item.price}}</td>
-												<td>{{item.ngaybaohanh}}</td>
-												<td>{{item.model}}</td>
-												<td><img src="/images/product/small-size/1.jpg" width="100" height="80"></td>
+											<tr th:each="p: ${listProduct}">
+												<td>[[${p.name}]]</td>
+												<td>[[${p.price}]]</td>
+												<td>[[${p.category.name}]]</td>
+												<td>[[${p.quantity}]]</td>
+												<td th:text="${#dates.format(p.ngaybaohanh, 'dd-MM-yyyy')}">[[${p.ngaybaohanh}]]</td>
+												<td>[[${p.models}]]</td>
 												<td><a href="">Edit</a></td>
 												<td><a href="">Delete</a></td>
 											</tr>

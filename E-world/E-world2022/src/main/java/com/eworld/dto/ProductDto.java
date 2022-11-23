@@ -24,6 +24,8 @@ public class ProductDto {
 	
 	private Integer id;
 	
+	private Integer categoryId;
+	
 	private String name;
 	
 	private Double price;
@@ -32,7 +34,7 @@ public class ProductDto {
 	
 	private String urlVideo;
 	
-	private Date ngayBaoHanh;
+	private Date ngaybaohanh;
 	
 	private Integer models;
 	
