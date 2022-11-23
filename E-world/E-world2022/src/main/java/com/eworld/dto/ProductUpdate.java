@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.eworld.contstant.ProductStatus;
+import com.eworld.entity.Category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +17,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductUpdate {
+	
+	private Date createdAt;
 	
 	private String name;
 	
@@ -35,5 +38,8 @@ public class ProductUpdate {
 	private String urlVideo;
 	
 	private Integer models;
+	
+	private Category category;
+	
 	
 }

@@ -1,13 +1,10 @@
 package com.eworld.dto;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.eworld.contstant.ProductStatus;
-import com.eworld.entity.ImagesProduct;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,5 +42,4 @@ public class ProductInput {
 	
 	private Integer models;
 	
-	private Set<ImagesProduct> imagesIds = new HashSet<>();
 }

@@ -73,7 +73,6 @@
 												<th scope="col">Loại</th>
 												<th scope="col">Số lượng</th>
 												<th scope="col">Ngày bảo hành</th>
-												<th scope="col">Model</th>
 												<th scope="col"> Ảnh</th>
 												<th scope="col"> </th>
 												<th scope="col"> </th>
@@ -86,7 +85,7 @@
 												<td>[[${p.category.name}]]</td>
 												<td>[[${p.quantity}]]</td>
 												<td th:text="${#dates.format(p.ngaybaohanh, 'dd-MM-yyyy')}">[[${p.ngaybaohanh}]]</td>
-												<td>[[${p.models}]]</td>
+												<td><img th:src="@{|/images/product/${p.logo}|}" width="80" height="50"/></td>
 												<td><a href="">Edit</a></td>
 												<td><a href="">Delete</a></td>
 											</tr>

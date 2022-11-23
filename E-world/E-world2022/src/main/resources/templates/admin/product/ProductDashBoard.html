@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" ng-app>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -92,6 +92,7 @@
                             <div class="card-body">
                                 <div class="form-validation">
                                     <form class="form-valide" th:action="@{admin}" th:object="${product}" method="post" enctype="multipart/form-data">
+                                        <p th:text="${message}" style="color: red; font-size: 20"></p>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-username">Loại sản phẩm <span class="text-danger">*</span>
                                             </label>
@@ -154,11 +155,19 @@
                                                 </select>                                           
                                                  </div>
                                         </div>
-                                 			 <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-skill">Ảnh sản phẩm <span class="text-danger">*</span>
+                             			         <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-skill">Ảnh sản phẩm  <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                           <input type="file" class="form-control" id="val-confirm-password" name="image" multiple="multiple">
+                                           <input  type="file" onchange="readURL(this);" class="form-control" id="val-confirm-password" name="image">
+                                           <img id="image" th:src="@{|/images/product/*{logo}}">
+                                            </div>
+                                        </div>
+                                               <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-email">Url video <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input th:field="*{urlVideo}" type="text" class="form-control" id="val-email" placeholder="http://...">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -202,6 +211,7 @@
     <script src="/admin/js/settings.js"></script>
     <script src="/admin/js/gleek.js"></script>
     <script src="/admin/js/styleSwitcher.js"></script>
+	<script src="/js/category.js"></script>
 
     <script src="/admin/plugins/validation/jquery.validate.min.js"></script>
     <script src="/admin/plugins/validation/jquery.validate-init.js"></script>

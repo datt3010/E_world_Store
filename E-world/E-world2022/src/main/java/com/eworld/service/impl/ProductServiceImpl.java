@@ -3,8 +3,6 @@ package com.eworld.service.impl;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,12 +15,10 @@ import com.eworld.dto.ProductDto;
 import com.eworld.dto.ProductInput;
 import com.eworld.dto.ProductUpdate;
 import com.eworld.entity.Category;
-import com.eworld.entity.ImagesProduct;
 import com.eworld.entity.Product;
 import com.eworld.filter.ProductFilter;
 import com.eworld.projector.ProductProjector;
 import com.eworld.repository.CategoryRepository;
-import com.eworld.repository.ImagesProductRepository;
 import com.eworld.repository.ProductRepository;
 import com.eworld.service.ProductService;
 
@@ -35,13 +31,10 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private CategoryRepository cateRepo;
-	
-	@Autowired
-	private ImagesProductRepository imagesProductRepo;
 
 	@Override
 	@Transactional
-	public ProductDto create(ProductInput input, String fileName) {
+	public ProductDto create(ProductInput input) {
 		
 		Instant instant = Instant.now();
 		Date date = Date.from(instant);
@@ -58,25 +51,39 @@ public class ProductServiceImpl implements ProductService {
 				.models(input.getModels())
 				.status(input.getStatus())
 				.category(category)
+				.image(input.getLogo())
+				.urlVideo(input.getUrlVideo())
 				.build();
-		
-			Set<ImagesProduct> imagesProducts = imagesProductRepo.findByProductId(input.getId()).stream()
-					.map(e -> ImagesProduct.builder()
-							.product(product)
-							.productId(input.getId())
-							.url(fileName)
-							.build())
-					.collect(Collectors.toSet());
-			
-		product.setImagesProducts(imagesProducts);
+
 			productRepo.save(product);
+
 		
 		return ProductDto.builder().id(product.getId()).build();
 	}
 
 	@Override
+	@Transactional
 	public ProductDto update(Integer id, ProductUpdate input) {
-		return null;
+		Instant instant = Instant.now();
+		Date date = Date.from(instant);
+		
+		Product product = findbyId(id);
+				product.setCreatedAt(date);
+				product.setName(input.getName());
+				product.setPrice(input.getPrice());
+				product.setQuantity(input.getQuantity());
+				product.setDescription(input.getDescription());
+				product.setNgaybaohanh(input.getNgaybaohanh());
+				product.setModels(input.getModels());
+				product.setStatus(input.getStatus());
+				product.setCategory(input.getCategory());
+				product.setImage(input.getLogo());
+				product.setUrlVideo(input.getUrlVideo());
+
+			productRepo.save(product);
+
+		
+		return ProductDto.builder().id(id).build();
 	}
 
 	@Override
@@ -88,6 +95,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteById(Integer id) {
 		 productRepo.deleteById(id);
 
@@ -102,4 +110,8 @@ public class ProductServiceImpl implements ProductService {
 		return dto;
 	}
 
+	@Override
+	public Product findbyId(Integer id) {
+		return productRepo.findById(id).get();
+	}
 }

@@ -61,6 +61,8 @@ public class Product {
 	
 	private String description;
 	
+	private String image;
+	
 	@Enumerated(EnumType.STRING)
 	private ProductStatus status;
 	
@@ -71,6 +73,4 @@ public class Product {
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<OrderDetail> orderDetails;
 	
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<ImagesProduct> imagesProducts;
 }

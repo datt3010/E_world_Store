@@ -94,7 +94,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	@Transactional()
+	@Transactional
 	public void delete(Integer id) {
 		customerRepo.deleteById(id);
 	}

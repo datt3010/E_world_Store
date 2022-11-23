@@ -3,8 +3,9 @@ package com.eworld.dto;
 import java.util.Date;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.eworld.contstant.ProductStatus;
-import com.eworld.entity.ImagesProduct;
 import com.eworld.entity.OrderDetail;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -34,6 +35,7 @@ public class ProductDto {
 	
 	private String urlVideo;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date ngaybaohanh;
 	
 	private Integer models;
@@ -44,7 +46,7 @@ public class ProductDto {
 	
 	private CategoryDto category;
 	
-	private Set<OrderDetail> orderDetails;
+	private String logo;
 	
-	private Set<ImagesProduct> imageProducts;
+	private Set<OrderDetail> orderDetails;	
 }
