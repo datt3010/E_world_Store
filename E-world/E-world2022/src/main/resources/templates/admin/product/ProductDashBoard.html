@@ -101,12 +101,14 @@
                                                     <option  th:each="c: ${listCate}" th:value="${c.id}">[[${c.name}]]</option>
                                                 </select>
                                             </div>
+                                                <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}"></span>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-email">Tên sản phẩm <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
                                                 <input th:field="*{name}" type="text" class="form-control" id="val-email" name="nameProduct" placeholder="Nhập tên sản phẩm...">
+                                            <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -114,6 +116,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input th:field="*{price}" type="text" class="form-control" id="val-password" name="price" placeholder="Nhập giá sản phẩm">
+                                                   <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -121,6 +124,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input th:field="*{quantity}" type="number" class="form-control" id="val-confirm-password" name="quality" placeholder="Số lượng sản phẩm">
+                                           <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -131,10 +135,10 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-currency">Ngày bảo hành <span class="text-danger">*</span>
-                                            </label>
+                                            <label class="col-lg-4 col-form-label" for="val-currency">Ngày bảo hành <span class="text-danger">*</span> </label>
                                             <div class="col-lg-6">
-                                                <input th:field="*{ngaybaohanh}" type="date" class="form-control" id="val-currency" name="val-currency" placeholder="$21.60">
+                                                <input th:field="*{ngaybaohanh}" type="date" class="form-control" id="val-currency" name="val-currency">
+                                             <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('ngaybaohanh')}" th:errors="*{ngaybaohanh}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -142,6 +146,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input th:field="*{models}" type="text" class="form-control" id="val-website" name="val-website" placeholder="1231231">
+                                              	 <span class="text-danger" style="color:red;"  th:if="${#fields.hasErrors('models')}" th:errors="*{models}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -152,7 +157,8 @@
                                                     <option value="" >Please select</option>
                                                     <option value="ACTIVE">Active</option>
                                                     <option value="INACTIVE">Inactive</option>
-                                                </select>                                           
+                                                </select>
+                                          	 <span class="text-danger" style="color:red;"  th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></span>                                           
                                                  </div>
                                         </div>
                              			         <div class="form-group row">
@@ -168,13 +174,14 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input th:field="*{urlVideo}" type="text" class="form-control" id="val-email" placeholder="http://...">
+                                           	 <span class="text-danger" style="color:red;"  th:if="${#fields.hasErrors('urlVideo')}" th:errors="*{urlVideo}"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-lg-8 ml-auto">
                                                 <button th:formaction="@{/admin/product/insert}" formmethod="post" type="submit" class="btn btn-primary">Insert</button>
-                                                <button type="submit" class="btn btn-primary">Update</button>
-                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                                <button th:formaction="@{|/admin/listproduct/${id}|}" formmethod="post" type="submit" class="btn btn-primary">Update</button>
+                                                <button th:formaction="@{|/admin/listproduct/delete/${id}|}" formmethod="get" type="submit" class="btn btn-primary">Delete</button>
                                             </div>
                                         </div>
                                     </form>

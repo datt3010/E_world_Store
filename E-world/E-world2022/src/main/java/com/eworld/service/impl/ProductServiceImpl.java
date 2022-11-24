@@ -7,7 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,6 +68,8 @@ public class ProductServiceImpl implements ProductService {
 	public ProductDto update(Integer id, ProductUpdate input) {
 		Instant instant = Instant.now();
 		Date date = Date.from(instant);
+		Category category = cateRepo.findById(input.getCategoryId()).get(); 
+
 		
 		Product product = findbyId(id);
 				product.setCreatedAt(date);
@@ -76,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
 				product.setNgaybaohanh(input.getNgaybaohanh());
 				product.setModels(input.getModels());
 				product.setStatus(input.getStatus());
-				product.setCategory(input.getCategory());
+				product.setCategory(category);
 				product.setImage(input.getLogo());
 				product.setUrlVideo(input.getUrlVideo());
 
@@ -113,5 +117,14 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product findbyId(Integer id) {
 		return productRepo.findById(id).get();
+	}
+
+	@Override
+	public Page<ProductDto> findPagingCustom(int pageNum, String sortField, String sortDir, ProductFilter filter,
+			Pageable pageable) {
+		
+		Page<Product> page = productRepo.findPaging(filter, pageable);
+		List<ProductDto> content = ProductProjector.convertToPageDto(page.getContent());
+		return new PageImpl<>(content, pageable, page.getTotalElements());
 	}
 }

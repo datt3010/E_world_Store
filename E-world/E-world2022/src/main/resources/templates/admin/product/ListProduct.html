@@ -68,10 +68,10 @@
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th scope="col">Tên</th>
-												<th scope="col">Giá </th>
+										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Tên</a></th>
+										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">Giá</a></th>
 												<th scope="col">Loại</th>
-												<th scope="col">Số lượng</th>
+										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=quantity&sortDir=' + ${reverseSortDir}}">Số lượng</a></th>
 												<th scope="col">Ngày bảo hành</th>
 												<th scope="col"> Ảnh</th>
 												<th scope="col"> </th>
@@ -86,24 +86,30 @@
 												<td>[[${p.quantity}]]</td>
 												<td th:text="${#dates.format(p.ngaybaohanh, 'dd-MM-yyyy')}">[[${p.ngaybaohanh}]]</td>
 												<td><img th:src="@{|/images/product/${p.logo}|}" width="80" height="50"/></td>
-												<td><a href="">Edit</a></td>
-												<td><a href="">Delete</a></td>
+												<td><a th:href="@{|/admin/listproduct/${p.id}|}">Edit</a></td>
+												<td><a th:href="@{|/admin/listproduct/delete/${p.id}|}">Delete</a></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
-							<nav aria-label="Page navigation example" style="margin-left: 88rem;">
+							<span style="margin-left:2rem;">Total Items: [[${totalItems}]]- Page [[${currentPage}]] of [[${totalPages}]]</span>
+							<nav aria-label="Page navigation example" style="margin-left: 80rem;">
 								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-									</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-									</a></li>
+								<li class="page-item">
+									<a class="page-link" th:if="${currentPage > 1}" th:href="@{'/admin/listproduct/page/' + ${currentPage - 1} + '?sortField=price&sortDir=' + ${reverseSortDir}}" aria-label="Previous">Previous</a>
+									<span aria-label="Previous" th:unless="${currentPage >1}">Previous</span>
+									&nbsp;&nbsp;
+									</li>
+									<span th:each="i: ${#numbers.sequence(1, totalPages)}" class="page-item">
+									<span><a th:if="${i != currentPage}" th:href="@{'/admin/listproduct/page/' +${i} + '?sortField=price&sortDir=' + ${reverseSortDir}}">[[${i}]]</a>
+									    <span th:unless="${i != currentPage}">[[${i}]]</span> &nbsp;
+									</span> &nbsp;&nbsp;
+									</span>
+									<li class="page-item">
+									<a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/admin/listproduct/page/' + ${currentPage + 1} + '?sortField=price&sortDir=' + ${reverseSortDir}}" aria-label="Next">Next</a>
+									<span th:unless="${currentPage < totalPages}">Next</span>
+									</li>
 								</ul>
 							</nav>
 						</div>
