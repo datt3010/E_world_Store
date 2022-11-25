@@ -25,4 +25,5 @@ public interface CategoryService {
 	public void deleteById(Integer id);
 	
 	public CategoryDto getDetail(Integer id);
+	
 }

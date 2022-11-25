@@ -17,8 +17,6 @@ public class CategoryUpdate {
 	@Size(max = 100)
 	private String name;
 	
-	@NotBlank(message = "{Size.Category.logo}")
-	@Size(max = 255)
 	private String logo;
 	
 	@NotNull

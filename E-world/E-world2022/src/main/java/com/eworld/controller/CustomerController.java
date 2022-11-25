@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -51,7 +53,7 @@ public class CustomerController {
 		
 		model.addAttribute("listCustomer", listCustomer);
 		
-		return "admin/customer/ListCustomer";
+		return searchPage(model, 1, keyword, "id","asc", pageable);
 	}
 	
 	@PostMapping("/customer/insert")
@@ -77,7 +79,7 @@ public class CustomerController {
 	
 	@RequestMapping("/customer")
 	public String index(Model model) {
-		model.addAttribute("customer", new CustomerInput());
+		model.addAttribute("customer", new CustomerDto());
 		return "admin/customer/CustomerDashBoard";
 	}
 	
@@ -113,5 +115,31 @@ public class CustomerController {
 			model.addAttribute("message", "Update thành công");
 		
 		return "forward:/admin/customer";
+	}
+	
+	@RequestMapping("listcustomer/page/{pageNum}")
+	public String searchPage(Model model,
+			@PathVariable("pageNum") int pageNum,
+			@RequestParam(name="keyword", required = false) String keyword,
+			@RequestParam(name="sortField", required = false) String sortField,
+			@RequestParam(name = "sortDir", required = false) String sortDir,
+			@SortDefault(sort = "id", direction = Direction.ASC) Pageable pageable) {
+		
+		pageable = PageRequest.of(pageNum-1, 3, sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
+		CustomerFilter filter = CustomerFilter.builder()
+				.keyword(keyword)
+				.build();
+		Page<CustomerDto> listCustomer =  customerService.findPaging(filter, pageable);
+		model.addAttribute("keyword", filter.getKeyword());
+		model.addAttribute("listCustomer", listCustomer);
+		model.addAttribute("currentPage", pageNum);
+		model.addAttribute("totalPages", listCustomer.getTotalPages());
+		model.addAttribute("totalItems", listCustomer.getTotalElements());
+		
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
+		
+		return "admin/customer/ListCustomer";
 	}
 }

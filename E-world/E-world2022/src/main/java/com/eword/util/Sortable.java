@@ -5,7 +5,7 @@ import java.util.List;
 public class Sortable {
 
 	public static final List<String> CUSTOMER = Arrays.asList(
-			"id", "firstName", "lastName");
+			"id", "firstName", "lastName", "age", "gioitinh");
 	
 	public static final List<String> CATEGORY = Arrays.asList(
 			"id", "name", "status");

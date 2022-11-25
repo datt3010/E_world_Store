@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -80,7 +82,8 @@ public class CategoryController {
 		
 		Page<CategoryDto> listCategory = categorySerivce.findPaging(filter, pageable);
 		model.addAttribute("listCategory", listCategory);
-		return "admin/brand/ListBrand";
+		
+		return listPage(model, 1, keyword, "name", "asc", pageable);
 	}
 	
 	@RequestMapping("category/{id}")
@@ -115,4 +118,30 @@ public class CategoryController {
 		
 		return "forward:/admin/category";
 	}
+	
+	@RequestMapping("listcategory/page/{pageNum}")
+	public String listPage(Model model,
+			@PathVariable("pageNum") int pageNum,
+			@RequestParam(name="keyword", required = false) String keyword,
+			@RequestParam(name="sortField", required = false) String sortField,
+			@RequestParam(name = "sortDir", required = false) String sortDir,
+			@SortDefault(sort = "name", direction = Direction.ASC) Pageable pageable){
+		pageable = PageRequest.of(pageNum-1, 3, sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
+		CategoryFilter filter = CategoryFilter.builder()
+				.keyword(keyword)
+				.build();
+		Page<CategoryDto> listCategory = categorySerivce.findPaging(filter, pageable);
+		model.addAttribute("keyword", filter.getKeyword());
+		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("currentPage", pageNum);
+		model.addAttribute("totalPages", listCategory.getTotalPages());
+		model.addAttribute("totalItems", listCategory.getTotalElements());
+		
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
+		
+		return "admin/brand/ListBrand";
+			}
+
 }

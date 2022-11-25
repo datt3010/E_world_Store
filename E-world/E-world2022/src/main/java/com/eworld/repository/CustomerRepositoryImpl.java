@@ -39,14 +39,11 @@ public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPag
 			whereClauseSqlBuilder.append(" AND(");
 			
 			if(StringUtils.isNumeric(filter.getKeyword())) {
-				whereClauseSqlBuilder.append(" c.id = :keywordId OR");
-				parameterMap.put("keywordId", Integer.parseInt(filter.getKeyword()));
-				
-				whereClauseSqlBuilder.append(" c.age = :keywordAge OR");
-				parameterMap.put("keywordAge", Integer.parseInt(filter.getKeyword()));
+				whereClauseSqlBuilder.append(" c.id = :keywordInt OR c.age = :keywordInt OR");
+				parameterMap.put("keywordInt", Integer.parseInt(filter.getKeyword()));
 			}
 			
-			whereClauseSqlBuilder.append(" c.firstName LIKE :keyword OR c.lastName LIKE :keyword)");
+			whereClauseSqlBuilder.append(" c.firstName LIKE :keyword OR c.lastName LIKE :keyword OR c.gioitinh LIKE :keyword)");
 			parameterMap.put("keyword", "%" + filter.getKeyword() + "%");
 		}
 		

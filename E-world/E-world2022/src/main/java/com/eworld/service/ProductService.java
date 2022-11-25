@@ -22,7 +22,5 @@ public interface ProductService {
 	public ProductDto getDetail(Integer id);
 	
 	public Product findbyId(Integer id);
-	
-	public Page<ProductDto> findPagingCustom(int pageNum,String sortField, String sortDir,ProductFilter filter, Pageable pageable);
-	
+		
 }
