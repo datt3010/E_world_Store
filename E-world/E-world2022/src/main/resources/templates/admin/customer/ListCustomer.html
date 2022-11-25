@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-
+<html lang="en" xlmns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +40,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a  th:href="@{/admin}">
+                <a href="index.html">
                     <b class="logo-abbr"><img src="/admin/images/logo.png" alt=""> </b>
                     <span class="logo-compact"><img src="/admin/images/logo-compact.png" alt=""></span>
                     <span class="brand-title">
@@ -57,7 +56,7 @@
         <!--**********************************
             Header start
         ***********************************-->
-       <div th:replace="/layout/admin/header.html"></div>
+       	<div th:replace="/layout/admin/header.html"></div>
         <!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -89,10 +88,10 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                           	<div class="card-body">
+                      	<div class="card-body">
 							<form>
 						  <div class="form-group">
-						    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
+						    <input name="keyword" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
 						  </div>
 						</form>
 								<h4 class="card-title">Danh sách sản phẩm</h4>
@@ -100,42 +99,48 @@
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th scope="col">Tên sản phẩm</th>
-												<th scope="col">Giá sản phẩm</th>
-												<th scope="col">Loại sản phẩm</th>
-												<th scope="col">Giá sản phẩm</th>
-												<th scope="col">Ngày bảo hành</th>
-												<th scope="col">Model</th>
+										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">Mã khách hàng</a></th>
+										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">Tên khách hàng</a></th>
+										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=age&sortDir=' + ${reverseSortDir}}">age</a></th>
+												<th scope="col">Ngày sinh</th>
+										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=gioitinh&sortDir=' + ${reverseSortDir}}">Giới tính</a></th>
 												<th scope="col"> Ảnh</th>
+												<th scope="col"></th>
+												<th scope="col"></th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="p in items">
-												<td>{{item.name}}</td>
-												<td>{{item.price | number:2}}</td>
-												<td>{{item.category.name}}</td>
-												<td>{{item.price}}</td>
-												<td>{{item.ngaybaohanh}}</td>
-												<td>{{item.model}}</td>
-												<td><img src="/images/product/small-size/1.jpg" width="100" height="80"></td>
-												<td><a href="">Edit</a></td>
-												<td><a href="">Delete</a></td>
+											<tr th:each="c: ${listCustomer}">
+												<td>[[${c.id}]]</td>
+												<td>[[${c.firstName} +' '+ ${c.lastName}]]</td>
+												<td>[[${c.age}]]</td>
+												<td th:text="${#dates.format(c.dateOfBirth, 'dd-MM-yyyy')}">[[${c.dateOfBirth}]]</td>
+												<td>[[${c.gioitinh}]]</td>
+												<td><img th:src="@{|/images/staff/${c.logo}|}" width="80" height="50"/></td>
+												<td><a th:href="@{|/admin/listcustomer/${c.id}|}">Edit</a></td>
+												<td><a th:href="@{|/admin/listcustomer/delete/${c.id}|}">Delete</a></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
-							<nav aria-label="Page navigation example" style="margin-left: 88rem;">
+									<span style="margin-left:2rem;">Total Items: [[${totalItems}]]- Page [[${currentPage}]] of [[${totalPages}]]</span>
+							<nav aria-label="Page navigation example" style="margin-left: 80rem;">
 								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-									</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-									</a></li>
+								<li class="page-item">
+									<a class="page-link" th:if="${currentPage > 1}" th:href="@{'/admin/listcustomer/page/' + ${currentPage - 1} + '?sortField=id&sortDir=' + ${reverseSortDir}}" aria-label="Previous">Previous</a>
+									<span aria-label="Previous" th:unless="${currentPage >1}">Previous</span>
+									&nbsp;&nbsp;
+									</li>
+									<span th:each="i: ${#numbers.sequence(1, totalPages)}" class="page-item">
+									<span><a th:if="${i != currentPage}" th:href="@{'/admin/listcustomer/page/' +${i} + '?sortField=id&sortDir=' + ${reverseSortDir}}">[[${i}]]</a>
+									    <span th:unless="${i != currentPage}">[[${i}]]</span> &nbsp;
+									</span> &nbsp;&nbsp;
+									</span>
+									<li class="page-item">
+									<a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/admin/listcustomer/page/' + ${currentPage + 1} + '?sortField=id&sortDir=' + ${reverseSortDir}}" aria-label="Next">Next</a>
+									<span th:unless="${currentPage < totalPages}">Next</span>
+									</li>
 								</ul>
 							</nav>
                         </div>
@@ -152,7 +157,7 @@
         <!--**********************************
             Footer start
         ***********************************-->
-      <div th:replace="/layout/admin/footer.html"></div>
+        <div th:replace="/layout/admin/footer.html"></div>
         <!--**********************************
             Footer end
         ***********************************-->

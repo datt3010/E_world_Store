@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -21,10 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eworld.dto.CategoryDto;
+import com.eworld.dto.CategoryInput;
+import com.eworld.dto.CategoryUpdate;
 import com.eworld.entity.Category;
-import com.eworld.repository.CategoryRepository;
-import com.eworld.schema.CategoryInput;
-import com.eworld.schema.CategoryUpdate;
+import com.eworld.filter.CategoryFilter;
 import com.eworld.service.CategoryService;
 import com.eworld.service.UploadService;
 
@@ -38,13 +41,13 @@ public class CategoryController {
 	@Autowired
 	private UploadService uploadService;
 	
-	@Autowired
-	private CategoryRepository cateRepo;
-	
 	ServletContext application;
 	
 	@PostMapping("/category/insert")
-	public String create (@ModelAttribute("category") @Valid CategoryInput input, BindingResult result, Model model, @RequestParam("image") MultipartFile file) throws IOException {
+	public String create (@ModelAttribute("category") @Valid CategoryInput input, 
+			BindingResult result,
+			Model model, 
+			@RequestParam("image") MultipartFile file) throws IOException {
 		
 		if(result.hasErrors()) {
 			return "admin/brand/BrandDashBoard";
@@ -69,27 +72,26 @@ public class CategoryController {
 		return "admin/brand/BrandDashBoard";
 	}
 	
-	@RequestMapping("/listcategory/search")
-	public String listBrand(Model model, @RequestParam("keyword") String keyword) {
-		
-		Pageable page = PageRequest.of(0,10, Direction.ASC,"name");
-		Page<Category> listCate = categorySerivce.findByKeyWord(keyword, page);
-		model.addAttribute("listCate", listCate);
-		
-		return "admin/brand/ListBrand";
-	}
-	
 	@RequestMapping("/listcategory")
-	public String listBrand(Model model) {
-		Pageable page = PageRequest.of(0, 10, Direction.ASC,"name");
-		Page<Category> listCate = cateRepo.findAll(page);
-		model.addAttribute("listCate", listCate);
-		return "admin/brand/ListBrand";
+	public String listBrand(Model model, @RequestParam(name = "keyword", required = false)String keyword) {
+		Pageable pageable = PageRequest.of(0, 10, Direction.ASC,"name");
+		
+		CategoryFilter filter = CategoryFilter.builder()
+				.keyword(keyword)
+				.build();
+		
+		Page<CategoryDto> listCategory = categorySerivce.findPaging(filter, pageable);
+		model.addAttribute("listCategory", listCategory);
+		
+		return listPage(model, 1, keyword, "name", "asc", pageable);
 	}
 	
 	@RequestMapping("category/{id}")
 	public String edit(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("category",cateRepo.findById(id).get());
+		
+		CategoryDto category = categorySerivce.getDetail(id);
+		
+		model.addAttribute("category",category);
 		return "admin/brand/BrandDashBoard";
 	}
 	
@@ -116,4 +118,30 @@ public class CategoryController {
 		
 		return "forward:/admin/category";
 	}
+	
+	@RequestMapping("listcategory/page/{pageNum}")
+	public String listPage(Model model,
+			@PathVariable("pageNum") int pageNum,
+			@RequestParam(name="keyword", required = false) String keyword,
+			@RequestParam(name="sortField", required = false) String sortField,
+			@RequestParam(name = "sortDir", required = false) String sortDir,
+			@SortDefault(sort = "name", direction = Direction.ASC) Pageable pageable){
+		pageable = PageRequest.of(pageNum-1, 3, sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
+		CategoryFilter filter = CategoryFilter.builder()
+				.keyword(keyword)
+				.build();
+		Page<CategoryDto> listCategory = categorySerivce.findPaging(filter, pageable);
+		model.addAttribute("keyword", filter.getKeyword());
+		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("currentPage", pageNum);
+		model.addAttribute("totalPages", listCategory.getTotalPages());
+		model.addAttribute("totalItems", listCategory.getTotalElements());
+		
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
+		
+		return "admin/brand/ListBrand";
+			}
+
 }

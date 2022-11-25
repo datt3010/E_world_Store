@@ -44,6 +44,9 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(insertable = false, updatable = false)
+	private Integer categoryId;
+	
 	private String name;
 	
 	private Double price;
@@ -54,20 +57,20 @@ public class Product {
 	
 	private Date ngaybaohanh;
 	
-	private Integer model;
+	private Integer models;
 	
 	private String description;
+	
+	private String image;
 	
 	@Enumerated(EnumType.STRING)
 	private ProductStatus status;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "categoryId", referencedColumnName = "id", updatable = false)
+	@JoinColumn(name = "categoryId", referencedColumnName = "id")
 	private Category category;
 	
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<OrderDetail> orderDetails;
 	
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<ImagesProduct> imagesProducts;
 }

@@ -62,7 +62,7 @@ public class Order {
 	private Set<OrderDetail> orderDetails;
 	
 	@ManyToOne(fetch = FetchType.LAZY )
-	@JoinColumn(name ="userId", referencedColumnName = "id", updatable = false)
+	@JoinColumn(name ="accountId", referencedColumnName = "id", updatable = false)
 	private Account account;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

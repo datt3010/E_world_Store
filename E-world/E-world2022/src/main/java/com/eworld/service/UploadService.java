@@ -15,13 +15,18 @@ public class UploadService {
 	@Autowired
 	ServletContext ctx;
 	 
-	public File save(MultipartFile file, String folder) throws IOException {
-		File dir = new File(ctx.getRealPath(folder));
-		if(!dir.exists()) {
-			dir.mkdirs();
-		}
-		File saveFile = new File(dir, file.getOriginalFilename());
-		file.transferTo(saveFile);
+	public File save (MultipartFile file, String folder) throws IOException {
+
+			File dir = new File(ctx.getRealPath(folder));
+
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			
+			File saveFile = new File(dir, file.getOriginalFilename());
+			file.transferTo(saveFile);
+		
 		return saveFile;
 	}
+
 }

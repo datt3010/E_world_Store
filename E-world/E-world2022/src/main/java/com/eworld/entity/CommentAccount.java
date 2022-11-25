@@ -1,40 +1,36 @@
 package com.eworld.entity;
 
-import java.util.Set;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
-@Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class ImagesProduct {
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+@Data
+public class CommentAccount {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	private String url;
-	
-	@Column(insertable = false, updatable = false)
-	private Integer productId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "accountId", referencedColumnName = "id", updatable = false)
+	private Account account;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "productId", referencedColumnName = "id", updatable = false)
-	private Product product;
+	@JoinColumn(name = "commentId", referencedColumnName = "id", updatable = false)
+	private Comment comment;
 }

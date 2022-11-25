@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import com.eworld.contstant.CategoryStatus;
 import com.eworld.entity.Category;
 
-public interface CategoryRepository extends JpaRepository<Category, Integer> {
+public interface CategoryRepository extends JpaRepository<Category, Integer>, CategoryCustomRepository {
 	
 	@Query("FROM Category c WHERE c.status LIKE :status")
 	List<Category> findByInStatus( @Param(value = "status") CategoryStatus status);

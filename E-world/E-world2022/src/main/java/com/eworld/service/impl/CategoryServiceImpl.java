@@ -4,16 +4,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eworld.contstant.CategoryStatus;
+import com.eworld.dto.CategoryDto;
+import com.eworld.dto.CategoryInput;
+import com.eworld.dto.CategoryUpdate;
 import com.eworld.entity.Category;
+import com.eworld.filter.CategoryFilter;
+import com.eworld.projector.CategoryProjector;
 import com.eworld.repository.CategoryRepository;
-import com.eworld.schema.CategoryDto;
-import com.eworld.schema.CategoryInput;
-import com.eworld.schema.CategoryUpdate;
 import com.eworld.service.CategoryService;
 
 @Service
@@ -59,13 +62,24 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Page<Category> findByKeyWord(String keyword, Pageable pageable) {
-		return categoryRepo.findByKeyWord(keyword, pageable);
-	}
-
-	@Override
 	@Transactional
 	public void deleteById(Integer id) {
 		 categoryRepo.deleteById(id);
+	}
+
+	@Override
+	public Page<CategoryDto> findPaging(CategoryFilter filter, Pageable pageable) {
+		Page<Category> page = categoryRepo.findPaging(filter, pageable);
+		List<CategoryDto> content = CategoryProjector.convertToPageDto(page.getContent());
+		return new PageImpl<>(content, pageable, page.getTotalElements());
+	}
+
+	@Override
+	public CategoryDto getDetail(Integer id) {
+		
+		Category category = categoryRepo.findById(id).get();
+		CategoryDto dto = CategoryProjector.convertToDetailDto(category);
+		
+		return dto;
 	}
 }

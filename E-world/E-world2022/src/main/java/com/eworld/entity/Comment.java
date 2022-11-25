@@ -29,5 +29,5 @@ public class Comment {
 	private String name;
 	
 	@OneToMany(mappedBy = "comment", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<CommentUser> commentUsers;
+	private Set<CommentAccount> commentAccounts;
 }

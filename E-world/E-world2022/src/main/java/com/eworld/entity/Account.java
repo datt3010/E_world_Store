@@ -18,30 +18,32 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.eworld.contstant.Gender;
 import com.eworld.contstant.UserStatus;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@SuppressWarnings("serial")
 @Entity
-@Table(name = "users")
-@NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
+@Table
 @Data
-public class Account  {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+public class Account{
 	
 	@CreatedDate 
 	@Column(updatable = false)
-	private Date createdAt;
+	private Date createAt;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+		
 	private String username;
 	
 	private String password;
@@ -53,6 +55,7 @@ public class Account  {
 	private String phone;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(name = "gender")
 	private Gender gioitinh;
 	
 	private String firstName;
@@ -65,6 +68,8 @@ public class Account  {
 	
 	private String nationality;
 	
+	private String image;
+	
 	@Enumerated(EnumType.STRING)
 	private UserStatus status;
 	
@@ -72,9 +77,6 @@ public class Account  {
 	 Set<Order> orders;
 	
 	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	 Set<UserRole> userRoles;
-	
-	public Account(OAuth2User socialUser) {
-		this.username = socialUser.getName();
-	}
+	 Set<AccountRole> accountRoles;
+
 }

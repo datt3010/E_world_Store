@@ -1,36 +1,43 @@
 package com.eworld.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
+@Table
 @Data
-public class CommentUser {
-	
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AccountRole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId", referencedColumnName = "id", updatable = false)
+	@JoinColumn(name = "accountId", referencedColumnName = "id", updatable = false)
 	private Account account;
 	
+	@Column(insertable = false, updatable = false)
+	private Integer accountId;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "commentId", referencedColumnName = "id", updatable = false)
-	private Comment comment;
+	@JoinColumn(name = "roleId", referencedColumnName = "id", updatable = false)
+	private Role role;
+	
+	@Column(insertable = false, updatable = false)
+	private Integer roleId;
+	
 }
