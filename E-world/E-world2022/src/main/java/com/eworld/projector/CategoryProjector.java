@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.eworld.dto.CategoryDto;
+import com.eworld.dto.ProductDto;
 import com.eworld.entity.Category;
 
 public class CategoryProjector {
@@ -24,10 +25,19 @@ public class CategoryProjector {
 	
 	public static CategoryDto convertToDetailDto(Category entity) {
 		
+	List<ProductDto> products = entity.getProducts().stream()
+			.map(e -> ProductDto.builder()
+					.name(e.getName())
+					.price(e.getPrice())
+					.quantity(e.getQuantity())
+					.build())
+			.collect(Collectors.toList());
+		
 		return CategoryDto.builder()
 				.name(entity.getName())
 				.logo(entity.getLogo())
 				.status(entity.getStatus())
+				.products(products)
 				.build();
 	}
 }

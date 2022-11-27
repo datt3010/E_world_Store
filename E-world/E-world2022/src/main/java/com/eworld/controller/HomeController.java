@@ -23,7 +23,7 @@ public class HomeController {
 	
 	@GetMapping()
 	public String home(Model model,@RequestParam(name="keyword", required = false)String keyword) {
-Pageable pageable = PageRequest.of(0,4,Direction.ASC,"name");
+		Pageable pageable = PageRequest.of(0,4,Direction.ASC,"name");
 		
 		ProductFilter filter = ProductFilter.builder()
 				.keyword(keyword)
@@ -56,7 +56,7 @@ Pageable pageable = PageRequest.of(0,4,Direction.ASC,"name");
 	
 	@GetMapping("giohang")
 	public String wishList() {
-		return "user/product/wishlist";
+		return "user/product/Cart";
 	}
 	
 	@GetMapping("logout")
@@ -118,4 +118,5 @@ Pageable pageable = PageRequest.of(0,4,Direction.ASC,"name");
 	public String listAdminBlog() {
 		return "admin/blog/ListBlog";
 	}
+	
 }

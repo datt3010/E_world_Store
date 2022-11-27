@@ -21,5 +21,7 @@ public class GlobalInterceptor implements HandlerInterceptor{
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 			request.setAttribute("cates", categoryService.findAll(CategoryStatus.ACTIVE));
+
 	}
+	
 }

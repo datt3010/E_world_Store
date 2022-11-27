@@ -1,4 +1,5 @@
 package com.eworld.dto;
+import java.util.List;
 
 import com.eworld.contstant.CategoryStatus;
 
@@ -22,4 +23,6 @@ public class CategoryDto {
 	private String logo;
 	
 	private CategoryStatus status;
+	
+	private List<ProductDto> products;
 }

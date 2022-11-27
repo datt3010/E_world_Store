@@ -20,7 +20,7 @@
                             <!-- Begin Header Middle Right Area -->
                             <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
                                 <!-- Begin Header Middle Searchbox Area -->
-                                <form action="#" class="hm-searchbox">
+                                <form th:action="@{/product/search}" class="hm-searchbox">
                                     <select class="nice-select select-search-category">
                                         <option value="0">All</option>                         
                                         <option value="10">Laptops</option>                     
@@ -93,7 +93,7 @@
                                         <option value="15">Smartwatch</option>                           
                                         <option value="16">Accessories</option>
                                     </select>
-                                    <input type="text" placeholder="Enter your search key ...">
+                                    <input name="keyword" type="text" placeholder="Enter your search key ...">
                                     <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                                 <!-- Header Middle Searchbox Area End Here -->
@@ -113,40 +113,28 @@
                                             <div class="hm-minicart-trigger">
                                                 <span class="item-icon"></span>
                                                 <span class="item-text">£160
-                                                    <span class="cart-item-count">2</span>
+                                                    <span class="cart-item-count">[[${totalItems}]]</span>
                                                 </span>
                                             </div>
                                             <span></span>
                                             <div class="minicart">
-                                                <ul class="minicart-product-list">
-                                                    <li>
+                                                <ul  class="minicart-product-list">
+                                                    <li th:each="cart: ${@cart.productInCart}" th:with="p=${cart.key}">
                                                         <a href="single-product.html" class="minicart-product-image">
-                                                            <img src="images/product/small-size/3.jpg" alt="cart products">
+                                                            <img th:src="@{|/images/product/${p.image}|}" alt="cart products">
                                                         </a>
                                                         <div class="minicart-product-details">
-                                                            <h6><a href="single-product.html">Aenean eu tristique</a></h6>
-                                                            <span>£80 x 1</span>
+                                                            <h6 th:text="${p.name}"><a href="single-product.html"></a></h6>
+                                                            <span th:text="${p.price}"></span>
                                                         </div>
                                                         <button class="close">
-                                                            <i class="fa fa-close"></i>
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-product.html" class="minicart-product-image">
-                                                            <img src="images/product/small-size/4.jpg" alt="cart products">
-                                                        </a>
-                                                        <div class="minicart-product-details">
-                                                            <h6><a href="single-product.html">Aenean eu tristique</a></h6>
-                                                            <span>£80 x 1</span>
-                                                        </div>
-                                                        <button class="close">
-                                                            <i class="fa fa-close"></i>
+                                                          <a th:href="@{|/shoppingcart/removeProduct/${p.id}|}">  <i class="fa fa-close"></i></a>
                                                         </button>
                                                     </li>
                                                 </ul>
                                                 <p class="minicart-total">SUBTOTAL: <span>£160</span></p>
                                                 <div class="minicart-button">
-                                                    <a href="checkout.html" class="li-button li-button-dark li-button-fullwidth li-button-sm">
+                                                    <a th:href="@{/shoppingcart}" class="li-button li-button-dark li-button-fullwidth li-button-sm">
                                                         <span>View Full Cart</span>
                                                     </a>
                                                     <a href="checkout.html" class="li-button li-button-fullwidth li-button-sm">
@@ -174,14 +162,7 @@
                                 <div class="hb-menu hb-menu-2 d-xl-block">
                                     <nav>
                                         <ul>
-                                            <li class="dropdown-holder"><a href="index.html">Home</a>
-                                                <ul class="hb-dropdown">
-                                                    <li><a href="index.html">Home One</a></li>
-                                                    <li class="active"><a href="index-2.html">Home Two</a></li>
-                                                    <li><a href="index-3.html">Home Three</a></li>
-                                                    <li><a href="index-4.html">Home Four</a></li>
-                                                </ul>
-                                            </li>
+                                            <li><a th:href="@{/}">Home</a></li>
                                             <li class="megamenu-holder"><a href="shop-left-sidebar.html">Shop</a>
                                                 <ul class="megamenu hb-megamenu">
                                                     <li><a href="shop-left-sidebar.html">Shop Page Layout</a>
