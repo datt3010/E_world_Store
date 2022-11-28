@@ -103,21 +103,19 @@
                                         <!-- shop-item-filter-list end -->
                                     </div>
                                     <div class="toolbar-amount">
-                                        <span>Showing 1 to [[${totalItems}]] of [[${totalPages}]]</span>
+                                        <span>Showing 1 to [[${totalProducts}]] of [[${totalPages}]]</span>
                                     </div>
                                 </div>
                                 <!-- product-select-box start -->
                                 <div class="product-select-box">
                                     <div class="product-short">
                                         <p>Sort By:</p>
-                                        <select class="nice-select">
-                                            <option value="trending">Relevance</option>
-                                            <option value="sales">Name (A - Z)</option>
-                                            <option value="sales">Name (Z - A)</option>
-                                            <option value="rating">Price (Low &gt; High)</option>
-                                            <option value="date">Rating (Lowest)</option>
-                                            <option value="price-asc">Model (A - Z)</option>
-                                            <option value="price-asc">Model (Z - A)</option>
+                                        <select onChange="window.location.href=this.value" class="nice-select">
+                                            <option th:value="@{product}">Normally</option>
+                                        	<option th:value="@{'/product/'+ '?sortField=name&sortDir=asc'}">Name (A - Z)</option>
+                                            <option th:value="@{'/product/'+ '?sortField=name&sortDir=desc'}">Name (Z - A)</option>
+                                            <option th:value="@{'/product/'+ '?sortField=price&sortDir=asc'}">Price (Low &gt; High)</option>
+                                            <option th:value="@{'/product/'+ '?sortField=price&sortDir=desc'}">Price (High &gt; Low)</option>
                                         </select>
                                     </div>
                                 </div>

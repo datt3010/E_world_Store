@@ -14,4 +14,7 @@ public interface ShoppingCartService {
 	public Map<Product, Integer> getProductInCart();
 	
 	public void checkout() throws NotEnoughProductsInStockException;		
+	
+	public Double getTotal();
+	
 }

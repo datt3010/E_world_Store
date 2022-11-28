@@ -68,11 +68,14 @@ public class WebController {
 		model.addAttribute("listProduct", listProduct);
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("totalPages", listProduct.getTotalPages());
-		model.addAttribute("totalItems", listProduct.getTotalElements());
+		model.addAttribute("totalProducts", listProduct.getTotalElements());
 		
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
+		model.addAttribute("totalItems", shoppingCartService.getProductInCart().values());
+		model.addAttribute("totalPrice", shoppingCartService.getTotal());
+
 		return "user/product/Listproduct";
 		}
 	
@@ -97,20 +100,37 @@ public class WebController {
 		return "user/product/Cart";
 	}
 	@RequestMapping("/shoppingcart/addProduct/{productId}")
-	public String addProductToCart(@PathVariable("productId") Integer productId) {
+	public String addProductToCart(Model model,@PathVariable("productId") Integer productId) {
 		producRepo.findById(productId).ifPresent(shoppingCartService :: addProduct);
+		model.addAttribute("totalPrice", shoppingCartService.getTotal());
+		model.addAttribute("totalItems", shoppingCartService.getProductInCart().values());
+		model.addAttribute("cart", producRepo.findById(productId));
 		return "user/product/Cart";
 	}
 	
 	@RequestMapping("/shoppingcart/removeProduct/{productId}")
-	public String removeProduct(@PathVariable("productId") Integer productId) {
+	public String removeProduct(Model model, @PathVariable("productId") Integer productId) {
 		producRepo.findById(productId).ifPresent(shoppingCartService :: removeProduct);
-		return "user/product/Cart";
+		model.addAttribute("totalPrice", shoppingCartService.getTotal());
+		model.addAttribute("totalItems", shoppingCartService.getProductInCart().values());
+		return "redirect:/shoppingcart";
 	}
 	
 	@ModelAttribute("cart")
 	public Map<Product, Integer> listCart(Model model){
+		model.addAttribute("totalPrice", shoppingCartService.getTotal());
 		model.addAttribute("totalItems", shoppingCartService.getProductInCart().values());
 		return shoppingCartService.getProductInCart();
 	}
+
+	@RequestMapping("product/")
+	public String listBySelection(Model model,
+			@RequestParam("sortField")String sortField,
+			@RequestParam("sortDir") String sortDir) {
+		
+		 Pageable pageable = PageRequest.of(0,3,sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
+		
+		return listPage(model,1, null, sortField, sortDir, pageable);
+	}
+
 }

@@ -3,6 +3,7 @@ package com.eworld.service.impl;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -21,7 +22,7 @@ import com.eworld.service.ShoppingCartService;
 @Service("cart")
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Transactional(readOnly = true)
-public class ShoppingCartServiceImpl implements ShoppingCartService {
+public class ShoppingCartServiceImpl  implements ShoppingCartService {
 	
 	@Autowired
 	private ProductService productService;
@@ -34,7 +35,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	@Transactional
 	 public void addProduct(Product product) {
-		Product p = products.keySet().stream().filter(pp -> pp.getId() == product.getId()).findFirst().orElse(product);
+		
+		Product p = products.keySet().stream()
+				.filter(pp -> pp.getId() == product.getId())
+				.findFirst()
+				.orElse(product);
+		
 		Integer cnt = products.get(p);
 		if (cnt != null) {
 			products.replace(p, cnt + 1);
@@ -46,7 +52,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	@Transactional
     public void removeProduct(Product product) {
-		Product p = products.keySet().stream().filter(pp -> pp.getId() == product.getId()).findFirst().orElse(product);
+		
+		Product p = products.keySet().stream()
+				.filter(pp -> pp.getId() == product.getId())
+				.findFirst()
+				.orElse(product);
+		
 		Integer cnt = products.get(p);
 		if (cnt > 1) {
 			products.replace(p, cnt - 1);
@@ -76,5 +87,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         productRepo.saveAll(products.keySet());
         productRepo.flush();
         products.clear();
+	}
+
+	@Override
+	public Double getTotal() {
+		double totalPrice = 0;
+		for (Entry<Product, Integer> items : products.entrySet()) {
+			if (products.containsKey(items.getKey())) {
+				totalPrice += items.getKey().getPrice() * items.getValue();
+			}
+		}
+		return totalPrice;
+
 	}
 }

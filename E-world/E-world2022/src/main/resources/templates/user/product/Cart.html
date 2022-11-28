@@ -100,9 +100,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr th:each="cart: ${@cart.productInCart}" th:with="p=${cart.key}">
+			                                   <tr th:each="cart: ${@cart.productInCart}" th:with="p=${cart.key}">
                                                 <td class="li-product-remove"><a th:href="@{|/shoppingcart/removeProduct/${p.id}|}"><i class="fa fa-times"></i></a></td>
-                                                <td class="li-product-thumbnail"><a th:href="@{|/images/product/${p.image}|}"><img th:src="@{|/images/product/${p.image}|}" alt=""></a></td>
+                                                <td class="li-product-thumbnail"><a th:href="@{|/images/product/${p.image}|}"><img th:src="@{|/images/product/${p.image}|}" width="200" height="200" alt=""></a></td>
                                                 <td class="li-product-name"><a href="#" th:text="${p.name}"></a></td>
                                                 <td class="li-product-price"><span class="amount" th:text="${p.price}"></span></td>
                                                 <td class="li-product-stock-status"><span class="in-stock" th:text="${cart.value}"></span></td>
@@ -112,6 +112,10 @@
                                     </table>
                                 </div>
                             </form>
+                            <p style="font-size:20px;padding-top:10px;" class="minicart-total">Order value: <span>$[[${totalPrice}]]</span></p>
+                    		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">VAT: <span>10%</span></p>
+                      		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">Totals: <span>[[${totalPrice} +${totalPrice}*0.1]]</span></p>
+							<button type="button" class="btn btn-primary">Check out</button>
                         </div>
                     </div>
                 </div>
