@@ -53,12 +53,7 @@ public class HomeController {
 	public String detailProduct() {
 		return "user/product/ProductDetail";
 	}
-	
-	@GetMapping("giohang")
-	public String wishList() {
-		return "user/product/Cart";
-	}
-	
+
 	@GetMapping("logout")
 	public String logOut() {
 		return "user/login/login";
@@ -83,40 +78,4 @@ public class HomeController {
 	public String listBlog() {
 		return "user/blog/blog-list";
 	}
-	//-------------Request admin--------------//
-	@RequestMapping("/admin")
-	public String homeAdmin() {
-		return "admin/index";
-	}
-	
-	@RequestMapping("/admin/listcustomer")
-	public String listCustomer() {
-		return "admin/customer/ListCustomer";
-	}
-	
-	@RequestMapping("/admin/staff")
-	public String crudStaff() {
-		return "admin/staff/StaffDashBoard";
-	}
-	
-	@RequestMapping("/admin/liststaff")
-	public String listStaff() {
-		return "admin/staff/ListStaff";
-	}
-	
-	@RequestMapping("/admin/login")
-	public String adminLogin() {
-		return "admin/login";
-	}
-	
-	@RequestMapping("/admin/blog")
-	public String adminBlog() {
-		return "admin/blog/BlogDashBoard";
-	}
-	
-	@RequestMapping("/admin/listblog")
-	public String listAdminBlog() {
-		return "admin/blog/ListBlog";
-	}
-	
 }

@@ -16,11 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.eworld.contstant.OrderStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,13 +37,9 @@ public class Order {
 	@Column(updatable = false)
 	private Date createdAt;
 	
-	@CreatedBy
-	@Column(updatable = false)
-	private String createdBy;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	private String phone;
 	
@@ -56,14 +49,19 @@ public class Order {
 	
 	private Double freightFee;
 	
-	private OrderStatus status;
 	
 	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<OrderDetail> orderDetails;
 	
+	@Column(updatable = false , insertable = false)
+	private Integer accountId;
+	
 	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name ="accountId", referencedColumnName = "id", updatable = false)
 	private Account account;
+	
+	@Column(updatable = false , insertable = false)
+	private Integer paymentId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "paymentId", referencedColumnName = "id", updatable = false)
