@@ -11,14 +11,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.eword.util.Sortable;
-import com.eworld.entity.Category;
-import com.eworld.filter.CategoryFilter;
+import com.eworld.entity.Brand;
+import com.eworld.filter.BrandFilter;
 import com.eworld.provider.FindPagingJpaRepository;
 
-public class CategoryCustomRepositoryImpl implements CategoryCustomRepository, FindPagingJpaRepository<Category> {
+public class BrandCustomRepositoryImpl implements BrandCustomRepository, FindPagingJpaRepository<Brand> {
 	
 	@PersistenceContext
-	private EntityManager em;
+	EntityManager em;
 	
 	@Override
 	public EntityManager getEntityManager() {
@@ -26,53 +26,40 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository, F
 	}
 
 	@Override
-	public Page<Category> findPaging(CategoryFilter filter, Pageable pageable) {
+	public Page<Brand> findPaging(BrandFilter filter, Pageable pageable) {
+			
 		StringBuilder countSqlBuilder = new StringBuilder(100)
-				.append("SELECT COUNT(c.id) FROM Category c");
-		
+				.append("SELECT COUNT(b.id) FROM Brand b");
+
 		StringBuilder selectSqlBuilder = new StringBuilder(100)
-				.append(" SELECT c FROM Category c");
-		
-		StringBuilder conditionSqlBuilder = new StringBuilder(100);
+				.append(" SELECT b FROM Brand b");
 		
 		StringBuilder whereClauseSqlBuilder = new StringBuilder(50)
 				.append(" WHERE 1=1");
 		
 		Map<String, Object> parameterMap = new LinkedHashMap<>();
 		
-		if(filter.getBrandId() !=null) {
-			conditionSqlBuilder.append(" LEFT JOIN c.categoryBrands cb");
-			whereClauseSqlBuilder.append(" AND cb.brandId = :brandId");
-			parameterMap.put("brandId", filter.getBrandId());
-		}
-		
 		if(StringUtils.isNotBlank(filter.getKeyword())) {
 			whereClauseSqlBuilder.append(" AND(");
 			
 			if(StringUtils.isNumeric(filter.getKeyword())) {
-				whereClauseSqlBuilder.append(" c.id = :keywordId OR");
+				whereClauseSqlBuilder.append(" b.id = :keywordId OR");
 				parameterMap.put("keywordId", Integer.parseInt(filter.getKeyword()));
-				
-				whereClauseSqlBuilder.append(" c.age = :keywordAge OR");
-				parameterMap.put("keywordAge", Integer.parseInt(filter.getKeyword()));
 			}
 			
-			whereClauseSqlBuilder.append(" c.name LIKE :keyword OR c.status LIKE :keyword)");
+			whereClauseSqlBuilder.append(" c.name LIKE :keyword");
 			parameterMap.put("keyword", "%" + filter.getKeyword() + "%");
 		}
 		
-		String orderClause = makeOrderClause(pageable.getSort(), Sortable.CATEGORY, "c");
+		String orderClause = makeOrderClause(pageable.getSort(), Sortable.BRAND, "b");
 		
-		countSqlBuilder.append(conditionSqlBuilder)
-		.append(whereClauseSqlBuilder);
+		countSqlBuilder.append(whereClauseSqlBuilder);
 		
 		selectSqlBuilder
-		.append(conditionSqlBuilder)
 		.append(whereClauseSqlBuilder)
 		.append(orderClause);
 		
 		return findPaging(countSqlBuilder.toString(), selectSqlBuilder.toString(), pageable, parameterMap);
 	}
-	
-	
+
 }

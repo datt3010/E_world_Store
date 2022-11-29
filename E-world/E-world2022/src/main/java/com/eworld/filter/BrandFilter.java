@@ -7,9 +7,7 @@ import lombok.Value;
 @Value
 @Builder
 @Setter
-public class CategoryFilter {
+public class BrandFilter {
 	
 	private String keyword;
-	
-	private Integer brandId;
 }

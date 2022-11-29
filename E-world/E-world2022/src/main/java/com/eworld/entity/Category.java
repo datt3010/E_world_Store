@@ -39,7 +39,7 @@ public class Category {
 	private CategoryStatus status;
 	
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<CategoryBrand> categories;
+	private List<CategoryBrand> categoryBrands;
 	
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Product> products;

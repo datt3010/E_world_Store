@@ -251,40 +251,15 @@
                             <!--sidebar-categores-box start  -->
                             <div class="sidebar-categores-box mt-sm-30 mt-xs-30">
                                 <div class="sidebar-title">
-                                    <h2>Laptop</h2>
+                                    <h2>Brands</h2>
                                 </div>
                                 <!-- category-sub-menu start -->
                                 <div class="category-sub-menu">
-                                    <ul>
-                                        <li class="has-sub"><a href="# ">Prime Video</a>
-                                            <ul>
-                                                <li><a href="#">All Videos</a></li>
-                                                <li><a href="#">Blouses</a></li>
-                                                <li><a href="#">Evening Dresses</a></li>
-                                                <li><a href="#">Summer Dresses</a></li>
-                                                <li><a href="#">T-Rent or Buy</a></li>
-                                                <li><a href="#">Your Watchlist</a></li>
-                                                <li><a href="#">Watch Anywhere</a></li>
-                                                <li><a href="#">Getting Started</a></li>  
-                                            </ul>
-                                        </li>
-                                        <li class="has-sub"><a href="#">Computer</a>
-                                            <ul>
-                                                <li><a href="#">TV & Video</a></li>
-                                                <li><a href="#">Audio & Theater</a></li>
-                                                <li><a href="#">Camera, Photo</a></li>
-                                                <li><a href="#">Cell Phones</a></li>
-                                                <li><a href="#">Headphones</a></li>
-                                                <li><a href="#">Video Games</a></li>
-                                                <li><a href="#">Wireless Speakers</a></li> 
-                                            </ul>
-                                        </li>
-                                        <li class="has-sub"><a href="#">Electronics</a>
-                                            <ul>
-                                                <li><a href="#">Amazon Home</a></li>
-                                                <li><a href="#">Kitchen & Dining</a></li>
-                                                <li><a href="#">Bed & Bath</a></li>
-                                                <li><a href="#">Appliances</a></li>    
+                                    <ul th:each="b: ${brands}">
+                                        <li  class="has-sub"><a href="# ">[[${b.name}]]</a>
+                                            <ul  th:each="c: ${categories}">
+                                            <input type="hidden" value="brandId" th:with="brandId = ${b.id}"/>
+                                                <li><a href="#">[[${c.name}]]</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -376,7 +351,7 @@
                             <!-- category-sub-menu start -->
                             <div class="sidebar-categores-box mb-sm-0 mb-xs-0">
                                 <div class="sidebar-title">
-                                    <h2>Laptop</h2>
+                                    <h2>Brands</h2>
                                 </div>
                                 <div class="category-tags">
                                     <ul>
