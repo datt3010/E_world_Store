@@ -21,6 +21,7 @@ public class ProductProjector {
 				.ngaybaohanh(entity.getNgaybaohanh())
 				.price(entity.getPrice())
 				.status(entity.getStatus())
+				.logo(entity.getImage())
 				.category(CategoryDto.builder()
 						.id(entity.getCategory().getId())
 						.name(entity.getCategory().getName())
@@ -39,10 +40,23 @@ public class ProductProjector {
 	}
 	
 	public static ProductDto convertToDetailDto(Product entity) {
+			
+		List<ProductDto> listProductDto = entity.getCategory().getProducts().stream()
+				.map(e -> ProductDto.builder()
+						.id(e.getId())
+						.name(e.getName())
+						.price(e.getPrice())
+						.quantity(e.getQuantity())
+						.logo(e.getImage())
+						.build())
+				.collect(Collectors.toList());
+		
 			return ProductDto.builder()
 					.name(entity.getName())
+					.price(entity.getPrice())
 					.quantity(entity.getQuantity())
 					.models(entity.getModels())
+					.quantity(entity.getQuantity())
 					.description(entity.getDescription())
 					.urlVideo(entity.getUrlVideo())
 					.ngaybaohanh(entity.getNgaybaohanh())
@@ -50,6 +64,7 @@ public class ProductProjector {
 					.category(CategoryDto.builder()
 						.id(entity.getCategory().getId())
 						.name(entity.getCategory().getName())
+						.products(listProductDto)
 						.build())
 					.build();
 	}

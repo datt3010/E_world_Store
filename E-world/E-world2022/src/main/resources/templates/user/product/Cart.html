@@ -93,41 +93,29 @@
                                             <tr>
                                                 <th class="li-product-remove">remove</th>
                                                 <th class="li-product-thumbnail">images</th>
-                                                <th class="cart-product-name">Product</th>
-                                                <th class="li-product-price">Unit Price</th>
-                                                <th class="li-product-stock-status">Stock Status</th>
+                                                <th class="cart-product-name">Name</th>
+                                                <th class="li-product-price"> Price</th>
+                                                <th class="li-product-stock-status">Quantity</th>
                                                 <th class="li-product-add-cart">add to cart</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                                <td class="li-product-thumbnail"><a href="#"><img src="/images/wishlist-thumb/1.jpg" alt=""></a></td>
-                                                <td class="li-product-name"><a href="#">Giro Civilia</a></td>
-                                                <td class="li-product-price"><span class="amount">$23.39</span></td>
-                                                <td class="li-product-stock-status"><span class="in-stock">in stock</span></td>
-                                                <td class="li-product-add-cart"><a href="#">add to cart</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                                <td class="li-product-thumbnail"><a href="#"><img src="/images/wishlist-thumb/2.jpg" alt=""></a></td>
-                                                <td class="li-product-name"><a href="#">Pro Bike Shoes</a></td>
-                                                <td class="li-product-price"><span class="amount">$30.50</span></td>
-                                                <td class="li-product-stock-status"><span class="in-stock">in stock</span></td>
-                                                <td class="li-product-add-cart"><a href="#">add to cart</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                                <td class="li-product-thumbnail"><a href="#"><img src="/images/wishlist-thumb/3.jpg" alt=""></a></td>
-                                                <td class="li-product-name"><a href="#">Nero Urban Shoes</a></td>
-                                                <td class="li-product-price"><span class="amount">$40.19</span></td>
-                                                <td class="li-product-stock-status"><span class="out-stock">out stock</span></td>
+			                                   <tr th:each="cart: ${@cart.productInCart}" th:with="p=${cart.key}">
+                                                <td class="li-product-remove"><a th:href="@{|/shoppingcart/removeProduct/${p.id}|}"><i class="fa fa-times"></i></a></td>
+                                                <td class="li-product-thumbnail"><a th:href="@{|/images/product/${p.image}|}"><img th:src="@{|/images/product/${p.image}|}" width="200" height="200" alt=""></a></td>
+                                                <td class="li-product-name"><a href="#" th:text="${p.name}"></a></td>
+                                                <td class="li-product-price"><span class="amount" th:text="${p.price}"></span></td>
+                                                <td class="li-product-stock-status"><span class="in-stock" th:text="${cart.value}"></span></td>
                                                 <td class="li-product-add-cart"><a href="#">add to cart</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </form>
+                            <p style="font-size:20px;padding-top:10px;" class="minicart-total">Order value: <span>$[[${totalPrice}]]</span></p>
+                    		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">VAT: <span>10%</span></p>
+                      		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">Totals: <span>[[${totalPrice} +${totalPrice}*0.1]]</span></p>
+							<button type="button" class="btn btn-primary">Check out</button>
                         </div>
                     </div>
                 </div>

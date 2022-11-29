@@ -1,5 +1,6 @@
 package com.eworld.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,9 +27,15 @@ public class CategoryBrand {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(updatable = false, insertable = false)
+	private Integer categoryId;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoryId", referencedColumnName = "id", updatable = false)
 	private Category category;
+	
+	@Column(updatable = false, insertable = false)
+	private Integer brandId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "brandId", referencedColumnName = "id", updatable = false)

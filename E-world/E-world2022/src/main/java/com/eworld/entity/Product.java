@@ -1,4 +1,5 @@
 package com.eworld.entity;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Product {
+public class Product implements Serializable {
 	
 	@CreatedDate
 	@Column(updatable = false)
