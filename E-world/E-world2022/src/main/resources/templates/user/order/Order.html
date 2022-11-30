@@ -43,21 +43,11 @@
         <!-- Modernizr js -->
         <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
-    <body>
-    <!--[if lt IE 8]>
-		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-	<![endif]-->
-        <!-- Begin Body Wrapper -->
-        <div class="body-wrapper">
-            <!-- Begin Header Area -->
+    <body onload="loadDate()">
+         <div class="body-wrapper">
             <header>
-                <!-- Begin Header Top Area -->
          <div th:replace="/layout/user/Header.html"></div>
-                <!-- Header Top Area End Here -->
-                <!-- Begin Header Middle Area -->
          <div th:replace="/layout/user/container.html"></div>
-                <!-- Header Bottom Area End Here -->
-                <!-- Begin Mobile Menu Area -->
                 <div class="mobile-menu-area d-lg-none d-xl-none col-12">
                     <div class="container"> 
                         <div class="row">
@@ -66,10 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Mobile Menu Area End Here -->
             </header>
-            <!-- Header Area End Here -->
-            <!-- Begin Li's Breadcrumb Area -->
             <div class="breadcrumb-area">
                 <div class="container">
                     <div class="breadcrumb-content">
@@ -80,18 +67,24 @@
                     </div>
                 </div>
             </div>
-            <!-- Li's Breadcrumb Area End Here -->
-            <!--Wishlist Area Strat-->
             <div class="wishlist-area pt-60 pb-60">
-                <div class="container">
+               <nav>
+				  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+				    <button class="nav-link active" id="nav-home-tab" data-toggle="tab" data-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Đặt hàng</button>
+				    <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Lịch sử mua hàng</button>
+				    <button class="nav-link" id="nav-contact-tab" data-toggle="tab" data-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Chi tiết đơn hàng</button>
+				  </div>
+				</nav>
+				<div class="tab-content" id="nav-tabContent">
+				  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+				  <div class="container">
                     <div class="row">
-                
                          <div class="col-12">
-             <form>
+             <form th:action="@{/order}" method="post" th:object="${order}">
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
 				      <label for="inputEmail4">Ngày mua</label>
-				      <input type="text" class="form-control" id="inputEmail4" value="dd/MM/YYYY" disabled="true">
+				      <input th:field="*{created_at}" type="text" class="form-control" id="date" disabled="true">
 				    </div>
 				    <div class="form-group col-md-6">
 				      <label for="inputPassword4">Người mua</label>
@@ -101,18 +94,70 @@
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
 				      <label for="inputEmail4">Địa chỉ</label>
-				      <input type="text" class="form-control" id="inputEmail4" value="dd/MM/YYYY" >
+				      <input th:field="*{address}" type="text" class="form-control" id="inputEmail4" value="dd/MM/YYYY" >
 				    </div>
 				    <div class="form-group col-md-6">
 				      <label for="inputPassword4">Số điện thoại</label>
-				      <input type="text" class="form-control" id="inputPassword4" value="Huỳnh Tấn Đạt">
+				      <input th:field="*{phone}" type="text" class="form-control" id="inputPassword4" >
+				    </div>
+				  </div>
+				 	  <div class="form-row">
+				    <div class="form-group col-md-8">
+				      <label for="inputEmail4">Total price</label>
+				      <input th:name="totalPrice" type="text" class="form-control" id="formattedNumberField" th:value="${totalPrice}" disabled="disabled"  >
 				    </div>
 				  </div>
 				  <button type="submit" class="btn btn-primary">Thanh toán</button>
+  				  <button type="submit" class="btn btn-primary">Kiểm tra lịch sử mua hàng của bạn</button>
 				</form>
                         </div>
-                    </div>
+                    </div>  
                 </div>
+				  </div>
+				  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+				  <input type="hidden" name="keyword">
+				  <table class="table table-hover">
+					  <thead>
+					    <tr >
+					      <th scope="col">Id</th>
+					      <th scope="col">Ngày mua</th>
+					      <th scope="col">Tổng tiền</th>
+					      <th scope="col">Trạng thái</th>
+					      <th scope="col">Chi tiết đơn hàng</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr th:each="o: ${listOrder}">
+					      <th>[[${o.id}]]</th>
+					      <td th:text="${#dates.format(o.createdAt, 'dd-MM-yyyy')}">[[${o.createdAt}]]</td>
+					      <td>[[${o.totalPrice}]]</td>
+					      <td>[[${o.status}]]</td>
+					      <td><a href="#">Xem chi tiết đơn hàng</a></td>
+					    </tr>
+					  </tbody>
+				</table>
+				  </div>
+				  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+				  <table class="table table-hover">
+				  <thead>
+				    <tr>
+				      <th scope="col">Mã đơn hàng</th>
+				      <th scope="col">Tên sản phẩm</th>
+				      <th scope="col">Số lượng</th>
+				      <th scope="col">Đơn giá</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <th scope="row">1</th>
+				      <td>Mark</td>
+				      <td>Otto</td>
+				      <td>@mdo</td>
+				    </tr>
+				  </tbody>
+			</table>
+				  </div>
+				</div>
             </div>
             <!--Wishlist Area End-->
             <!-- Begin Footer Area -->
@@ -491,7 +536,67 @@
             <script src="/js/scrollUp.min.js"></script>
             <!-- Main/Activator js -->
             <script src="/js/main.js"></script>
+            <script>
+            window.onload =window.onload = (function loadDate() {
+                let date = new Date(),
+                day = date.getDate(),
+                month = date.getMonth() + 1,
+                year = date.getFullYear();
+
+            if (month < 10) month = "0" + month;
+            if (day < 10) day = "0" + day;
+
+            const todayDate = `${year}-${month}-${day}`;
+
+            document.getElementById("date").defaultValue = todayDate;
+        })();
+            var fnf = document.getElementById("formattedNumberField");
+            fnf.addEventListener('keyup', function(evt){
+                var n = parseDouble(this.value.replace(/\D/g,''),1);
+                fnf.value = n.toLocaleString();
+            }, false);
+            </script>
+            <script >
+            (function($, undefined) {
+
+            	  "use strict";
+
+            	  // When ready.
+            	  $(function() {
+            	    
+            	    var $form = $( "#form" );
+            	    var $input = $form.find( "input" );
+
+            	    $input.on( "keyup", function( event ) {
+            	      
+            	      
+            	      // When user select text in the document, also abort.
+            	      var selection = window.getSelection().toString();
+            	      if ( selection !== '' ) {
+            	        return;
+            	      }
+            	      
+            	      // When the arrow keys are pressed, abort.
+            	      if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+            	        return;
+            	      }
+            	      
+            	      
+            	      var $this = $( this );
+            	      
+            	      // Get the value.
+            	      var input = $this.val();
+            	      
+            	      var input = input.replace(/[\D\s\._\-]+/g, "");
+            	          input = input ? parseInt( input, 10 ) : 0;
+
+            	          $this.val( function() {
+            	            return ( input === 0 ) ? "" : input.toLocaleString( "en-US" );
+            	          } );
+            	    } );
+            </script>>
     </body>
 
 <!-- wishlist31:30-->
 </html>
+

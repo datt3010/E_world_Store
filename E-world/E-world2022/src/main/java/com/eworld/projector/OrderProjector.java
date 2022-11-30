@@ -3,6 +3,7 @@ package com.eworld.projector;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.eworld.dto.CustomerDto;
 import com.eworld.dto.OrderDto;
 import com.eworld.entity.Order;
 
@@ -15,11 +16,21 @@ public class OrderProjector {
 	}
 
 	public static OrderDto convertToPageDto(Order entity) {
+		
 		return OrderDto.builder()
 				.id(entity.getId())
 				.address(entity.getAddress())
 				.phone(entity.getPhone())
-				.freightFee(entity.getFreightFee())				
+				.totalPrice(entity.getTotalPrice())
+				.paymentMethod(entity.getPaymentMethod())
+				.status(entity.getStatus())
+				.createdAt(entity.getCreatedAt())
+//				.account(CustomerDto.builder()
+//						.//id(entity.getAccount().getId())
+//						.firstName(entity.getAccount().getFirstName())
+//						.lastName(entity.getAccount().getLastName())
+//						.username(entity.getAccount().getUsername())
+//						.build())
 				.build();
 	}
 
@@ -28,7 +39,15 @@ public class OrderProjector {
 					.id(entity.getId())
 					.address(entity.getAddress())
 					.phone(entity.getPhone())
-					.freightFee(entity.getFreightFee())				
+					.paymentMethod(entity.getPaymentMethod())
+					.status(entity.getStatus())
+					.createdAt(entity.getCreatedAt())
+					.account(CustomerDto.builder()
+							.id(entity.getAccount().getId())
+							.firstName(entity.getAccount().getFirstName())
+							.lastName(entity.getAccount().getLastName())
+							.build())
+					.totalPrice(entity.getTotalPrice())
 					.build();
 		}
 }

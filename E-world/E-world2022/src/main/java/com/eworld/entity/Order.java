@@ -7,6 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,9 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.eworld.contstant.OrderStatus;
+import com.eworld.contstant.PaymentMethod;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,25 +51,19 @@ public class Order {
 	private String address;
 	
 	private Double totalPrice;
+		
+	@Enumerated(EnumType.STRING)
+	private PaymentMethod paymentMethod;
 	
-	private Double freightFee;
-	
+	@Enumerated(EnumType.STRING)
+	private OrderStatus status;
 	
 	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<OrderDetail> orderDetails;
-	
-	@Column(updatable = false , insertable = false)
-	private Integer accountId;
-	
+		
 	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name ="accountId", referencedColumnName = "id", updatable = false)
 	private Account account;
 	
-	@Column(updatable = false , insertable = false)
-	private Integer paymentId;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "paymentId", referencedColumnName = "id", updatable = false)
-	private PaymentMethod paymentMethod;
 }
 

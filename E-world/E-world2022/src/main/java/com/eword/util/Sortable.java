@@ -15,4 +15,7 @@ public class Sortable {
 	
 	public static final List<String> BRAND = Arrays.asList(
 			"id", "name");
+	
+	public static final List<String> ORDER = Arrays.asList(
+			"id", "totalPrice");
 }

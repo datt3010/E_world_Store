@@ -3,42 +3,40 @@ package com.eworld.dto;
 import java.util.Date;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.eworld.contstant.OrderStatus;
 import com.eworld.contstant.PaymentMethod;
 import com.eworld.entity.OrderDetail;
+import com.eworld.entity.Product;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class OrderDto {
-	
-	private Date createdAt;
+public class OrderInput {
 	
 	private Integer id;
 	
-	private Integer accountId;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date created_at;
 	
-	private Integer paymentId;
+	private String address; 
 	
-	private String phone;
-	
-	private String address;
+	private String phone ;
 	
 	private Double totalPrice;
 	
-	private Double freightFee;
-	
-	private OrderStatus status;
-	
-	private CustomerDto account;
+	private Integer accountId;
 	
 	private PaymentMethod paymentMethod;
 	
+	private OrderStatus status;
+	
 	private Set<OrderDetail> orderDetails;
+	
+	private Product product;
 }
