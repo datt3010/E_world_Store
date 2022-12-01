@@ -1,6 +1,7 @@
 package com.eworld.entity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -18,9 +19,11 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.eworld.contstant.Gender;
 import com.eworld.contstant.UserStatus;
+import com.eworld.service.AccountDetail;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,8 +37,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Account{
+public class  Account implements AccountDetail{
 	
+	private static final long serialVersionUID = 1L;
+
 	@CreatedDate 
 	@Column(updatable = false)
 	private Date createAt;
@@ -73,10 +78,19 @@ public class Account{
 	@Enumerated(EnumType.STRING)
 	private UserStatus status;
 	
+	private boolean enabled;
+	
 	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	 Set<Order> orders;
 	
 	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	 Set<AccountRole> accountRoles;
-
+	 List<AccountRole> accountRoles;
+	
+	
+	public Account(OAuth2User socialUser) {
+		this.username = socialUser.getName();
+		this.email = socialUser.getAttribute("email");
+		String fullname = this.getFirstName() + this.getLastName();
+	}
+	
 }

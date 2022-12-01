@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class AccountRole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "accountId", referencedColumnName = "id", updatable = false)
@@ -38,6 +38,6 @@ public class AccountRole {
 	private Role role;
 	
 	@Column(insertable = false, updatable = false)
-	private Integer roleId;
+	private String roleId;
 	
 }

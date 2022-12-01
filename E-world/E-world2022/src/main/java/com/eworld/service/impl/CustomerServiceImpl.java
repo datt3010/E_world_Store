@@ -30,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
 	@Override
 	public Account findById(Integer id) {
 		return customerRepo.findById(id).get();  
@@ -124,4 +124,5 @@ public class CustomerServiceImpl implements CustomerService {
 		return CustomerDto.builder().id(id).build();
 		
 	}
+
 }

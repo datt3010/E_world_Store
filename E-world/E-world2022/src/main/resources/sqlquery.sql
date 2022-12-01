@@ -3,7 +3,7 @@ go
 USE e_world;
 go
 CREATE TABLE role(
-id INT IDENTITY(1,1) PRIMARY KEY,
+id VARCHAR(50) PRIMARY KEY,
 name VARCHAR(100) NOT NULL
 )
 go
@@ -65,7 +65,6 @@ order_id INT NOT NULL,
 product_id INT  NOT NULL,
 quantity INT NOT NULL,
 product_price FLOAT NOT NULL,
-status VARCHAR(255) NOT NULL,
 FOREIGN KEY(order_id) REFERENCES orders(id),
 FOREIGN KEY(product_id) REFERENCES product(id)
 );
@@ -87,7 +86,7 @@ GO
 CREATE TABLE account_role(
 id INT IDENTITY(1,1) PRIMARY KEY,
 account_id INT NOT NULL,
-role_id INT NOT NULL,
+role_id VARCHAR(50) NOT NULL,
 FOREIGN KEY (account_id) REFERENCES account(id),
 FOREIGN KEY (role_id) REFERENCES role(id)
 );

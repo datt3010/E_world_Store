@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -118,7 +118,7 @@
                                             </div>
                                             <span></span>
                                             <div class="minicart">
-                                                <ul  class="minicart-product-list">
+                                            <!--     <ul  class="minicart-product-list">
                                                     <li th:each="cart: ${@cart.productInCart}" th:with="p=${cart.key}">
                                                         <a href="single-product.html" class="minicart-product-image">
                                                             <img th:src="@{|/images/product/${p.image}|}" alt="cart products">
@@ -131,7 +131,7 @@
                                                           <a th:href="@{|/shoppingcart/removeProduct/${p.id}|}">  <i class="fa fa-close"></i></a>
                                                         </button>
                                                     </li>
-                                                </ul>
+                                                </ul>  -->
                                                 <p class="minicart-total">Total: <span>$[[${totalPrice}]]</span></p>
                                                 <div class="minicart-button">
                                                     <a th:href="@{/shoppingcart}" class="li-button li-button-dark li-button-fullwidth li-button-sm">

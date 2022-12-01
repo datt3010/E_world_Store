@@ -43,32 +43,12 @@ public class HomeController {
 	public String contact() {
 		return "user/home/contact";
 	}
-	
-	@GetMapping("dangnhap")
-	public String login() {
-		return "/user/login/login";
-	}
 
 	@GetMapping("chitietsanpham")
 	public String detailProduct() {
 		return "user/product/ProductDetail";
 	}
 
-	@GetMapping("logout")
-	public String logOut() {
-		return "user/login/login";
-	}
-	
-	@GetMapping("404")
-	public String error() {
-		return "user/error/404";
-	}
-	
-	@RequestMapping("dangky")
-	public String dangky() {
-		return "user/login/register";
-	}
-	
 	@GetMapping("blogdetail")
 	public String blogDetail() {
 		return "user/blog/BlogDetail";
