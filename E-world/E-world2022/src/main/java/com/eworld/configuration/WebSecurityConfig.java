@@ -34,19 +34,19 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/order/**","/product/**").hasAnyRole("Admin", "Custom")
+                .antMatchers("/checkout/**","/shoppingcart/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(jwtA, UsernamePasswordAuthenticationFilter.class);
 
         http.formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/")
+                .loginPage("/login").loginProcessingUrl("/login")
                 .usernameParameter("username")
-                .passwordParameter("password");
+                .passwordParameter("password")
+                .defaultSuccessUrl("/product")
+                .failureUrl("/404");
 
-        http.rememberMe().tokenValiditySeconds(1*24*60*60*60);
+        http.rememberMe().rememberMeParameter("rememberMe").tokenValiditySeconds(1*24*60*60*60);
         return http.build();
     }
 

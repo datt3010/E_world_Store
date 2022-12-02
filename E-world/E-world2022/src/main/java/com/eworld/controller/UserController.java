@@ -13,8 +13,5 @@ public class UserController {
     public String homeLogin(){
         return "user/login/login";
     }
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String processLogin(){
-        return "user/home/index";
-    }
+
 }
