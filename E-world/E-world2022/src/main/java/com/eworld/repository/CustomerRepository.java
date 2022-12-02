@@ -9,8 +9,8 @@ import com.eworld.entity.Account;
 
 public interface CustomerRepository extends JpaRepository<Account, Integer>,CustomerCustomRepository {
 		
-	@Query("FROM Account a WHERE a.username= ?1 OR a.email= ?1")
-	Account findByUsernameAndEmail(String username);
+	@Query("FROM Account a WHERE a.username= ?1")
+	Account findByUsername(String username);
 	
 	@Query("FROM Account a WHERE a.accountRoles IS NOT EMPTY")
 	List<Account> findEmployees();
