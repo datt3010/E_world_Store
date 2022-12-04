@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.eworld.dto.OrderDto;
-import com.eworld.dto.OrderInput;
+import com.eworld.dto.order.OrderDto;
+import com.eworld.dto.order.OrderInput;
 import com.eworld.filter.OrderFilter;
 import com.eworld.service.OrderService;
 import com.eworld.service.ShoppingCartService;

@@ -11,14 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.eworld.dto.CustomerDto;
-import com.eworld.dto.CustomerInput;
-import com.eworld.dto.CustomerUpdate;
+import com.eworld.dto.customer.CustomerDto;
+import com.eworld.dto.customer.CustomerInput;
+import com.eworld.dto.customer.CustomerUpdate;
 import com.eworld.entity.Account;
 import com.eworld.filter.CustomerFilter;
 import com.eworld.projector.CustomerProjector;
-import com.eworld.repository.CustomerRepository;
-import com.eworld.repository.RoleRepository;
+import com.eworld.repository.customer.CustomerRepository;
+import com.eworld.repository.role.RoleRepository;
 import com.eworld.service.CustomerService;
 
 @Service

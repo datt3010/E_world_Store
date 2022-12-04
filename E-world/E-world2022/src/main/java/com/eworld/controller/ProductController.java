@@ -24,12 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eworld.contstant.CategoryStatus;
-import com.eworld.dto.ProductDto;
-import com.eworld.dto.ProductInput;
-import com.eworld.dto.ProductUpdate;
+import com.eworld.dto.product.ProductDto;
+import com.eworld.dto.product.ProductInput;
+import com.eworld.dto.product.ProductUpdate;
 import com.eworld.entity.Category;
 import com.eworld.filter.ProductFilter;
-import com.eworld.repository.CategoryRepository;
+import com.eworld.repository.category.CategoryRepository;
 import com.eworld.service.ProductService;
 import com.eworld.service.UploadService;
 

@@ -88,29 +88,35 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-xs-12 col-lg-9 mb-30">
-                            <form action="#">
+                            <form th:action="@{/dangky}" th:object="${user}" method="post">
                                 <div class="login-form" style="margin-top:2rem;margin-left:12rem;">
+                                    <span style="color:red;" th:text="${message}"></span>
                                     <h4 class="login-title">Register</h4>
                                     <div class="row">
                                         <div class="col-md-6 col-12 mb-20">
-                                            <label>First Name</label>
-                                            <input class="mb-0" type="text" placeholder="First Name">
+                                            <label>First Name*</label>
+                                            <input th:field="*{firstName}" class="mb-0" type="text">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
                                         </div>
                                         <div class="col-md-6 col-12 mb-20">
-                                            <label>Last Name</label>
-                                            <input class="mb-0" type="text" placeholder="Last Name">
+                                            <label>Last Name*</label>
+                                            <input th:field="*{lastName}" class="mb-0" type="text">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
                                         </div>
                                         <div class="col-md-12 mb-20">
-                                            <label>Email Address*</label>
-                                            <input class="mb-0" type="email" placeholder="Email Address">
+                                            <label>Username*</label>
+                                            <input th:field="*{username}" class="mb-0" type="text">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
                                         </div>
                                         <div class="col-md-6 mb-20">
-                                            <label>Password</label>
-                                            <input class="mb-0" type="password" placeholder="Password">
+                                            <label>Password*</label>
+                                            <input th:field="*{password}" class="mb-0" type="password">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                                         </div>
                                         <div class="col-md-6 mb-20">
-                                            <label>Confirm Password</label>
-                                            <input class="mb-0" type="password" placeholder="Confirm Password">
+                                            <label>Confirm Password*</label>
+                                            <input name="confirmPassword" class="mb-0" type="password">
+                                            <span class="text-danger" style="color:red;" th:text="${errorPassword}"></span>
                                         </div>
                                         <div class="col-12">
                                             <button class="register-button mt-0">Register</button>

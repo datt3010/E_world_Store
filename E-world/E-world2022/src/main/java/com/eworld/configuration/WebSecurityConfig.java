@@ -3,13 +3,18 @@ import com.eworld.configuration.security.SecurityEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 @Configuration
 public class WebSecurityConfig {
@@ -20,6 +25,8 @@ public class WebSecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtA;
 
+    @Autowired HandleAuthenticationExceptionEntryPoint handleAuthenticationExceptionEntryPoint;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -27,32 +34,60 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.cors().disable();
 
-        http.cors().disable()
-                .csrf().disable()
-                .httpBasic().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/checkout/**","/shoppingcart/**").authenticated()
-                .anyRequest().permitAll()
-                .and()
-                .addFilterBefore(jwtA, UsernamePasswordAuthenticationFilter.class);
+        http.authorizeHttpRequests()
+                .antMatchers("/order","/checkout/**","/doimatkhau").authenticated()
+                .antMatchers("/admin/customer","/admin/listcustomer").hasRole("Admin")
+                .antMatchers("/admin/product","/admin/listproduct").hasRole("Staff")
+                .antMatchers("/order").hasRole("Customer")
+                .anyRequest().permitAll();
+
+        http.exceptionHandling()
+                .accessDeniedPage("/404");
 
         http.formLogin()
-                .loginPage("/login").loginProcessingUrl("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/product")
+                .loginPage("/login")
+                .loginProcessingUrl("/login").permitAll()
+                .defaultSuccessUrl("/")
                 .failureUrl("/404");
 
-        http.rememberMe().rememberMeParameter("rememberMe").tokenValiditySeconds(1*24*60*60*60);
+        http.rememberMe().tokenValiditySeconds(30*24*60*60);
+
+        http.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .addLogoutHandler(new SecurityContextLogoutHandler());
+
+        http.oauth2Login()
+                .loginPage("/login")
+                .defaultSuccessUrl("/",true)
+                .defaultSuccessUrl("/oauth2/login/success", true)
+                .failureUrl("/oauth2/login/failure")
+                .authorizationEndpoint()
+                .baseUri("/oauth2/authorization")
+                .and().tokenEndpoint()
+                .accessTokenResponseClient(getToken());
+
         return http.build();
     }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**", "/css/**", "/static/**");
+        return (web) -> web.ignoring()
+                .antMatchers("/js/**", "/css/**", "/images/**", "/api/**");
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> getToken(){
+        return new DefaultAuthorizationCodeTokenResponseClient();
     }
 
 }

@@ -6,9 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.eworld.contstant.CategoryStatus;
-import com.eworld.dto.CategoryDto;
-import com.eworld.dto.CategoryInput;
-import com.eworld.dto.CategoryUpdate;
+import com.eworld.dto.category.CategoryDto;
+import com.eworld.dto.category.CategoryInput;
+import com.eworld.dto.category.CategoryUpdate;
 import com.eworld.entity.Category;
 import com.eworld.filter.CategoryFilter;
 

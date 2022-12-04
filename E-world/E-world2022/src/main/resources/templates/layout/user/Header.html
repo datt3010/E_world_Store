@@ -22,13 +22,24 @@
                                     <div class="header-top-right">
                                         <ul class="ht-menu">
                                             <!-- Begin Setting Area -->
-                                            <li>
+                                            <li th:unless="${@sec.authenticated}">
                                                 <div class="ht-setting-trigger"><span>Setting</span></div>
                                                 <div class="setting ht-setting">
                                                     <ul class="ht-setting-list">
-                                                        <li><a href="login-register.html">My Account</a></li>
-                                                        <li><a href="checkout.html">Checkout</a></li>
-                                                        <li><a href="login-register.html">Sign In</a></li>
+                                                        <li><a th:href="@{/login}">Đăng nhập</a></li>
+                                                        <li><a th:href="@{/dangky}">Đăng ký</a></li>
+                                                        <li><a th:href="@{/}">Home</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li th:if="${@sec.authenticated}">
+                                                <div class="ht-setting-trigger">Hi, <span th:text="${@sec.userContext.fullName}"></span></div>
+                                                <div class="setting ht-setting">
+                                                    <ul class="ht-setting-list">
+                                                        <li><a href="login-register.html">Thông tin của bạn</a></li>
+                                                        <li><a th:href="@{/order}">Lịch sử mua hàng</a></li>
+                                                        <li><a th:href="@{/logout}">Đăng xuất</a></li>
+                                                        <li><a th:href="@{/doimatkhau}">Đổi mật khẩu</a></li>
                                                     </ul>
                                                 </div>
                                             </li>

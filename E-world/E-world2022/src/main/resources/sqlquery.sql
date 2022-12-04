@@ -47,6 +47,7 @@ address NVARCHAR(255),
 nationality VARCHAR(100),
 image VARCHAR(100),
 status VARCHAR(100) NOT NULL,
+enabled BIT NOT NULL
 );
 go
 CREATE TABLE orders(
@@ -103,25 +104,10 @@ comment_id INT NOT NULL,
 FOREIGN KEY(account_id) REFERENCES account(id),
 FOREIGN KEY(comment_id) REFERENCES comment(id)
 )
-INSERT INTO category(name,logo,status) values
-('Shoes','Shoes','ACTIVE'),
-('Laptop','Laptop','INACTIVE')
-
-SELECT * FROM category;
-
-SELECT * FROM account;
-
-SELECT * FROM product;
-
+CREATE TRIGGER trg_account  ON account 
+FOR INSERT
+AS DECLARE @account_id INT
+SELECT @account_id = account.id FROM account;
+SELECT * FROM account
+SELECT * FROM account_role;
 SELECT * FROM role;
-
-INSERT INTO role (name) values ('Staff'), ('Admin'),('Custom')
-
-SELECT * FROM account us RIGHT JOIN  account_role ur 
-ON us.id=ur.account_id
-WHERE ur.role_id = 3
-
-INSERT INTO account(create_at,username,password,email,phone,first_name,last_name,gioitinh,age,date_of_birth,address,nationality,image,status) VALUES
-('2022-11-20','sa','2002','datthuynh30102002@gmail.com','0909442487',N'Đạt',N'Huỳnh','Nam',20,'2002-10-30',N'Quận 7','Việt Nam','1.jpg','ACTIVE')
-
-INSERT INTO account_role(account_id,role_id) VALUES(1,3)

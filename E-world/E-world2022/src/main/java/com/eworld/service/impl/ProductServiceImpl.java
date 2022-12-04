@@ -11,15 +11,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.eworld.dto.ProductDto;
-import com.eworld.dto.ProductInput;
-import com.eworld.dto.ProductUpdate;
+import com.eworld.dto.product.ProductDto;
+import com.eworld.dto.product.ProductInput;
+import com.eworld.dto.product.ProductUpdate;
 import com.eworld.entity.Category;
 import com.eworld.entity.Product;
 import com.eworld.filter.ProductFilter;
 import com.eworld.projector.ProductProjector;
-import com.eworld.repository.CategoryRepository;
-import com.eworld.repository.ProductRepository;
+import com.eworld.repository.category.CategoryRepository;
+import com.eworld.repository.product.ProductRepository;
 import com.eworld.service.ProductService;
 
 @Service

@@ -3,9 +3,9 @@ package com.eworld.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.eworld.dto.ProductDto;
-import com.eworld.dto.ProductInput;
-import com.eworld.dto.ProductUpdate;
+import com.eworld.dto.product.ProductDto;
+import com.eworld.dto.product.ProductInput;
+import com.eworld.dto.product.ProductUpdate;
 import com.eworld.entity.Product;
 import com.eworld.filter.ProductFilter;
 

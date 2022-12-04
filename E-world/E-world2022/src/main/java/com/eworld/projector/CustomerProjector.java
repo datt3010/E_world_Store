@@ -3,7 +3,7 @@ package com.eworld.projector;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.eworld.dto.CustomerDto;
+import com.eworld.dto.customer.CustomerDto;
 import com.eworld.entity.Account;
 
 public class CustomerProjector {

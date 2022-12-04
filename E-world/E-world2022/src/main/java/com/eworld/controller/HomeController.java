@@ -1,6 +1,6 @@
 package com.eworld.controller;
 
-import com.eworld.dto.ProductDto;
+import com.eworld.dto.product.ProductDto;
 import com.eworld.filter.ProductFilter;
 import com.eworld.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -17,15 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eworld.contstant.OrderStatus;
 import com.eworld.contstant.PaymentMethod;
-import com.eworld.dto.OrderDto;
-import com.eworld.dto.OrderInput;
+import com.eworld.dto.order.OrderDto;
+import com.eworld.dto.order.OrderInput;
 import com.eworld.entity.Order;
 import com.eworld.entity.OrderDetail;
 import com.eworld.entity.Product;
 import com.eworld.filter.OrderFilter;
 import com.eworld.projector.OrderProjector;
-import com.eworld.repository.OrderRepository;
-import com.eworld.repository.ProductRepository;
+import com.eworld.repository.order.OrderRepository;
+import com.eworld.repository.product.ProductRepository;
 import com.eworld.service.OrderService;
 import com.eworld.service.ShoppingCartService;
 
