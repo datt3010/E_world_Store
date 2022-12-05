@@ -36,7 +36,6 @@ public class UserContextService implements UserDetailsManager, Serializable {
         Account account = customerRepository.findByUsernameOrEmail(username);
 
         return UserContext.builder()
-                .id(account.getId())
                 .username(account.getUsername())
                 .password(pe.encode(account.getPassword()))
                 .firstName(account.getFirstName())
@@ -112,7 +111,7 @@ public class UserContextService implements UserDetailsManager, Serializable {
     }
     public UserContext createFormSocial(OAuth2User socialUser){
         UserContext userContext = new UserContext(socialUser);
-        accountService.create(userContext);
+        accountService.createFormSocial(userContext);
         return accountService.findbyUsernameOrEmail(userContext.getEmail());
     }
 }

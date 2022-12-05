@@ -11,4 +11,6 @@ public interface AccountService {
    public UserContext changePassword(UserContext userContext);
 
    public UserContext findbyUsernameOrEmail(String username);
+
+   public UserContext createFormSocial(UserContext input);
 }

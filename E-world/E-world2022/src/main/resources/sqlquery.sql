@@ -35,7 +35,7 @@ CREATE TABLE account(
 create_at DATE NOT NULL,
 id INT IDENTITY(1,1) PRIMARY KEY,
 username VARCHAR(100) NOT NULL,
-password VARCHAR(100) NOT NULL,
+password VARCHAR(100),
 email VARCHAR(100) NOT NULL,
 phone VARCHAR(20) ,
 first_name VARCHAR(100),
@@ -47,7 +47,6 @@ address NVARCHAR(255),
 nationality VARCHAR(100),
 image VARCHAR(100),
 status VARCHAR(100) NOT NULL,
-enabled BIT NOT NULL
 );
 go
 CREATE TABLE orders(
@@ -105,9 +104,21 @@ FOREIGN KEY(account_id) REFERENCES account(id),
 FOREIGN KEY(comment_id) REFERENCES comment(id)
 )
 CREATE TRIGGER trg_account  ON account 
-FOR INSERT
-AS DECLARE @account_id INT
-SELECT @account_id = account.id FROM account;
+AFTER INSERT AS
+DECLARE @account_id INT
+SELECT @account_id = id FROM account
+
+INSERT INTO account_role(account_id,role_id) VALUES(@account_id,'3');
+
+CREATE TRIGGER trg_account_delete ON account 
+AFTER DELETE
+AS DECLARE @account_id INT 
+SELECT @account_id = id FROM account
+DELETE FROM account_role WHERE account_role.account_id = @account_id;
+
 SELECT * FROM account
 SELECT * FROM account_role;
 SELECT * FROM role;
+DELETE FROM account WHERE id=4;
+
+INSERT INTO role(id,name) VALUES('1','Admin'),('2','Staff'),('3','Custom');

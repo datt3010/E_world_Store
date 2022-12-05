@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
@@ -62,14 +61,12 @@ public class WebSecurityConfig {
 
         http.oauth2Login()
                 .loginPage("/login")
-                .defaultSuccessUrl("/",true)
-                .defaultSuccessUrl("/oauth2/login/success", true)
+                .defaultSuccessUrl("/oauth2/login/success",true)
                 .failureUrl("/oauth2/login/failure")
                 .authorizationEndpoint()
                 .baseUri("/oauth2/authorization")
                 .and().tokenEndpoint()
                 .accessTokenResponseClient(getToken());
-
         return http.build();
     }
 
@@ -89,5 +86,4 @@ public class WebSecurityConfig {
     public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> getToken(){
         return new DefaultAuthorizationCodeTokenResponseClient();
     }
-
 }

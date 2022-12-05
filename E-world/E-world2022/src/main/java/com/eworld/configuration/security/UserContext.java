@@ -44,7 +44,8 @@ public class UserContext implements UserDetails {
     public UserContext(OAuth2User socialUser){
         this.username = socialUser.getName();
         this.email = socialUser.getAttribute("email");
-        this.fullName = socialUser.getAttribute("name");
+        this.firstName = socialUser.getAttribute("family_name");
+        this.lastName = socialUser.getAttribute("given_name");
     }
 
 }

@@ -57,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
            List<AccountRole> accountRoleList = accountRoleRepository.findByIdAccountID(input.getId()).stream()
                    .map(e -> AccountRole.builder()
                            .roleId("3")
-                           .accountId(input.getId())
+                         //  .accountId(input.getId())
                            .role(role)
                            .account(account)
                            .build())
@@ -87,5 +87,31 @@ public class AccountServiceImpl implements AccountService {
     public UserContext findbyUsernameOrEmail(String username) {
         Account account = customerRepository.findByUsernameOrEmail(username);
         return UserContext.builder().username(account.getUsername()).build();
+    }
+
+    @Override
+    public UserContext createFormSocial(UserContext input) {
+
+        Instant instant = Instant.now();
+        Date date = Date.from(instant);
+
+        Account account = Account.builder()
+                .createAt(date)
+                .username(input.getUsername())
+                .password(input.getPassword())
+                .firstName(input.getFirstName())
+                .lastName(input.getLastName())
+                .email(input.getEmail())
+                .phone("0865057229")
+                .gioitinh(Gender.Nam)
+                .age(18)
+                .dateOfBirth(date)
+                .address("Go O Moi")
+                .nationality("VN")
+                .image("images.jpg")
+                .status(UserStatus.ACTIVE)
+                .build();
+        customerRepository.save(account);
+        return UserContext.builder().id(account.getId()).build();
     }
 }

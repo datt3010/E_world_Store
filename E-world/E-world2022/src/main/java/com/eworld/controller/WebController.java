@@ -150,4 +150,9 @@ public class WebController {
 		return page;
 	}
 
+	@RequestMapping("/404")
+	public String errorPage(){
+		return "user/error/404";
+	}
+
 }
