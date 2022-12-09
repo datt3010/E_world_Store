@@ -10,15 +10,14 @@ import com.eworld.repository.customer.CustomerRepository;
 import com.eworld.repository.role.AccountRoleRepository;
 import com.eworld.repository.role.RoleRepository;
 import com.eworld.service.AccountService;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
@@ -26,15 +25,19 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
-    private AccountRoleRepository accountRoleRepository;
-    @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private AccountRoleRepository accountRoleRepository;
+
     @Override
     @Transactional
     public UserContext create(UserContext input) {
 
         Instant instant = Instant.now();
         Date date = Date.from(instant);
+
+        Role role = roleRepository.findById("2").orElseThrow();
 
         Account account = Account.builder()
                 .createAt(date)
@@ -52,19 +55,18 @@ public class AccountServiceImpl implements AccountService {
                 .image("images.jpg")
                 .status(UserStatus.ACTIVE)
                 .build();
-        if(CollectionUtils.isNotEmpty(input.getAccountRoleList())){
-            Role role = roleRepository.findById(3).orElseThrow();
-           List<AccountRole> accountRoleList = accountRoleRepository.findByIdAccountID(input.getId()).stream()
-                   .map(e -> AccountRole.builder()
-                           .roleId("3")
-                         //  .accountId(input.getId())
-                           .role(role)
-                           .account(account)
-                           .build())
-                   .collect(Collectors.toList());
-           account.setAccountRoles(accountRoleList);
-        }
+
+        AccountRole accountRole = accountRoleRepository.findByAccountId(account.getId());
+                account.setAccountRoles(Set.of(accountRole = AccountRole.builder()
+                        .account(account)
+                        .accountId(input.getId())
+                        .role(role)
+                        .roleId(role.getId())
+                        .build()));
+
         customerRepository.save(account);
+
+
         return UserContext.builder().id(account.getId()).build();
     }
 
@@ -94,6 +96,7 @@ public class AccountServiceImpl implements AccountService {
 
         Instant instant = Instant.now();
         Date date = Date.from(instant);
+        Role role = roleRepository.findById("2").orElseThrow();
 
         Account account = Account.builder()
                 .createAt(date)
@@ -111,7 +114,27 @@ public class AccountServiceImpl implements AccountService {
                 .image("images.jpg")
                 .status(UserStatus.ACTIVE)
                 .build();
+
+        AccountRole accountRole = accountRoleRepository.findByAccountId(account.getId());
+        account.setAccountRoles(Set.of(accountRole = AccountRole.builder()
+                .account(account)
+                .accountId(input.getId())
+                .role(role)
+                .roleId(role.getId())
+                .build()));
         customerRepository.save(account);
         return UserContext.builder().id(account.getId()).build();
+    }
+
+    @Override
+    public boolean checkExistUser(String username) {
+        Account account = customerRepository.findByUsername(username);
+        if(StringUtils.isBlank(username)){
+            return false;
+        }
+        if(!account.getUsername().equalsIgnoreCase(username)){
+            return false;
+        }
+        return true;
     }
 }

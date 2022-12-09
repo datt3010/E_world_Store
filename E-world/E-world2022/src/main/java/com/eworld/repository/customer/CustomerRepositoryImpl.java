@@ -25,13 +25,16 @@ public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPag
 	public Page<Account> findPaging(CustomerFilter filter, Pageable pageable) {
 		
 		StringBuilder countSqlBuilder = new StringBuilder(100)
-				.append("SELECT COUNT(c.id) FROM Account c");
-		
+				.append("SELECT COUNT(c.id) FROM Account c")
+				.append(" INNER JOIN AccountRole ar ON ar.accountId = c.id");
+
 		StringBuilder selectSqlBuilder = new StringBuilder(100)
-				.append(" SELECT c FROM Account c");
+				.append(" SELECT c FROM Account c")
+				.append(" INNER JOIN AccountRole ar ON ar.accountId = c.id");
 		
 		StringBuilder whereClauseSqlBuilder = new StringBuilder(50)
-				.append(" WHERE 1=1");
+				.append(" WHERE 1=1")
+				.append(" AND ar.roleId=3");
 
 		Map<String, Object> parameterMap = new LinkedHashMap<>();
 		

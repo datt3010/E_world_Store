@@ -13,4 +13,6 @@ public interface AccountService {
    public UserContext findbyUsernameOrEmail(String username);
 
    public UserContext createFormSocial(UserContext input);
+
+   public boolean checkExistUser(String username);
 }

@@ -2,11 +2,12 @@ package com.eworld.dto.customer;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.eworld.contstant.Gender;
 import com.eworld.contstant.UserStatus;
-import com.eworld.entity.AccountRole;
 import com.eworld.entity.Order;
+import com.eworld.entity.Role;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
@@ -53,5 +54,5 @@ public class CustomerDto {
 	
 	private  List<Order> orders;
 	
-	private List<AccountRole> roles;
+	private Set<Role> roles;
 }

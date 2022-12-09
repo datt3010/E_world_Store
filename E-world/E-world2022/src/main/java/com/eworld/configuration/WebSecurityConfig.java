@@ -1,6 +1,4 @@
 package com.eworld.configuration;
-import com.eworld.configuration.security.SecurityEnvironment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,15 +15,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 
 @Configuration
 public class WebSecurityConfig {
-
-    @Autowired
-    private SecurityEnvironment securityEnvironment;
-
-    @Autowired
-    private JwtAuthenticationFilter jwtA;
-
-    @Autowired HandleAuthenticationExceptionEntryPoint handleAuthenticationExceptionEntryPoint;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -37,10 +26,8 @@ public class WebSecurityConfig {
         http.cors().disable();
 
         http.authorizeHttpRequests()
-                .antMatchers("/order","/checkout/**","/doimatkhau").authenticated()
-                .antMatchers("/admin/customer","/admin/listcustomer").hasRole("Admin")
-                .antMatchers("/admin/product","/admin/listproduct").hasRole("Staff")
-                .antMatchers("/order").hasRole("Customer")
+                .antMatchers("/order/**", "/checkout/**","/doimatkhau").authenticated()
+                .antMatchers("/admin/customer", "/admin/listcustomer").hasRole("ADMIN")
                 .anyRequest().permitAll();
 
         http.exceptionHandling()
@@ -48,7 +35,7 @@ public class WebSecurityConfig {
 
         http.formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/login").permitAll()
+                .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/")
                 .failureUrl("/404");
 

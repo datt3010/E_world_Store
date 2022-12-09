@@ -9,9 +9,7 @@ import com.eworld.entity.Account;
 import org.springframework.data.repository.query.Param;
 
 public interface CustomerRepository extends JpaRepository<Account, Integer>,CustomerCustomRepository {
-	@Query("FROM Account a WHERE a.accountRoles IS NOT EMPTY")
-	List<Account> findEmployees();
-	
+
 	@Query("DELETE FROM Account a WHERE a.username = ?1")
 	public void deleteByUsername(String username);
 	
@@ -19,4 +17,6 @@ public interface CustomerRepository extends JpaRepository<Account, Integer>,Cust
 	public boolean existsById(String username);
 	@Query("FROM Account a WHERE a.username LIKE :keyword OR email LIKE :keyword")
 	public Account findByUsernameOrEmail(@Param(value = "keyword") String username);
+
+	public Account findByUsername(String username);
 }

@@ -42,11 +42,6 @@ public class HomeController {
         return "user/home/contact";
     }
 
-    @GetMapping("chitietsanpham")
-    public String detailProduct() {
-        return "user/product/ProductDetail";
-    }
-
     @GetMapping("blogdetail")
     public String blogDetail() {
         return "user/blog/BlogDetail";

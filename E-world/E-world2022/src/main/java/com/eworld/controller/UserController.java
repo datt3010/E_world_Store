@@ -23,7 +23,6 @@ public class UserController {
     private ClientRegistrationRepository clientRegistrationRepository;
     @Autowired
     private UserContextService userContextService;
-
     @Autowired
     private AccountService accountService;
 
@@ -32,17 +31,15 @@ public class UserController {
         return "user/login/login";
     }
 
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public String executeLogin(Model model,
-//                               @RequestParam(name = "username", required = false)String username,
-//                               @RequestParam(name = "password", required = false)String password){
-//        UserContext userContext = userContextService.getCurrent();
-//        if((username).equalsIgnoreCase(userContext.getUsername()) || (password.equalsIgnoreCase(userContext.getPassword()))){
-//            model.addAttribute("message", "username or password incorrect");
-//            return "user/login/login";
-//        }
-//        return "/user/home/index";
-//    }
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String executeLogin(Model model,
+                               @RequestParam(name = "username", required = false)String username){
+      if(userContextService.userExists(username) == false){
+          model.addAttribute("message", "username is not exists");
+          return "user/login/login";
+      }
+      return "user/home/index";
+    }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String homeLogout() {

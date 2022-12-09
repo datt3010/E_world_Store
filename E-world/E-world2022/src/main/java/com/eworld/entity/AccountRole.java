@@ -1,43 +1,31 @@
 package com.eworld.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import javax.persistence.*;
 @Entity
 @Table
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountRole {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "accountId", referencedColumnName = "id", updatable = false)
-	private Account account;
-	
-	@Column(insertable = false, updatable = false)
-	private Integer accountId;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "roleId", referencedColumnName = "id", updatable = false)
-	private Role role;
-	
-	@Column(insertable = false, updatable = false)
-	private String roleId;
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "accountId", referencedColumnName = "id", updatable = false)
+    private Account account;
+
+    @Column(insertable = false, updatable = false)
+    private Integer accountId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "roleId", referencedColumnName = "id", updatable = false)
+    private Role role;
+
+    @Column(insertable = false, updatable = false)
+    private String roleId;
 }

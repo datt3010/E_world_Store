@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -16,7 +16,7 @@
         
                 <div class="header-right">
                     <ul class="clearfix">
-                        <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                <!--        <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                                 <i class="mdi mdi-email-outline"></i>
                                 <span class="badge badge-pill gradient-1">3</span>
                             </a>
@@ -73,8 +73,8 @@
                                     
                                 </div>
                             </div>
-                        </li>
-                        <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                        </li>-->
+                <!--        <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                                 <i class="mdi mdi-bell-outline"></i>
                                 <span class="badge badge-pill gradient-2">3</span>
                             </a>
@@ -127,8 +127,8 @@
                                     
                                 </div>
                             </div>
-                        </li>
-                        <li class="icons dropdown d-none d-md-flex">
+                        </li>-->
+                     <!--   <li class="icons dropdown d-none d-md-flex">
                             <a href="javascript:void(0)" class="log-user"  data-toggle="dropdown">
                                 <span>English</span>  <i class="fa fa-angle-down f-s-14" aria-hidden="true"></i>
                             </a>
@@ -140,29 +140,48 @@
                                     </ul>
                                 </div>
                             </div>
-                        </li>
-                        <li class="icons dropdown">
+                        </li>-->
+                        <li th:unless="${@sec.authenticated}" class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                 <span class="activity active"></span>
-                                <img src="/admin/images/user/1.png" height="40" width="40" alt="">
                             </div>
                             <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
+                                            <a href="app-profile.html"><i class="icon-user"></i> <span>Đăng nhập</span></a>
                                         </li>
                                         <li>
+                                            <a href="page-lock.html"><i class="icon-lock"></i> <span>Quên mật khẩu</span></a>
+                                        </li>
+                                        <li><a href="page-login.html"><i class="icon-key"></i> <span>Đăng ký</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li  th:if="${@sec.authenticated}" class="icons dropdown">
+                            <span th:text="${@sec.userContext.fullName}"></span>
+                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+                                <span class="activity active" ></span>
+                                <img th:src="@{|/images/staff/${@sec.userContext.image}|}" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+                                        <li>
+                                            <a th:href="@{|/admin/listcustomer/${@sec.userContext.id}|}"><i class="icon-user"></i> <span>Thông tin của bạn</span></a>
+                                        </li>
+                            <!--            <li>
                                             <a href="javascript:void()">
                                                 <i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill gradient-1">3</div>
                                             </a>
                                         </li>
-                                        
+-->
                                         <hr class="my-2">
                                         <li>
-                                            <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
+                                            <a th:href="@{/doimatkhau}"><i class="icon-lock"></i> <span>Đổi mật khẩu</span></a>
                                         </li>
-                                        <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                        <li><a th:href="@{/logout}"><i class="icon-key"></i> <span>Đăng xuất</span></a></li>
                                     </ul>
                                 </div>
                             </div>

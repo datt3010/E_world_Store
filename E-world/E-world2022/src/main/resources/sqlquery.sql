@@ -103,6 +103,15 @@ comment_id INT NOT NULL,
 FOREIGN KEY(account_id) REFERENCES account(id),
 FOREIGN KEY(comment_id) REFERENCES comment(id)
 )
+go
+CREATE TABLE blog(
+id INT IDENTITY(1,1) PRIMARY KEY,
+name NVARCHAR(100) NOT NULL,
+description NVARCHAR(255),
+image VARCHAR(255) NOT NULL,
+status VARCHAR(50) NOT NULL
+)
+go
 CREATE TRIGGER trg_account  ON account 
 AFTER INSERT AS
 DECLARE @account_id INT
@@ -114,7 +123,7 @@ CREATE TRIGGER trg_account_delete ON account
 AFTER DELETE
 AS DECLARE @account_id INT 
 SELECT @account_id = id FROM account
-DELETE FROM account_role WHERE account_role.account_id = @account_id;
+DELETE FROM account_role WHERE @account_id IN(SELECT account_id FROM account_role);
 
 SELECT * FROM account
 SELECT * FROM account_role;
@@ -122,3 +131,11 @@ SELECT * FROM role;
 DELETE FROM account WHERE id=4;
 
 INSERT INTO role(id,name) VALUES('1','Admin'),('2','Staff'),('3','Custom');
+
+SELECT *  FROM account_role ar inner join role r on ar.role_id = r.id
+
+SELECT * FROM account_role ar inner join account a on ar.account_id = a.id
+WHERE ar.account_id = 28
+
+SELECT * FROM account a inner join account_role ar on ar.account_id = a.id
+WHERE ar.role_id =3;
