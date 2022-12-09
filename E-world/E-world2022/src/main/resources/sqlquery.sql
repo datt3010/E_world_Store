@@ -3,7 +3,7 @@ go
 USE e_world;
 go
 CREATE TABLE role(
-id INT IDENTITY(1,1) PRIMARY KEY,
+id VARCHAR(50) PRIMARY KEY,
 name VARCHAR(100) NOT NULL
 )
 go
@@ -35,7 +35,7 @@ CREATE TABLE account(
 create_at DATE NOT NULL,
 id INT IDENTITY(1,1) PRIMARY KEY,
 username VARCHAR(100) NOT NULL,
-password VARCHAR(100) NOT NULL,
+password VARCHAR(100),
 email VARCHAR(100) NOT NULL,
 phone VARCHAR(20) ,
 first_name VARCHAR(100),
@@ -65,7 +65,6 @@ order_id INT NOT NULL,
 product_id INT  NOT NULL,
 quantity INT NOT NULL,
 product_price FLOAT NOT NULL,
-status VARCHAR(255) NOT NULL,
 FOREIGN KEY(order_id) REFERENCES orders(id),
 FOREIGN KEY(product_id) REFERENCES product(id)
 );
@@ -87,7 +86,7 @@ GO
 CREATE TABLE account_role(
 id INT IDENTITY(1,1) PRIMARY KEY,
 account_id INT NOT NULL,
-role_id INT NOT NULL,
+role_id VARCHAR(50) NOT NULL,
 FOREIGN KEY (account_id) REFERENCES account(id),
 FOREIGN KEY (role_id) REFERENCES role(id)
 );
@@ -104,25 +103,39 @@ comment_id INT NOT NULL,
 FOREIGN KEY(account_id) REFERENCES account(id),
 FOREIGN KEY(comment_id) REFERENCES comment(id)
 )
-INSERT INTO category(name,logo,status) values
-('Shoes','Shoes','ACTIVE'),
-('Laptop','Laptop','INACTIVE')
+go
+CREATE TABLE blog(
+id INT IDENTITY(1,1) PRIMARY KEY,
+name NVARCHAR(100) NOT NULL,
+description NVARCHAR(255),
+image VARCHAR(255) NOT NULL,
+status VARCHAR(50) NOT NULL
+)
+go
+CREATE TRIGGER trg_account  ON account 
+AFTER INSERT AS
+DECLARE @account_id INT
+SELECT @account_id = id FROM account
 
-SELECT * FROM category;
+INSERT INTO account_role(account_id,role_id) VALUES(@account_id,'3');
 
-SELECT * FROM account;
+CREATE TRIGGER trg_account_delete ON account 
+AFTER DELETE
+AS DECLARE @account_id INT 
+SELECT @account_id = id FROM account
+DELETE FROM account_role WHERE @account_id IN(SELECT account_id FROM account_role);
 
-SELECT * FROM product;
-
+SELECT * FROM account
+SELECT * FROM account_role;
 SELECT * FROM role;
+DELETE FROM account WHERE id=4;
 
-INSERT INTO role (name) values ('Staff'), ('Admin'),('Custom')
+INSERT INTO role(id,name) VALUES('1','Admin'),('2','Staff'),('3','Custom');
 
-SELECT * FROM account us RIGHT JOIN  account_role ur 
-ON us.id=ur.account_id
-WHERE ur.role_id = 3
+SELECT *  FROM account_role ar inner join role r on ar.role_id = r.id
 
-INSERT INTO account(create_at,username,password,email,phone,first_name,last_name,gioitinh,age,date_of_birth,address,nationality,image,status) VALUES
-('2022-11-20','sa','2002','datthuynh30102002@gmail.com','0909442487',N'Đạt',N'Huỳnh','Nam',20,'2002-10-30',N'Quận 7','Việt Nam','1.jpg','ACTIVE')
+SELECT * FROM account_role ar inner join account a on ar.account_id = a.id
+WHERE ar.account_id = 28
 
-INSERT INTO account_role(account_id,role_id) VALUES(1,3)
+SELECT * FROM account a inner join account_role ar on ar.account_id = a.id
+WHERE ar.role_id =3;

@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.eworld.dto.CategoryDto;
-import com.eworld.dto.ProductDto;
+import com.eworld.dto.category.CategoryDto;
+import com.eworld.dto.product.ProductDto;
 import com.eworld.entity.Product;
 import com.eworld.filter.CategoryFilter;
 import com.eworld.filter.ProductFilter;
-import com.eworld.repository.ProductRepository;
+import com.eworld.repository.product.ProductRepository;
 import com.eworld.service.CategoryService;
 import com.eworld.service.ProductService;
 import com.eworld.service.ShoppingCartService;
@@ -148,6 +148,11 @@ public class WebController {
 				.build();
 		Page<CategoryDto> page = categoryService.findPaging(filter, pageable);
 		return page;
+	}
+
+	@RequestMapping("/404")
+	public String errorPage(){
+		return "user/error/404";
 	}
 
 }

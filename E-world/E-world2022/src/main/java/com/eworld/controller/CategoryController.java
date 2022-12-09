@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.eworld.dto.CategoryDto;
-import com.eworld.dto.CategoryInput;
-import com.eworld.dto.CategoryUpdate;
+import com.eworld.dto.category.CategoryDto;
+import com.eworld.dto.category.CategoryInput;
+import com.eworld.dto.category.CategoryUpdate;
 import com.eworld.entity.Category;
 import com.eworld.filter.CategoryFilter;
 import com.eworld.service.CategoryService;

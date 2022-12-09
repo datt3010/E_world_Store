@@ -13,7 +13,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eworld.contstant.CategoryStatus;
-import com.eworld.dto.BrandDto;
+import com.eworld.dto.brand.BrandDto;
 import com.eworld.filter.BrandFilter;
 import com.eworld.service.BrandService;
 import com.eworld.service.CategoryService;

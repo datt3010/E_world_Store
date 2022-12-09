@@ -3,7 +3,7 @@ package com.eworld.projector;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.eworld.dto.BrandDto;
+import com.eworld.dto.brand.BrandDto;
 import com.eworld.entity.Brand;
 
 public class BrandProjector {

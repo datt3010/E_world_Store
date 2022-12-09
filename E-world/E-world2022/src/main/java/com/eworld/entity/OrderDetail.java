@@ -29,9 +29,7 @@ public class OrderDetail {
 	private Integer quantity;
 	
 	private Double productPrice;
-	
-	private Double discount;
-	
+		
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "productId", referencedColumnName = "id", updatable = false)
 	private Product product;

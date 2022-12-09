@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.eworld.dto.CustomerDto;
-import com.eworld.dto.CustomerInput;
-import com.eworld.dto.CustomerUpdate;
+import com.eworld.dto.customer.CustomerDto;
+import com.eworld.dto.customer.CustomerInput;
+import com.eworld.dto.customer.CustomerUpdate;
 import com.eworld.filter.CustomerFilter;
 import com.eworld.service.CustomerService;
 import com.eworld.service.UploadService;

@@ -115,7 +115,7 @@
                             <p style="font-size:20px;padding-top:10px;" class="minicart-total">Order value: <span>$[[${totalPrice}]]</span></p>
                     		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">VAT: <span>10%</span></p>
                       		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">Totals: <span>[[${totalPrice} +${totalPrice}*0.1]]</span></p>
-							<button type="button" class="btn btn-primary">Check out</button>
+							<button th:formaction="@{/order}" formmethod="get" type="button" class="btn btn-primary">Check out</button>
                         </div>
                     </div>
                 </div>

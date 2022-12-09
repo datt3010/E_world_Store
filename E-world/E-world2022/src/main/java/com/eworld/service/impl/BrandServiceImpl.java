@@ -9,11 +9,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.eworld.dto.BrandDto;
+import com.eworld.dto.brand.BrandDto;
 import com.eworld.entity.Brand;
 import com.eworld.filter.BrandFilter;
 import com.eworld.projector.BrandProjector;
-import com.eworld.repository.BrandRepository;
+import com.eworld.repository.brand.BrandRepository;
 import com.eworld.service.BrandService;
 
 @Service

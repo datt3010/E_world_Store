@@ -14,7 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.eworld.entity.Product;
 import com.eworld.exception.NotEnoughProductsInStockException;
-import com.eworld.repository.ProductRepository;
+import com.eworld.repository.product.ProductRepository;
 import com.eworld.service.ProductService;
 import com.eworld.service.ShoppingCartService;
 

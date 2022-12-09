@@ -3,7 +3,7 @@ package com.eworld.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.eworld.dto.BrandDto;
+import com.eworld.dto.brand.BrandDto;
 import com.eworld.filter.BrandFilter;
 
 public  interface BrandService {
