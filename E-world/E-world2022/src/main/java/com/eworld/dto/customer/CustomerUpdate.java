@@ -8,14 +8,19 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.eworld.contstant.Gender;
 import com.eworld.contstant.UserStatus;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class CustomerUpdate {
 

@@ -10,200 +10,258 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/admin/images/favicon.png">
     <!-- Custom Stylesheet -->
     <link href="/admin/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
 </head>
 
-<body>
+<body onload="show()">
 
-    <!--*******************
-        Preloader start
-    ********************-->
-    <div id="preloader">
-        <div class="loader">
-            <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
-            </svg>
-        </div>
+<!--*******************
+    Preloader start
+********************-->
+<div id="preloader">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+        </svg>
     </div>
-    <!--*******************
-        Preloader end
-    ********************-->
+</div>
+<!--*******************
+    Preloader end
+********************-->
 
-    
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
     <!--**********************************
-        Main wrapper start
+        Nav header start
     ***********************************-->
-    <div id="main-wrapper">
-
-        <!--**********************************
-            Nav header start
-        ***********************************-->
-        <div class="nav-header">
-            <div class="brand-logo">
-                <a href="index.html">
-                    <b class="logo-abbr"><img src="/admin/images/logo.png" alt=""> </b>
-                    <span class="logo-compact"><img src="/admin/images/logo-compact.png" alt=""></span>
-                    <span class="brand-title">
+    <div class="nav-header">
+        <div class="brand-logo">
+            <a  th:href="@{/admin}">
+                <b class="logo-abbr"><img src="/admin/images/logo.png" alt=""> </b>
+                <span class="logo-compact"><img src="/admin/images/logo-compact.png" alt=""></span>
+                <span class="brand-title">
                         <img src="/admin/images/logo-text.png" alt="">
                     </span>
-                </a>
+            </a>
+        </div>
+    </div>
+    <!--**********************************
+        Nav header end
+    ***********************************-->
+
+    <!--**********************************
+        Header start
+    ***********************************-->
+    <div th:replace="/layout/admin/header.html"></div>
+    <!--**********************************
+        Header end ti-comment-alt
+    ***********************************-->
+
+    <!--**********************************
+        Sidebar start
+    ******************0*****************-->
+    <div th:replace="/layout/admin/sidebarnk.html"></div>
+    <!--**********************************
+        Sidebar end
+    ***********************************-->
+
+    <!--**********************************
+        Content body start
+    ***********************************-->
+    <div class="content-body">
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                </ol>
             </div>
         </div>
-        <!--**********************************
-            Nav header end
-        ***********************************-->
+        <!-- row -->
 
-        <!--**********************************
-            Header start
-        ***********************************-->
-      <div th:replace="/layout/admin/header.html"></div>
-        <!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
-
-        <!--**********************************
-            Sidebar start
-        ***********************************-->
-    	<div th:replace="/layout/admin/sidebarnk.html"></div>
-        <!--**********************************
-            Sidebar end
-        ***********************************-->
-
-        <!--**********************************
-            Content body start
-        ***********************************-->
-        <div class="content-body">
-
-            <div class="row page-titles mx-0">
-                <div class="col p-md-0">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
-                    </ol>
-                </div>
-            </div>
-            <!-- row -->
-
-            <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-validation">
-                                    <form class="form-valide" action="#" method="post">
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-username">First Name <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-username" name="firstName" placeholder="Enter your First name">
-                                            </div>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-validation">
+                                <form class="form-valide" th:action="@{admin}" th:object="${staff}" method="post" enctype="multipart/form-data">
+                                    <p th:text="${message}" style="color: red; font-size: 20"></p>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-suggestions">Username
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input th:field="*{username}" type="text" class="form-control">
+                                            <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-email">Last Name<span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-email" name="lastName" placeholder="Enter your Last name">
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-suggestions">Password <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input th:value="*{password}" th:field="*{password}" type="text" class="form-control" id="val-password" name="password">
+                                            <i style="float:left;" class="fa fa-eye" id="eye"></i>
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-password">Tuổi <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input type="number" class="form-control" id="val-password" name="val-password" placeholder="Nhập tuổi của bạn..">
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-username">First Name <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input th:field="*{firstName}" type="text" class="form-control" id="val-username" name="firstName" placeholder="Enter your First name">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-confirm-password">Địa chỉ<span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <textarea class="form-control" id="val-suggestions" name="address" rows="5" placeholder="Địa chỉ của bạn..."></textarea>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-email">Last Name<span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input th:field="*{lastName}" type="text" class="form-control" id="val-email" name="lastName" placeholder="Enter your Last name">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
                                         </div>
-                                             <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-currency">Quốc tịch<span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-    										  <select class="form-control" id="val-skill" name="val-skill">
-                                                    <option value="">Please select</option>
-                                                    <option value="html">Việt Nam</option>
-                                                    <option value="css">American</option>
-                                                    <option value="javascript">Japan</option>
-                                                    <option value="angular">China</option>
-                                                    <option value="angular">Germany</option>
-                                                    <option value="vuejs">England</option>
-                                                    <option value="ruby">Dandmarks</option>
-                                                    <option value="php">Poland</option>
-                                                    <option value="asp">Neitherland</option>
-                                                    <option value="python">ThaiLand</option>
-                                                    <option value="mysql">Indonesia</option>
-                                                </select>                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-password">Tuổi <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input th:field="*{age}" type="text" class="form-control" id="val-password" name="val-password" placeholder="Nhập tuổi của bạn..">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
                                         </div>
-                                              <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-suggestions">Ngày sinh <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input type="date" class="form-control" id="val-password" name="dateOfBirth" placeholder="Nhập email của bạn..">
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-confirm-password">Địa chỉ<span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <textarea th:field="*{address}" class="form-control" id="val-suggestions" name="address" rows="5" placeholder="Địa chỉ của bạn..."></textarea>
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-suggestions">Email <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input type="email" class="form-control" id="val-password" name="email" placeholder="Nhập email của bạn..">
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-suggestions">Ngày sinh <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input th:field="*{dateOfBirth}" type="date" class="form-control" id="val-password" name="dateOfBirth" placeholder="Nhập email của bạn..">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-currency">Phone <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-currency" name="phoneNumber" placeholder="0909442487">
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-currency">Quốc tịch<span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <select th:field="*{nationality}" class="form-control" id="val-skill" name="val-skill">
+                                                <option value="">Please select</option>
+                                                <option value="VN">Việt Nam</option>
+                                                <option value="USA">American</option>
+                                                <option value="JP">Japan</option>
+                                                <option value="CN">China</option>
+                                                <option value="GY">Germany</option>
+                                                <option value="USK">England</option>
+                                                <option value="DS">Dandmarks</option>
+                                                <option value="PL">Poland</option>
+                                                <option value="ND">Neitherland</option>
+                                                <option value="TD">ThaiLand</option>
+                                                <option value="IA">Indonesia</option>
+                                            </select>
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>
                                         </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-8 ml-auto">
-                                                <button type="submit" class="btn btn-primary">Insert</button>
-                                                <button type="submit" class="btn btn-primary">Update</button>
-                                                <button type="submit" class="btn btn-primary">Delete</button>
-                                                <button type="submit" class="btn btn-primary">Reset</button>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-currency">Giới tính
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <select th:field="*{gioitinh}" class="form-control" id="val-skill" name="val-skill">
+                                                <option value="">Please select</option>
+                                                <option value="Nam">Nam</option>
+                                                <option value="Nu">Nữ</option>
+                                            </select>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-currency">Trạng thái<span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <select th:field="*{status}" class="form-control" id="val-skill" name="val-skill">
+                                                <option value="">Please select</option>
+                                                <option value="ACTIVE">Active</option>
+                                                <option value="INACTIVE">Inactive</option>
+                                            </select>
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-suggestions">Email <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input th:field="*{email}" type="email" class="form-control" id="val-password" name="email" placeholder="Nhập email của bạn..">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-currency">Phone <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input th:field="*{phone}" type="text" class="form-control" id="val-currency" name="phoneNumber" placeholder="0909442487">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label" for="val-skill">Ảnh sản phẩm  <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input  type="file" onchange="readURL(this);" class="form-control" id="val-confirm-password" name="image">
+                                            <img id="image" th:src="@{|/images/staff/*{logo}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-8 ml-auto">
+                                            <button th:formaction="@{/admin/staff/insert}" formmethod="post" type="submit" class="btn btn-primary">Insert</button>
+                                            <button th:formaction="@{|/admin/liststaff/${id}|}" formmethod="post" type="submit" class="btn btn-primary">Update</button>
+                                            <button th:formaction="@{|/admin/liststaff/delete/${id}|}" formmethod="get" type="submit" class="btn btn-primary">Delete</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- #/ container -->
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
-        
-        
-        <!--**********************************
-            Footer start
-        ***********************************-->
-    	<div th:replace="/layout/admin/footer.html"></div>
-        <!--**********************************
-            Footer end
-        ***********************************-->
+        <!-- #/ container -->
     </div>
     <!--**********************************
-        Main wrapper end
+        Content body end
     ***********************************-->
+
 
     <!--**********************************
-        Scripts
+        Footer start
     ***********************************-->
-    <script src="/admin/plugins/common/common.min.js"></script>
-    <script src="/admin/js/custom.min.js"></script>
-    <script src="/admin/js/settings.js"></script>
-    <script src="/admin/js/gleek.js"></script>
-    <script src="/admin/js/styleSwitcher.js"></script>
+    <div th:replace="/layout/admin/footer.html"></div>
+    <!--**********************************
+        Footer end
+    ***********************************-->
+</div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
 
-    <script src="/admin/plugins/validation/jquery.validate.min.js"></script>
-    <script src="/admin/plugins/validation/jquery.validate-init.js"></script>
+<!--**********************************
+    Scripts
+***********************************-->
+<script src="/admin/plugins/common/common.min.js"></script>
+<script src="/admin/js/custom.min.js"></script>
+<script src="/admin/js/settings.js"></script>
+<script src="/admin/js/gleek.js"></script>
+<script src="/admin/js/styleSwitcher.js"></script>
+
+<script src="/admin/plugins/validation/jquery.validate.min.js"></script>
+<script src="/admin/plugins/validation/jquery.validate-init.js"></script>
+<script src="/js/category.js"></script>
 
 </body>
 

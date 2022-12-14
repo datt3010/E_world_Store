@@ -1,37 +1,26 @@
 package com.eworld.controller;
-import java.io.IOException;
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.SortDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MissingPathVariableException;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.eworld.contstant.CategoryStatus;
 import com.eworld.dto.product.ProductDto;
 import com.eworld.dto.product.ProductInput;
 import com.eworld.dto.product.ProductUpdate;
 import com.eworld.entity.Category;
-import com.eworld.filter.ProductFilter;
 import com.eworld.repository.category.CategoryRepository;
 import com.eworld.service.ProductService;
 import com.eworld.service.UploadService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MissingPathVariableException;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("admin")
@@ -47,16 +36,8 @@ public class ProductController {
 	private UploadService uploadService;
 	
 	@RequestMapping("/listproduct")
-	public String listProduct(Model model, @RequestParam(name = "keyword", required = false)String keyword) {
-		Pageable pageable = PageRequest.of(0, 10,Direction.ASC,"name");
-		
-		ProductFilter filter = ProductFilter.builder()
-				.keyword(keyword)
-				.build();
-		Page<ProductDto> listProduct = productService.findPaging(filter, pageable);
-		model.addAttribute("listProduct", listProduct);
-		
-		return listPage(model, 1, keyword,"name", "asc", pageable);
+	public String listProduct(Model model) {
+		return listPage(model,1,null,"id","asc");
 	}
 	
 	@RequestMapping("/product")
@@ -90,7 +71,7 @@ public class ProductController {
 	
 	@RequestMapping("/listproduct/delete/{id}")
 	public String delete(@PathVariable("id") Integer id) {
-		productService.deleteById(id);
+		productService.changeStatus(id);
 		return "redirect:/admin/listproduct";
 	}
 	
@@ -127,23 +108,21 @@ public class ProductController {
 			@PathVariable("pageNum") int pageNum,
 			@RequestParam(name="keyword", required = false)String keyword,
 			@RequestParam(name="sortField", required = false) String sortField,
-			@RequestParam(name="sortDir", required = false) String sortDir,
-			@SortDefault(sort = "name", direction = Direction.ASC)Pageable pageable) {
-		
-		 pageable = PageRequest.of(pageNum-1, 3,sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
-		ProductFilter filter = ProductFilter.builder()
-				.keyword(keyword)
-				.build();
-		Page<ProductDto> listProduct = productService.findPaging(filter, pageable);
-		model.addAttribute("keyword", filter.getKeyword());
-		model.addAttribute("listProduct", listProduct);
+			@RequestParam(name="sortDir", required = false) String sortDir
+		) {
+
+		Page<ProductDto> listProduct = productService.findPaging(keyword, sortField, sortDir, pageNum);
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("totalPages", listProduct.getTotalPages());
 		model.addAttribute("totalItems", listProduct.getTotalElements());
 		
-		model.addAttribute("sortField", sortField);
-		model.addAttribute("sortDir", sortDir);
-		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
+		model.addAttribute("sortField", "id");
+		model.addAttribute("sortDir", "asc");
+		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"asc":"desc");
+
+		model.addAttribute("listProduct", listProduct);
+
 		return "admin/product/ListProduct";
 		}
 }

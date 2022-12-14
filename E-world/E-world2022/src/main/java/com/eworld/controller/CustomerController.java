@@ -1,9 +1,11 @@
 package com.eworld.controller;
 
-import java.io.IOException;
-
-import javax.validation.Valid;
-
+import com.eworld.dto.customer.CustomerDto;
+import com.eworld.dto.customer.CustomerInput;
+import com.eworld.dto.customer.CustomerUpdate;
+import com.eworld.filter.CustomerFilter;
+import com.eworld.service.CustomerService;
+import com.eworld.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,20 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.eworld.dto.customer.CustomerDto;
-import com.eworld.dto.customer.CustomerInput;
-import com.eworld.dto.customer.CustomerUpdate;
-import com.eworld.filter.CustomerFilter;
-import com.eworld.service.CustomerService;
-import com.eworld.service.UploadService;
+import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("admin")
@@ -41,19 +34,8 @@ public class CustomerController {
 	private UploadService uploadService;
 	
 	@GetMapping("/listcustomer")
-	public String listByKeyWord(Model model, @RequestParam(name="keyword", required = false) String keyword) {
-		
-		Pageable pageable = PageRequest.of(0, 10, Direction.ASC,"id");
-		
-		CustomerFilter filter= CustomerFilter.builder()
-		.keyword(keyword)
-		.build();
-		
-		Page<CustomerDto> listCustomer = customerService.findPaging(filter, pageable);
-		
-		model.addAttribute("listCustomer", listCustomer);
-		
-		return searchPage(model, 1, keyword, "id","asc", pageable);
+	public String listByKeyWord(Model model) {
+		return searchPage(model, 1, null, "id","asc");
 	}
 	
 	@PostMapping("/customer/insert")
@@ -92,7 +74,7 @@ public class CustomerController {
 	
 	@RequestMapping("/listcustomer/delete/{id}")
 	public String delete(@PathVariable("id") Integer id) {
-		customerService.delete(id);
+		customerService.changeStatus(id);
 		return "redirect:/admin/listcustomer";
 	}
 	
@@ -122,10 +104,10 @@ public class CustomerController {
 			@PathVariable("pageNum") int pageNum,
 			@RequestParam(name="keyword", required = false) String keyword,
 			@RequestParam(name="sortField", required = false) String sortField,
-			@RequestParam(name = "sortDir", required = false) String sortDir,
-			@SortDefault(sort = "id", direction = Direction.ASC) Pageable pageable) {
+			@RequestParam(name = "sortDir", required = false) String sortDir
+			) {
 		
-		pageable = PageRequest.of(pageNum-1, 3, sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
+		Pageable pageable = PageRequest.of(pageNum-1, 3, sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
 		CustomerFilter filter = CustomerFilter.builder()
 				.keyword(keyword)
 				.build();

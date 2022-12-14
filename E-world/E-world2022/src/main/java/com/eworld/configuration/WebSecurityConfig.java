@@ -27,7 +27,8 @@ public class WebSecurityConfig {
 
         http.authorizeHttpRequests()
                 .antMatchers("/order/**", "/checkout/**","/doimatkhau").authenticated()
-                .antMatchers("/admin/customer", "/admin/listcustomer").hasRole("ADMIN")
+                .antMatchers("/admin/customer", "/admin/listcustomer").hasAnyRole("ADMIN", "STAFF")
+                .antMatchers("/admin/staff/**", "/admin/liststaff/**").hasRole("ADMIN")
                 .anyRequest().permitAll();
 
         http.exceptionHandling()

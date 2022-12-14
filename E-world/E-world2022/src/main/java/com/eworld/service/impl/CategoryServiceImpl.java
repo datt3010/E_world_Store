@@ -1,14 +1,5 @@
 package com.eworld.service.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.eworld.contstant.CategoryStatus;
 import com.eworld.dto.category.CategoryDto;
 import com.eworld.dto.category.CategoryInput;
@@ -18,6 +9,12 @@ import com.eworld.filter.CategoryFilter;
 import com.eworld.projector.CategoryProjector;
 import com.eworld.repository.category.CategoryRepository;
 import com.eworld.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -63,12 +60,18 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	@Transactional
-	public void deleteById(Integer id) {
-		 categoryRepo.deleteById(id);
+	public void changeStatus(Integer id) {
+		categoryRepo.changeStatus(CategoryStatus.INACTIVE, id);
 	}
 
 	@Override
-	public Page<CategoryDto> findPaging(CategoryFilter filter, Pageable pageable) {
+	public Page<CategoryDto> findPaging(String keyword, String sortField, String sortDir, int pageNum) {
+
+		CategoryFilter filter = CategoryFilter.builder()
+				.keyword(keyword)
+				.build();
+
+		Pageable pageable = PageRequest.of(pageNum-1, 3, sortDir.equals("asc")? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
 		Page<Category> page = categoryRepo.findPaging(filter, pageable);
 		List<CategoryDto> content = CategoryProjector.convertToPageDto(page.getContent());
 		return new PageImpl<>(content, pageable, page.getTotalElements());

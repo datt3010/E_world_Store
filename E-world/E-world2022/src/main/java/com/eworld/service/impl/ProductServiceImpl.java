@@ -1,16 +1,6 @@
 package com.eworld.service.impl;
 
-import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.eworld.contstant.ProductStatus;
 import com.eworld.dto.product.ProductDto;
 import com.eworld.dto.product.ProductInput;
 import com.eworld.dto.product.ProductUpdate;
@@ -21,6 +11,14 @@ import com.eworld.projector.ProductProjector;
 import com.eworld.repository.category.CategoryRepository;
 import com.eworld.repository.product.ProductRepository;
 import com.eworld.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -89,8 +87,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Page<ProductDto> findPaging(ProductFilter filter, Pageable pageable) {
-		
+	public Page<ProductDto> findPaging(String keyword, String sortField, String sortDir, int pageNum) {
+
+		ProductFilter filter = ProductFilter.builder()
+				.keyword(keyword)
+				.build();
+
+		Pageable pageable = PageRequest.of(pageNum-1, 3, sortDir.equals("asc")? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
 		Page<Product> page = productRepo.findPaging(filter, pageable);
 		List<ProductDto> content = ProductProjector.convertToPageDto(page.getContent());
 		return new PageImpl<>(content, pageable, page.getTotalElements());
@@ -98,9 +101,8 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public void deleteById(Integer id) {
-		 productRepo.deleteById(id);
-
+	public void changeStatus(Integer id) {
+		 productRepo.changeStatus(ProductStatus.INACTIVE, id);
 	}
 
 	@Override

@@ -21,14 +21,6 @@ public class HomeController {
 
     @GetMapping()
     public String home(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
-        Pageable pageable = PageRequest.of(0, 4, Direction.ASC, "name");
-
-        ProductFilter filter = ProductFilter.builder()
-                .keyword(keyword)
-                .build();
-        Page<ProductDto> listProduct = productService.findPaging(filter, pageable);
-        model.addAttribute("listProduct", listProduct);
-
         return "user/home/Index";
     }
 

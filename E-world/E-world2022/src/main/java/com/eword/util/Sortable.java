@@ -1,4 +1,5 @@
 package com.eword.util;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,4 +19,11 @@ public class Sortable {
 	
 	public static final List<String> ORDER = Arrays.asList(
 			"id", "totalPrice");
+
+	public static  final List<String> STAFF = Arrays.asList(
+			"id","lastName", "age", "gioitinh"
+	);
+	public static final List<String> BLOG = Arrays.asList(
+			"id", "name", "status"
+	);
 }

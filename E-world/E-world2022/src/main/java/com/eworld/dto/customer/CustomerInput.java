@@ -10,16 +10,16 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.eworld.contstant.Gender;
 import com.eworld.contstant.UserStatus;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CustomerInput {
 	
 	private Integer id;

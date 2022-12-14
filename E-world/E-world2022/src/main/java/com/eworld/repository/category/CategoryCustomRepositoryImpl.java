@@ -52,9 +52,7 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository, F
 			if(StringUtils.isNumeric(filter.getKeyword())) {
 				whereClauseSqlBuilder.append(" c.id = :keywordId OR");
 				parameterMap.put("keywordId", Integer.parseInt(filter.getKeyword()));
-				
-				whereClauseSqlBuilder.append(" c.age = :keywordAge OR");
-				parameterMap.put("keywordAge", Integer.parseInt(filter.getKeyword()));
+
 			}
 			
 			whereClauseSqlBuilder.append(" c.name LIKE :keyword OR c.status LIKE :keyword)");

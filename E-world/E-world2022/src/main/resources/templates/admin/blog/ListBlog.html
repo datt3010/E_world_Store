@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xlms:th="https://www.thymeleaf.org">
+<html class="no-js" lang="zxx" xmlns:th="https://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -53,7 +53,7 @@
                             	<div class="card-body">
 							<form>
 						  <div class="form-group">
-						    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
+						    <input name="keyword" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
 						  </div>
 						</form>
 								<h4 class="card-title">Danh sách sản phẩm</h4>
@@ -61,44 +61,46 @@
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th scope="col">Tên sản phẩm</th>
-												<th scope="col">Giá sản phẩm</th>
-												<th scope="col">Loại sản phẩm</th>
-												<th scope="col">Giá sản phẩm</th>
-												<th scope="col">Ngày bảo hành</th>
-												<th scope="col">Model</th>
-												<th scope="col"> Ảnh</th>
+												<th scope="col"><a th:href="@{'/admin/listblog/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Tên blog</a></th>
+												<th scope="col">Nội dung</th>
+												<th scope="col">Ảnh</th>
+												<th scope="col">Trạng thái</th>
+												<th scope="col"></th>
+												<th scope="col"> </th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="p in items">
-												<td>{{item.name}}</td>
-												<td>{{item.price | number:2}}</td>
-												<td>{{item.category.name}}</td>
-												<td>{{item.price}}</td>
-												<td>{{item.ngaybaohanh}}</td>
-												<td>{{item.model}}</td>
-												<td><img src="/images/product/small-size/1.jpg" width="100" height="80"></td>
-												<td><a href="">Edit</a></td>
-												<td><a href="">Delete</a></td>
+											<tr  th:each="b: ${listBlog}">
+												<td>[[${b.name}]]</td>
+												<td>[[${b.description}]]</td>
+                                                <td><img th:src="@{|images/blog/${b.image}|}" width="100" height="80"></td>
+												<td>[[${b.status}]]</td>
+                                                <td><a th:href="@{|/admin/listblog/${b.id}|}">Edit</a></td>
+                                                <td><a th:href="@{|/admin/listblog/delete/${b.id}|}">Delete</a></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
-							<nav aria-label="Page navigation example" style="margin-left: 88rem;">
-								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-									</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-									</a></li>
-								</ul>
-							</nav>
+                            <span style="margin-left:2rem;">Total Items: [[${totalItems}]]- Page [[${currentPage}]] of [[${totalPages}]]</span>
+                            <nav aria-label="Page navigation example" style="margin-left: 80rem;">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" th:if="${currentPage > 1}" th:href="@{'/admin/listblog/page/' + ${currentPage - 1} + '?sortField=id&sortDir=' + ${reverseSortDir}}" aria-label="Previous">Previous</a>
+                                        <span aria-label="Previous" th:unless="${currentPage >1}">Previous</span>
+                                        &nbsp;&nbsp;
+                                    </li>
+                                    <span th:each="i: ${#numbers.sequence(1, totalPages)}" class="page-item">
+									<span><a th:if="${i != currentPage}" th:href="@{'/admin/listblog/page/' +${i} + '?sortField=id&sortDir=' + ${reverseSortDir}}">[[${i}]]</a>
+									    <span th:unless="${i != currentPage}">[[${i}]]</span> &nbsp;
+									</span> &nbsp;&nbsp;
+									</span>
+                                    <li class="page-item">
+                                        <a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/admin/listblog/page/' + ${currentPage + 1} + '?sortField=id&sortDir=' + ${reverseSortDir}}" aria-label="Next">Next</a>
+                                        <span th:unless="${currentPage < totalPages}">Next</span>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>

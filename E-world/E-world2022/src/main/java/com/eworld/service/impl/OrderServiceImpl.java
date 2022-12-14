@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.eworld.repository.order.OrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -41,8 +42,10 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	ProductRepository productRepo;
-	
-    private Map<Product, Integer> products = new HashMap<>();
+
+	@Autowired
+	OrderDetailRepository orderDetailRepository;
+
 	
 	@Override
 	@Transactional
@@ -50,11 +53,11 @@ public class OrderServiceImpl implements OrderService {
 		
 		Instant instant = Instant.now();
 		Date date = Date.from(instant);
-		
-		 Product product = products.keySet().stream()
-				.filter(pp -> pp.getId() == input.getProduct().getId())
+
+		Product product = cartService.getProductInCart().entrySet().stream()
+				.map(p -> p.getKey())
 				.findFirst()
-				.orElse(input.getProduct());
+				.orElseThrow();
 		
 		Order order = Order.builder()
 				.createdAt(date)
@@ -65,17 +68,17 @@ public class OrderServiceImpl implements OrderService {
 				.paymentMethod(PaymentMethod.CASH)
 				.status(OrderStatus.IN_PROCRESS)
 				.build();
-				
-		Set<OrderDetail> OrderDetails = productRepo.findById(product.getId()).stream()
-				.map( e -> OrderDetail.builder()
-						.order(order)
-						.productPrice(product.getPrice())
-						.quantity(product.getQuantity())
-						.product(e)
-						.build())
-				.collect(Collectors.toSet());
-		order.setOrderDetails(OrderDetails);
-			
+
+		OrderDetail orderDetail = orderDetailRepository.findByOrderId(order.getId());  
+		order.setOrderDetails(Set.of(orderDetail = OrderDetail.builder()
+				.order(order)
+				.product(product)
+				.productPrice(product.getPrice())
+				.quantity(product.getQuantity())
+				.orderId(input.getId())
+				.productId(product.getId())
+				.build()));
+
 		orderRepository.save(order);
 		return OrderDto.builder().id(input.getId()).build();
 	}

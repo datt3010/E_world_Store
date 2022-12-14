@@ -1,38 +1,26 @@
 package com.eworld.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletContext;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.SortDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.eworld.dto.category.CategoryDto;
 import com.eworld.dto.category.CategoryInput;
 import com.eworld.dto.category.CategoryUpdate;
 import com.eworld.entity.Category;
-import com.eworld.filter.CategoryFilter;
 import com.eworld.service.CategoryService;
 import com.eworld.service.UploadService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("admin")
 public class CategoryController {  
 	
 	@Autowired
@@ -40,9 +28,7 @@ public class CategoryController {
 	
 	@Autowired
 	private UploadService uploadService;
-	
-	ServletContext application;
-	
+
 	@PostMapping("/category/insert")
 	public String create (@ModelAttribute("category") @Valid CategoryInput input, 
 			BindingResult result,
@@ -61,29 +47,20 @@ public class CategoryController {
 		uploadService.save(file, uploadDirectory);
 		model.addAttribute("message","Thêm mới thành công ^-^");
 		
-		return "admin/brand/BrandDashBoard";
+		return "admin/category/CategoryDashBoard";
 	}
 	
 	@RequestMapping("/category")
-	public String crudBrand(Model model) {
+	public String crudCategory(Model model) {
 		
 		model.addAttribute("category", new Category());
 		
-		return "admin/brand/BrandDashBoard";
+		return "admin/category/CategoryDashBoard";
 	}
 	
 	@RequestMapping("/listcategory")
-	public String listBrand(Model model, @RequestParam(name = "keyword", required = false)String keyword) {
-		Pageable pageable = PageRequest.of(0, 10, Direction.ASC,"name");
-		
-		CategoryFilter filter = CategoryFilter.builder()
-				.keyword(keyword)
-				.build();
-		
-		Page<CategoryDto> listCategory = categorySerivce.findPaging(filter, pageable);
-		model.addAttribute("listCategory", listCategory);
-		
-		return listPage(model, 1, keyword, "name", "asc", pageable);
+	public String listCategory(Model model) {
+		return listPage(model, 1, null, "id", "asc");
 	}
 	
 	@RequestMapping("category/{id}")
@@ -92,12 +69,12 @@ public class CategoryController {
 		CategoryDto category = categorySerivce.getDetail(id);
 		
 		model.addAttribute("category",category);
-		return "admin/brand/BrandDashBoard";
+		return "admin/category/CategoryDashBoard";
 	}
 	
 	@RequestMapping("category/delete/{id}")
 	public String delete(@PathVariable("id") Integer id) {
-		categorySerivce.deleteById(id);
+		categorySerivce.changeStatus(id);
 		return "redirect:/admin/listcategory";
 	}
 	
@@ -105,7 +82,7 @@ public class CategoryController {
 	public String update(@ModelAttribute("category") @Valid  CategoryUpdate input, BindingResult result, Model model, @RequestParam("image") MultipartFile file, @PathVariable("id") Integer id) throws IOException {
 		
 		if(result.hasErrors()) {
-			return "admin/brand/BrandDashBoard";
+			return "admin/category/CategoryDashBoard";
 		}
 		
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -122,26 +99,23 @@ public class CategoryController {
 	@RequestMapping("listcategory/page/{pageNum}")
 	public String listPage(Model model,
 			@PathVariable("pageNum") int pageNum,
-			@RequestParam(name="keyword", required = false) String keyword,
-			@RequestParam(name="sortField", required = false) String sortField,
-			@RequestParam(name = "sortDir", required = false) String sortDir,
-			@SortDefault(sort = "name", direction = Direction.ASC) Pageable pageable){
-		pageable = PageRequest.of(pageNum-1, 3, sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
-		CategoryFilter filter = CategoryFilter.builder()
-				.keyword(keyword)
-				.build();
-		Page<CategoryDto> listCategory = categorySerivce.findPaging(filter, pageable);
-		model.addAttribute("keyword", filter.getKeyword());
-		model.addAttribute("listCategory", listCategory);
+			@Param("keyword") String keyword,
+			@Param("sortField") String sortField,
+		   	@Param("sortDir") String sortDir)
+	{
+		Page<CategoryDto> listCategory = categorySerivce.findPaging(keyword, sortField, sortDir, pageNum);
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("totalPages", listCategory.getTotalPages());
 		model.addAttribute("totalItems", listCategory.getTotalElements());
 		
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDir", sortDir);
-		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
-		
-		return "admin/brand/ListBrand";
-			}
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+		model.addAttribute("listCategory", listCategory);
+
+		return "admin/category/ListCategory";
+	}
 
 }

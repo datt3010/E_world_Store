@@ -29,11 +29,12 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository, Fin
 	public Page<Product> findPaging(ProductFilter filter, Pageable pageable) {
 		
 		StringBuilder countSqlBuilder = new StringBuilder(100)
-				.append("SELECT COUNT(p.id) FROM Product p");
+				.append("SELECT COUNT(p.id) FROM Product p")
+				.append(" LEFT JOIN FETCH Category c ON c.id = p.categoryId");
 		
 		StringBuilder selectSqlBuilder = new StringBuilder(100)
-				.append(" SELECT p FROM Product p");
-		
+				.append(" SELECT p FROM Product p")
+				.append(" LEFT JOIN FETCH Category c ON c.id = p.categoryId");
 		StringBuilder whereClauseSqlBuilder = new StringBuilder(50)
 				.append(" WHERE 1=1");
 		

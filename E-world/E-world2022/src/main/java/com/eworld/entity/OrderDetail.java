@@ -1,13 +1,6 @@
 package com.eworld.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,10 +22,16 @@ public class OrderDetail {
 	private Integer quantity;
 	
 	private Double productPrice;
+
+	@Column(insertable = false, updatable = false)
+	private  Integer productId;
 		
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "productId", referencedColumnName = "id", updatable = false)
 	private Product product;
+
+	@Column(insertable = false, updatable = false)
+	private  Integer orderId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderId", referencedColumnName = "id", updatable = false)

@@ -20,7 +20,7 @@
                             <!-- Begin Header Middle Right Area -->
                             <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
                                 <!-- Begin Header Middle Searchbox Area -->
-                                <form th:action="@{/product/search}" class="hm-searchbox">
+                                <form th:action="@{/product/search}" method="get" class="hm-searchbox">
                                     <select class="nice-select select-search-category">
                                         <option value="0">All</option>                         
                                         <option value="10">Laptops</option>                     
@@ -94,6 +94,8 @@
                                         <option value="16">Accessories</option>
                                     </select>
                                     <input name="keyword" type="text" placeholder="Enter your search key ...">
+                                    <input type="hidden" name="sortDir" th:value="${sortDir}">
+                                    <input type="hidden" name="sortField" th:value="${sortField}">
                                     <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                                 <!-- Header Middle Searchbox Area End Here -->

@@ -1,19 +1,17 @@
 package com.eworld.repository.customer;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.eword.util.Sortable;
 import com.eworld.entity.Account;
 import com.eworld.filter.CustomerFilter;
 import com.eworld.provider.FindPagingJpaRepository;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPagingJpaRepository<Account> {
 
@@ -34,7 +32,8 @@ public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPag
 		
 		StringBuilder whereClauseSqlBuilder = new StringBuilder(50)
 				.append(" WHERE 1=1")
-				.append(" AND ar.roleId=3");
+				.append(" AND ar.roleId=3")
+				.append(" AND c.status LIKE 'ACTIVE'");
 
 		Map<String, Object> parameterMap = new LinkedHashMap<>();
 		
@@ -60,7 +59,6 @@ public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPag
 		
 		return findPaging(countSqlBuilder.toString(), selectSqlBuilder.toString(), pageable, parameterMap);
 	}
-
 
 	@Override
 	public EntityManager getEntityManager() {

@@ -1,9 +1,18 @@
 package com.eworld.service.impl;
 
-import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-
+import com.eworld.contstant.UserStatus;
+import com.eworld.dto.customer.CustomerDto;
+import com.eworld.dto.customer.CustomerInput;
+import com.eworld.dto.customer.CustomerUpdate;
+import com.eworld.entity.Account;
+import com.eworld.entity.AccountRole;
+import com.eworld.entity.Role;
+import com.eworld.filter.CustomerFilter;
+import com.eworld.projector.CustomerProjector;
+import com.eworld.repository.customer.CustomerRepository;
+import com.eworld.repository.role.AccountRoleRepository;
+import com.eworld.repository.role.RoleRepository;
+import com.eworld.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,15 +20,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.eworld.dto.customer.CustomerDto;
-import com.eworld.dto.customer.CustomerInput;
-import com.eworld.dto.customer.CustomerUpdate;
-import com.eworld.entity.Account;
-import com.eworld.filter.CustomerFilter;
-import com.eworld.projector.CustomerProjector;
-import com.eworld.repository.customer.CustomerRepository;
-import com.eworld.repository.role.RoleRepository;
-import com.eworld.service.CustomerService;
+import java.time.Instant;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,9 +35,12 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private RoleRepository roleRepository;
 
+	@Autowired
+	private AccountRoleRepository accountRoleRepository;
+
 	@Override
 	public Account findById(Integer id) {
-		return customerRepo.findById(id).get();  
+		return customerRepo.findById(id).get();
 	}
 
 	@Override
@@ -49,6 +56,8 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		Instant instant = Instant.now();
 		Date date = Date.from(instant);
+
+		Role role = roleRepository.findById("3").orElseThrow();
 		
 		Account account = Account.builder()
 				.createAt(date)
@@ -66,18 +75,15 @@ public class CustomerServiceImpl implements CustomerService {
 				.status(input.getStatus())
 				.gioitinh(input.getGioitinh())
 				.build();
-		
-//		List<Role> roles = roleRepository.findByIdIn(input.getRoleIds());
-//		Set<AccountRole> accountRoles = roles.stream()
-//				.map(e -> AccountRole.builder()
-//					.account(account)
-//					.role(e)
-//					.accountId(input.getId())
-//					.roleId(3)
-//					.build())
-//				.collect(Collectors.toSet());
-//		account.setAccountRoles(accountRoles);
-		
+
+		AccountRole accountRole = accountRoleRepository.findByAccountId(account.getId());
+		account.setAccountRoles(Set.of(accountRole = AccountRole.builder()
+				.account(account)
+				.accountId(input.getId())
+				.role(role)
+				.roleId(role.getId())
+				.build()));
+
 		customerRepo.save(account);
 		return CustomerDto.builder()
 				.id(account.getId())
@@ -95,8 +101,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional
-	public void delete(Integer id) {
-		customerRepo.deleteById(id);
+	public void changeStatus(Integer id) {
+		customerRepo.changeStatus(UserStatus.INACTIVE,id);
 	}
 
 	@Override

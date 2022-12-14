@@ -1,5 +1,6 @@
 package com.eworld.service;
 
+import com.eworld.dto.category.CategoryDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,10 +15,10 @@ public interface ProductService {
 	public  ProductDto create(ProductInput input);
 	
 	public 	ProductDto update(Integer id, ProductUpdate input);
-	
-	public Page<ProductDto> findPaging(ProductFilter filter, Pageable pageable);
+
+	public Page<ProductDto> findPaging(String keyword, String sortField, String sortDir, int pageNum);
 		
-	public void deleteById(Integer id);
+	public void changeStatus(Integer id);
 	
 	public ProductDto getDetail(Integer id);
 	

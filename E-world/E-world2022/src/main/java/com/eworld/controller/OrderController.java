@@ -39,7 +39,7 @@ public class OrderController {
 	public String checkOut(Model model, @ModelAttribute("order") OrderInput input) {
 				
 		input.setAccountId(1);
-		orderService.Checkout(input);		
+		orderService.Checkout(input);
 		model.addAttribute("message", "order thanh cong");
 		return "user/order/Order";
 	}

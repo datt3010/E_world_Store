@@ -1,15 +1,19 @@
 package com.eworld.controller;
 
-import java.util.Map;
-
+import com.eworld.dto.category.CategoryDto;
+import com.eworld.dto.product.ProductDto;
+import com.eworld.entity.Product;
+import com.eworld.filter.CategoryFilter;
+import com.eworld.repository.product.ProductRepository;
+import com.eworld.service.CategoryService;
+import com.eworld.service.ProductService;
+import com.eworld.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,15 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.eworld.dto.category.CategoryDto;
-import com.eworld.dto.product.ProductDto;
-import com.eworld.entity.Product;
-import com.eworld.filter.CategoryFilter;
-import com.eworld.filter.ProductFilter;
-import com.eworld.repository.product.ProductRepository;
-import com.eworld.service.CategoryService;
-import com.eworld.service.ProductService;
-import com.eworld.service.ShoppingCartService;
+import java.util.Map;
 
 @Controller
 public class WebController {
@@ -54,8 +50,7 @@ public class WebController {
 	
 	@RequestMapping("/product")
 	public String listAll(Model model, @RequestParam(name = "keyword", required = false)String keyword) {
-	Pageable pageable = PageRequest.of(0,5,Direction.ASC,"name");		
-		return listPage(model, 1, keyword,"name", "asc", pageable);
+		return  listPage(model,1,null,"id","asc");
 	}
 	
 	@RequestMapping("/product/page/{pageNum}")
@@ -63,20 +58,15 @@ public class WebController {
 			@PathVariable("pageNum") int pageNum,
 			@RequestParam(name="keyword", required = false)String keyword,
 			@RequestParam(name="sortField", required = false) String sortField,
-			@RequestParam(name="sortDir", required = false) String sortDir,
-			@SortDefault(sort = "name", direction = Direction.ASC)Pageable pageable) {
-		
-		 pageable = PageRequest.of(pageNum-1, 3,sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
-		ProductFilter filter = ProductFilter.builder()
-				.keyword(keyword)
-				.build();
-		Page<ProductDto> listProduct = productService.findPaging(filter, pageable);
-		model.addAttribute("keyword", filter.getKeyword());
+			@RequestParam(name="sortDir", required = false) String sortDir)
+	{
+		Page<ProductDto> listProduct = productService.findPaging(keyword,sortField,sortDir,pageNum);
+		model.addAttribute("keyword",keyword);
 		model.addAttribute("listProduct", listProduct);
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("totalPages", listProduct.getTotalPages());
-		model.addAttribute("totalProducts", listProduct.getTotalElements());
-		
+		model.addAttribute("totalProduct", listProduct.getTotalElements());
+
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
@@ -85,22 +75,13 @@ public class WebController {
 
 		return "user/product/Listproduct";
 		}
-	
+
 	@RequestMapping("/product/search")
 	public String searchByKey(Model model,
-					@RequestParam("keyword")String keyword,
-					@SortDefault(sort = "name", direction = Direction.DESC)Pageable pageable) {
-		pageable = PageRequest.of(0, 10,Direction.ASC,"name");
-		
-		ProductFilter filter = ProductFilter.builder()
-				.keyword(keyword)
-				.build();
-		Page<ProductDto> listProduct = productService.findPaging(filter, pageable);
-		model.addAttribute("listProduct", listProduct);
-		
-		return listPage(model, 1, keyword,"name", "asc", pageable);
+					@RequestParam(value = "keyword",required = false)String keyword) {
+		return listPage(model, 1, keyword,"name", "asc");
 	}
-	
+
 	@RequestMapping("/shoppingcart")
 	public String shoppingCart(Model model) {
 		model.addAttribute("cart", shoppingCartService.getProductInCart());
@@ -131,13 +112,8 @@ public class WebController {
 	}
 
 	@RequestMapping("product/")
-	public String listBySelection(Model model,
-			@RequestParam("sortField")String sortField,
-			@RequestParam("sortDir") String sortDir) {
-		
-		 Pageable pageable = PageRequest.of(0,3,sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
-		
-		return listPage(model,1, null, sortField, sortDir, pageable);
+	public String listBySelection(Model model) {
+		return listPage(model,1, null,"id","asc");
 	}
 	
 	@ModelAttribute("categories")
@@ -146,7 +122,7 @@ public class WebController {
 		CategoryFilter filter = CategoryFilter.builder()
 				.brandId(brandId)
 				.build();
-		Page<CategoryDto> page = categoryService.findPaging(filter, pageable);
+		Page<CategoryDto> page = categoryService.findPaging(null,"name","asc",1);
 		return page;
 	}
 
