@@ -10,4 +10,8 @@ import lombok.Value;
 public class ProductFilter {
 	
 	private String keyword;
+
+	private Integer categoryId;
+
+	private  Integer brandId;
 }

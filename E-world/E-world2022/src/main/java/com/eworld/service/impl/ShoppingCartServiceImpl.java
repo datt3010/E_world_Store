@@ -1,10 +1,17 @@
 package com.eworld.service.impl;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import com.eworld.dto.order.OrderDto;
+import com.eworld.entity.Order;
+import com.eworld.entity.OrderDetail;
+import com.eworld.entity.Product;
+import com.eworld.repository.customer.CustomerRepository;
+import com.eworld.repository.order.OrderDetailRepository;
+import com.eworld.repository.order.OrderRepository;
+import com.eworld.repository.product.ProductRepository;
+import com.eworld.service.ShoppingCartService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -12,26 +19,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.eworld.entity.Product;
-import com.eworld.exception.NotEnoughProductsInStockException;
-import com.eworld.repository.product.ProductRepository;
-import com.eworld.service.ProductService;
-import com.eworld.service.ShoppingCartService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service("cart")
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Transactional(readOnly = true)
 public class ShoppingCartServiceImpl  implements ShoppingCartService {
-	
-	@Autowired
-	private ProductService productService;
-	
+
 	@Autowired
 	private ProductRepository productRepo;
 	
     private Map<Product, Integer> products = new HashMap<>();
-	
+	@Autowired
+	private CustomerRepository customerRepository;
+
+	@Autowired
+	private OrderRepository orderRepository;
+
+	@Autowired
+	private OrderDetailRepository orderDetailRepository;
+
+/*
 	@Override
 	@Transactional
 	 public void addProduct(Product product) {
@@ -78,7 +91,7 @@ public class ShoppingCartServiceImpl  implements ShoppingCartService {
         Product product;
 	
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-        	product = productService.findbyId(entry.getKey().getId());
+        	product = productRepo.findById(entry.getKey().getId()).orElseThrow();
 				if(product.getQuantity() < entry.getValue()) {
 					throw new NotEnoughProductsInStockException(product);
 				}
@@ -100,4 +113,20 @@ public class ShoppingCartServiceImpl  implements ShoppingCartService {
 		return totalPrice;
 
 	}
+*/
+
+	@Override
+	public OrderDto createOrder(JsonNode orderData) {
+		ObjectMapper mapper = new ObjectMapper();
+		Order order = mapper.convertValue(orderData, Order.class);
+		orderRepository.save(order);
+		TypeReference<Set<OrderDetail>> type = new TypeReference<Set<OrderDetail>>(){};
+		List<OrderDetail> details = mapper.convertValue(orderData.get("orderDetails"),type)
+				.stream()
+				.peek(d -> d.setOrder(order)).collect(Collectors.toList());
+		orderDetailRepository.saveAll(details);
+
+		return OrderDto.builder().id(order.getId()).build();
+	}
+
 }

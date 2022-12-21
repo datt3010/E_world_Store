@@ -26,4 +26,7 @@ public class Sortable {
 	public static final List<String> BLOG = Arrays.asList(
 			"id", "name", "status"
 	);
+	public static final List<String> CARTITEMS = Arrays.asList(
+			"id"
+	);
 }

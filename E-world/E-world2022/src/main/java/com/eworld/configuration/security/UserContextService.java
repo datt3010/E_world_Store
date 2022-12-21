@@ -109,9 +109,9 @@ public class UserContextService implements UserDetailsManager, Serializable {
                 userContext.setPassword(oldPassword);
                 accountService.changePassword(userContext);
             }
-            else{
-               userContext.setPassword(newPassword);
-               accountService.changePassword(userContext);
+            else {
+                userContext.setPassword(newPassword);
+                accountService.changePassword(userContext);
             }
     }
     @Override
@@ -127,5 +127,20 @@ public class UserContextService implements UserDetailsManager, Serializable {
     public boolean hasAnyRole(String ... roles){
         UserContext userContext = this.getUserContext();
         return userContext !=null && userContext.hasAnyRole(roles);
+    }
+    public UserContext getCurrentlyLoggedInCustomer(Authentication authentication){
+        if(authentication !=null){
+            return null;
+        }
+        UserContext userContext = null;
+        Object principal = authentication.getPrincipal();
+        if(principal instanceof UserContext){
+            userContext = ((UserContext) principal);
+        }
+        else if (principal instanceof  OAuth2User){
+            String email = ((UserContext)principal).getEmail();
+            userContext = accountService.findbyUsernameOrEmail(email);
+        }
+        return userContext;
     }
 }

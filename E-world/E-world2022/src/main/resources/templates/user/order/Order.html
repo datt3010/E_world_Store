@@ -42,8 +42,11 @@
         <link rel="stylesheet" href="/css/responsive.css">
         <!-- Modernizr js -->
         <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="/js/add_to_cart.js"></script>
     </head>
-    <body onload="loadDate()">
+    <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl" onload="loadDate()">
          <div class="body-wrapper">
             <header>
          <div th:replace="/layout/user/Header.html"></div>
@@ -80,38 +83,40 @@
 				  <div class="container">
                     <div class="row">
                          <div class="col-12">
-             <form th:action="@{/order}" method="post" th:object="${order}">
+             <form>
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
-				      <label for="inputEmail4">Ngày mua</label>
-				      <input th:field="*{created_at}" type="text" class="form-control" id="date" disabled="true">
-				    </div>
+				      <label for="date">Ngày mua</label>
+				      <input  type="text" class="form-control" id="date" disabled="true">
+                        <div id="accountId" style="visibility:hidden;" >[[${#authentication.principal.id}]]</div>
+                    </div>
 				    <div class="form-group col-md-6">
-				      <label for="inputPassword4">Người mua</label>
-				      <input type="text" class="form-control" id="inputPassword4" th:value="${@sec.userContext.fullName}" disabled="disabled">
-				    </div>
+				      <label for="fullName">Người mua</label>
+				      <input type="text" class="form-control" id="fullName" th:value="${@sec.getUserContext.fullName}" disabled="disabled">
+                        <div id="username" style="visibility:hidden;">[[${#request.remoteUser}]]</div>
+                    </div>
 				  </div>
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
-				      <label for="inputEmail4">Địa chỉ</label>
-				      <input th:field="*{address}" type="text" class="form-control" id="inputEmail4" value="dd/MM/YYYY" >
+				      <label for="address">Địa chỉ</label>
+				      <input ng-model="order.address"  type="text" class="form-control" id="address">
 				    </div>
 				    <div class="form-group col-md-6">
-				      <label for="inputPassword4">Số điện thoại</label>
-				      <input th:field="*{phone}" type="text" class="form-control" id="inputPassword4" >
+				      <label for="phoneNumber">Số điện thoại</label>
+				      <input ng-model="order.phone"  type="text" class="form-control" id="phoneNumber" >
 				    </div>
 				  </div>
 				 	  <div class="form-row">
 				    <div class="form-group col-md-8">
-				      <label for="inputEmail4">Total price</label>
-				      <input th:name="totalPrice" type="text" class="form-control" id="formattedNumberField" th:value="${totalPrice}" disabled="disabled"  >
+				      <label for="formattedNumberField">Total price</label>
+				      <input ng-value="{{cart.amount + cart.amount*0.1}}" type="text" class="form-control" id="formattedNumberField" disabled="disabled"  >
 				    </div>
 				  </div>
-				  <button type="submit" class="btn btn-primary">Thanh toán</button>
+				  <button ng-click="order.purchase()" type="submit" class="btn btn-primary">Thanh toán</button>
   				  <button type="submit" class="btn btn-primary">Kiểm tra lịch sử mua hàng của bạn</button>
 				</form>
                         </div>
-                    </div>  
+                    </div>
                 </div>
 				  </div>
 				  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
@@ -127,11 +132,11 @@
 					    </tr>
 					  </thead>
 					  <tbody>
-					    <tr th:each="o: ${listOrder}">
-					      <th>[[${o.id}]]</th>
-					      <td th:text="${#dates.format(o.createdAt, 'dd-MM-yyyy')}">[[${o.createdAt}]]</td>
-					      <td>[[${o.totalPrice}]]</td>
-					      <td>[[${o.status}]]</td>
+					    <tr>
+					      <th>id</th>
+					      <td >ngày mua</td>
+					      <td>Tổng tiền</td>
+					      <td> Trạng thái</td>
 					      <td><a href="#">Xem chi tiết đơn hàng</a></td>
 					    </tr>
 					  </tbody>

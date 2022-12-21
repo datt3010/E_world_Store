@@ -1,19 +1,17 @@
 package com.eworld.repository.category;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.eword.util.Sortable;
 import com.eworld.entity.Category;
 import com.eworld.filter.CategoryFilter;
 import com.eworld.provider.FindPagingJpaRepository;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class CategoryCustomRepositoryImpl implements CategoryCustomRepository, FindPagingJpaRepository<Category> {
 	
@@ -32,7 +30,7 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository, F
 		
 		StringBuilder selectSqlBuilder = new StringBuilder(100)
 				.append(" SELECT c FROM Category c");
-		
+
 		StringBuilder conditionSqlBuilder = new StringBuilder(100);
 		
 		StringBuilder whereClauseSqlBuilder = new StringBuilder(50)
@@ -41,7 +39,8 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository, F
 		Map<String, Object> parameterMap = new LinkedHashMap<>();
 		
 		if(filter.getBrandId() !=null) {
-			conditionSqlBuilder.append(" LEFT JOIN c.categoryBrands cb");
+			countSqlBuilder.append(" INNER JOIN CategoryBrand cb On cb.categoryId = c.id");
+			selectSqlBuilder.append(" INNER JOIN CategoryBrand cb ON cb.categoryId = c.id");
 			whereClauseSqlBuilder.append(" AND cb.brandId = :brandId");
 			parameterMap.put("brandId", filter.getBrandId());
 		}

@@ -112,6 +112,15 @@ image VARCHAR(255) NOT NULL,
 status VARCHAR(50) NOT NULL
 )
 go
+CREATE TABLE cart_items(
+id INT IDENTITY(1,1) PRIMARY KEY,
+account_id INT NOT NULL,
+product_id INT NOT NULL,
+quantity INT,
+FOREIGN KEY(account_id) REFERENCES account(id),
+FOREIGN KEY(product_id) REFERENCES product(id)
+)
+go
 CREATE TRIGGER trg_account  ON account 
 AFTER INSERT AS
 DECLARE @account_id INT
@@ -128,6 +137,8 @@ DELETE FROM account_role WHERE @account_id IN(SELECT account_id FROM account_rol
 SELECT * FROM account
 SELECT * FROM account_role;
 SELECT * FROM role;
+SELECT * FROM order_detail;
+SELECT * FROM orders;
 DELETE FROM account WHERE id=4;
 
 INSERT INTO role(id,name) VALUES('1','Admin'),('2','Staff'),('3','Custom');
@@ -139,3 +150,27 @@ WHERE ar.account_id = 28
 
 SELECT * FROM account a inner join account_role ar on ar.account_id = a.id
 WHERE ar.role_id =3;
+
+SELECT * FROM product;
+
+UPDATE account  SET status = 'ACTIVE' WHERE id=28;	
+
+SELECT * FROM blog;
+
+select count(p.name) from product p where p.category_id IN (select cb.category_id from category_brand cb where cb.brand_id=1) ;
+
+SELECT * FROM category
+
+SELECT * FROM category_brand
+
+select count (a.id) from account a inner join account_role ar on ar.account_id = a.id 
+where ar.role_id=3
+
+SELECT * FROM cart_items ci inner join account a on a.id = ci.account_id where ci.account_id = a.id;
+
+select top 3 p.name, p.price from product p inner join order_detail od on od.product_id = p.id
+group by p.name
+order by sum(od.quantity) desc
+
+select * from orders
+select * from order_detail

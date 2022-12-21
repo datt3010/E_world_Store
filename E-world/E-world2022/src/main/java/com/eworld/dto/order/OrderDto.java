@@ -3,6 +3,7 @@ package com.eworld.dto.order;
 import java.util.Date;
 import java.util.Set;
 
+import com.eworld.configuration.security.UserContext;
 import com.eworld.contstant.OrderStatus;
 import com.eworld.contstant.PaymentMethod;
 import com.eworld.dto.customer.CustomerDto;
@@ -18,26 +19,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class OrderDto {
-	
+
 	private Date createdAt;
-	
+
 	private Integer id;
 	
 	private Integer accountId;
-	
-	private Integer paymentId;
-	
+
 	private String phone;
 	
 	private String address;
 	
 	private Double totalPrice;
-	
-	private Double freightFee;
-	
+
 	private OrderStatus status;
 	
-	private CustomerDto account;
+	private UserContext account;
 	
 	private PaymentMethod paymentMethod;
 	

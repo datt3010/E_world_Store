@@ -5,7 +5,7 @@
 <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Contact || limupa - Digital Products Store eCommerce Bootstrap 4 Template</title>
+        <title>Contact</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon -->
@@ -89,46 +89,50 @@
                         <div class="col-lg-5 offset-lg-1 col-md-12 order-1 order-lg-2">
                             <div class="contact-page-side-content">
                                 <h3 class="contact-page-title">Contact Us</h3>
-                                <p class="contact-page-message mb-25">Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram anteposuerit litterarum formas human.</p>
+                                <p class="contact-page-message mb-25">Đội ngũ nhân viên nhiệt tình, kinh nghiệm lâu năm và luôn đặt khách hàng là thượng đế</p>
                                 <div class="single-contact-block">
                                     <h4><i class="fa fa-fax"></i> Address</h4>
-                                    <p>123 Main Street, Anytown, CA 12345 – USA</p>
+                                    <p>271/16/14 Go O Moi street, Phu Thuan award, District 7 </p>
                                 </div>
                                 <div class="single-contact-block">
                                     <h4><i class="fa fa-phone"></i> Phone</h4>
-                                    <p>Mobile: (08) 123 456 789</p>
-                                    <p>Hotline: 1009 678 456</p>
+                                    <p>Mobile:0909442487</p>
                                 </div>
                                 <div class="single-contact-block last-child">
                                     <h4><i class="fa fa-envelope-o"></i> Email</h4>
-                                    <p>yourmail@domain.com</p>
-                                    <p>support@hastech.company</p>
+                                    <p>eworldstore2022@gmail.com</p>
+                                    <p>datthuynh30102002@gmail.com</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12 order-2 order-lg-1">
                             <div class="contact-form-content pt-sm-55 pt-xs-55">
                                 <h3 class="contact-page-title">Tell Us Your Message</h3>
+                                <span style="color:red;" th:text="${message}"></span>
                                 <div class="contact-form">
-                                    <form  id="contact-form" action="http://demo.hasthemes.com/limupa-v3/limupa/mail.php" method="post">
+                                    <form id="contact-form" th:object="${email}" th:action="@{contact}" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label>Your Name <span class="required">*</span></label>
-                                            <input type="text" name="customerName" id="customername" required>
+                                            <input th:field="*{fullName}"  type="text" name="customerName" id="customername" required>
+                                            <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
                                         </div>
                                         <div class="form-group">
                                             <label>Your Email <span class="required">*</span></label>
-                                            <input type="email" name="customerEmail" id="customerEmail" required>
+                                            <input th:field="*{mailFrom}" type="email" name="customerEmail" id="customerEmail" required>
+                                            <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('mailFrom')}" th:errors="*{mailFrom}"></span>
                                         </div>
                                         <div class="form-group">
                                             <label>Subject</label>
-                                            <input type="text" name="contactSubject" id="contactSubject">
+                                            <input th:field="*{mailSubject}" type="text" name="contactSubject" id="contactSubject">
+                                            <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('mailSubject')}" th:errors="*{mailSubject}"></span>
                                         </div>
                                         <div class="form-group mb-30">
                                             <label>Your Message</label>
-                                            <textarea name="contactMessage" id="contactMessage" ></textarea>
+                                            <textarea th:field="*{mailContent}" name="contactMessage" id="contactMessage" ></textarea>
+                                            <span class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('mailContent')}" th:errors="*{mailContent}"></span>
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" value="submit" id="submit" class="li-btn-3" name="submit">send</button>
+                                            <button  type="submit"  class="li-btn-3" >send</button>
                                         </div>
                                     </form>
                                 </div>

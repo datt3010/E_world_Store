@@ -1,13 +1,11 @@
 package com.eworld.service;
 
-import java.util.Map;
-
-import com.eworld.entity.Product;
-import com.eworld.exception.NotEnoughProductsInStockException;
+import com.eworld.dto.order.OrderDto;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public interface ShoppingCartService {
 	
-	public void addProduct(Product product);
+/*	public void addProduct(Product product);
 	
 	public void removeProduct(Product product);
 	
@@ -15,6 +13,8 @@ public interface ShoppingCartService {
 	
 	public void checkout() throws NotEnoughProductsInStockException;		
 	
-	public Double getTotal();
-	
+	public Double getTotal();*/
+
+	public OrderDto createOrder(JsonNode orderData);
+
 }

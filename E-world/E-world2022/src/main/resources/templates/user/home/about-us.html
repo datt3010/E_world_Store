@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="zxx" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
     
 <!-- about-us32:04-->
 <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>About Us || limupa - Digital Products Store eCommerce Bootstrap 4 Template</title>
+        <title>About Us</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon -->
@@ -42,8 +42,10 @@
         <link rel="stylesheet" href="/css/responsive.css">
         <!-- Modernizr js -->
         <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-    </head>
-    <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="/js/add_to_cart.js"></script>
+</head>
+    <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
     <!--[if lt IE 8]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
@@ -100,7 +102,7 @@
                         <!-- About Image Start -->
                         <div class="col-lg-5 col-md-10">
                             <div class="about-image-wrap">
-                                <img class="img-full" src="/images/product/large-size/13.jpg" alt="About Us" />
+                                <img class="img-full" src="/images/product/13.jpg" alt="About Us" />
                             </div>
                         </div>
                         <!-- About Image End -->
@@ -200,11 +202,11 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="team-member mb-60 mb-sm-30 mb-xs-30">
                                 <div class="team-thumb">
-                                    <img src="/images/team/1.png" alt="Our Team Member">
+                                    <img src="/images/staff/images.jpg" alt="Our Team Member">
                                 </div>
                                 <div class="team-content text-center">
                                     <h3>Huỳnh Tấn Đạt</h3>
-                                    <p>Member</p>
+                                    <p>Leader</p>
                                     <a href="#">dathtps18655@fpt.edu.vn</a>
                                     <div class="team-social">
                                         <a href="#"><i class="fa fa-facebook"></i></a>
@@ -218,30 +220,12 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="team-member mb-60 mb-sm-30 mb-xs-30">
                                 <div class="team-thumb">
-                                    <img src="/images/team/2.png" alt="Our Team Member">
+                                    <img src="/images/staff/tung.jpg" alt="Our Team Member">
                                 </div>
                                 <div class="team-content text-center">
                                     <h3>Trần Lê Thanh Tùng</h3>
                                     <p>Member</p>
-                                    <a href="#">info@example.com</a>
-                                    <div class="team-social">
-                                        <a href="#"><i class="fa fa-facebook"></i></a>
-                                        <a href="#"><i class="fa fa-twitter"></i></a>
-                                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                                        <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- end single team member -->
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="team-member mb-30 mb-sm-60">
-                                <div class="team-thumb">
-                                    <img src="/images/team/3.png" alt="Our Team Member">
-                                </div>
-                                <div class="team-content text-center">
-                                    <h3>Bùi Thanh Tùng</h3>
-                                    <p>Member</p>
-                                    <a href="#">info@example.com</a>
+                                    <a href="#">Tung6900@gmail.com</a>
                                     <div class="team-social">
                                         <a href="#"><i class="fa fa-facebook"></i></a>
                                         <a href="#"><i class="fa fa-twitter"></i></a>
@@ -254,12 +238,12 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="team-member mb-30 mb-sm-60 mb-xs-60">
                                 <div class="team-thumb">
-                                    <img src="/images/team/4.png" alt="Our Team Member">
+                                    <img src="/images/staff/trinh.jpg" alt="Our Team Member">
                                 </div>
                                 <div class="team-content text-center">
                                     <h3>Nguyễn Đăng Trình</h3>
-                                    <p>Team leader</p>
-                                    <a href="#">info@example.com</a>
+                                    <p>Member</p>
+                                    <a href="#">xammaachi9@gmail.com</a>
                                     <div class="team-social">
                                         <a href="#"><i class="fa fa-facebook"></i></a>
                                         <a href="#"><i class="fa fa-twitter"></i></a>

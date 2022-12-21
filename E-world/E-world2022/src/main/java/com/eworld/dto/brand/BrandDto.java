@@ -3,12 +3,10 @@ package com.eworld.dto.brand;
 import java.util.Set;
 
 import com.eworld.dto.category.CategoryBrandDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

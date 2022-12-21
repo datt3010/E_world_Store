@@ -12,7 +12,9 @@ import com.eworld.repository.category.CategoryRepository;
 import com.eworld.repository.product.ProductRepository;
 import com.eworld.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
 		Category category = cateRepo.findById(input.getCategoryId()).get(); 
 
 		
-		Product product = findbyId(id);
+		Product product = productRepo.findById(id).orElseThrow();
 				product.setCreatedAt(date);
 				product.setName(input.getName());
 				product.setPrice(input.getPrice());
@@ -87,13 +89,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Page<ProductDto> findPaging(String keyword, String sortField, String sortDir, int pageNum) {
-
-		ProductFilter filter = ProductFilter.builder()
-				.keyword(keyword)
-				.build();
-
-		Pageable pageable = PageRequest.of(pageNum-1, 3, sortDir.equals("asc")? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
+	public Page<ProductDto> findPaging(ProductFilter filter, Pageable pageable) {
 		Page<Product> page = productRepo.findPaging(filter, pageable);
 		List<ProductDto> content = ProductProjector.convertToPageDto(page.getContent());
 		return new PageImpl<>(content, pageable, page.getTotalElements());
@@ -110,12 +106,21 @@ public class ProductServiceImpl implements ProductService {
 		
 		Product product = productRepo.findById(id).get();
 		ProductDto dto = ProductProjector.convertToDetailDto(product);
-		
 		return dto;
 	}
 
 	@Override
-	public Product findbyId(Integer id) {
-		return productRepo.findById(id).get();
+	public ProductDto findbyId(Integer id) {
+		Product product =productRepo.findById(id).orElseThrow();
+		return  ProductDto.builder()
+				.id(product.getId())
+				.name(product.getName())
+				.price(product.getPrice())
+				.logo(product.getImage())
+				.build();
+	}
+
+	public Page<Product> findProductByCategoryId(Integer categoryId , Pageable pageable) {
+		return productRepo.listProductByCategoryId(categoryId,pageable);
 	}
 }

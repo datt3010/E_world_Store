@@ -42,8 +42,9 @@
         <link rel="stylesheet" href="/css/responsive.css">
         <!-- Modernizr js -->
         <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     </head>
-    <body>
+    <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
     <!--[if lt IE 8]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
@@ -112,10 +113,10 @@
                                         <p>Sort By:</p>
                                         <select onChange="window.location.href=this.value" class="nice-select">
                                             <option th:value="@{product}">Normally</option>
-                                        	<option th:value="@{'/product/'+ '?sortField=name&sortDir=asc'}">Name (A - Z)</option>
-                                            <option th:value="@{'/product/'+ '?sortField=name&sortDir=desc'}">Name (Z - A)</option>
-                                            <option th:value="@{'/product/'+ '?sortField=price&sortDir=asc'}">Price (Low &gt; High)</option>
-                                            <option th:value="@{'/product/'+ '?sortField=price&sortDir=desc'}">Price (High &gt; Low)</option>
+                                        	<option th:value="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">Name (A - Z)</option>
+                                            <option th:value="@{'/product/page/1'+'?sortField=name&sortDir=desc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">Name (Z - A)</option>
+                                            <option th:value="@{'/product/page/1'+'?sortField=price&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">Price (Low &gt; High)</option>
+                                            <option th:value="@{'/product/page/1'+'?sortField=price&sortDir=desc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">Price (High &gt; Low)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -132,7 +133,7 @@
                                                     <!-- single-product-wrap start -->
                                                     <div class="single-product-wrap">
                                                         <div class="product-image">
-                                                            <a href="single-product.html">
+                                                            <a th:href="@{|/chitietsanpham/${p.id}|}">
                                                                 <img  th:src="@{|/images/product/${p.logo}|}"/>
                                                             </a>
                                                             <span class="sticker">New</span>
@@ -160,7 +161,7 @@
                                                             </div>
                                                             <div class="add-actions">
                                                                 <ul class="add-actions-link">
-                                                                    <li class="add-cart active"><a th:href="@{|/shoppingcart/addProduct/${p.id}|}">Add to cart</a></li>
+                                                                    <li class="add-cart active"><a href="#" th:attr="ng-click=@{|cart.add(${p.id})|}"> Add to cart</a>
                                                                     <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                                                     <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
                                                                 </ul>
@@ -213,7 +214,7 @@
                                                     <div class="col-lg-4">
                                                         <div class="shop-add-action">
                                                             <ul class="add-actions-link">
-                                                                <li class="add-cart"><a href="#">Add to cart</a></li>
+                                                                <li class="add-cart"><a  href="#">Add to cart</a></li>
                                                                 <li class="wishlist"><a href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a></li>
                                                                 <li><a class="quick-view" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-eye"></i>Quick view</a></li>
                                                             </ul>
@@ -227,11 +228,11 @@
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6">
                                                 <span style="margin-left:2rem;">Total Items: [[${totalProduct}]]- Page [[${currentPage}]] of [[${totalPages}]]</span>
-                                                <nav th:if="${totalPages >1}" th:with="pageUrlPostfix='?sortField=' +${sortField} + '&sortDir=' +${sortDir}+ ${keyword !=null ? '&keyword=' + keyword : ''}" aria-label="Page navigation example">
+                                                <nav th:if="${totalPages >1}" th:with="pageUrlPostfix='?sortField=' +${sortField} + '&sortDir=' +${sortDir}+ ${keyword !=null ? '&keyword=' + keyword : ''} +${categoryId !=null ? '&categoryId=' +categoryId:''} +${brandId !=null ? '&brandId=' +brandId:''}" aria-label="Page navigation example">
                                                     <ul th:with="pageUrlPrefix='/product/page/'" class="pagination">
                                                         <li style="padding-right:10px;" class="page-item"><a th:if="${currentPage > 1}" th:href="@{${pageUrlPrefix} + ${currentPage -1} +${pageUrlPostfix}}" class="page-link" href="#">Previous</a></li>
                                                         <span style=" padding-right:10px; padding-top:8px;" class="page-item" aria-label="Previous" th:unless="${currentPage >1}">Previous</span>&nbsp;&nbsp;
-                                                        <th:block th:if="${  <=10}">
+                                                        <th:block th:if="${totalProducts<=10}">
                                                             <ul  th:each="i: ${#numbers.sequence(1, totalPages)}">
                                                                 <li class="page-item"><a th:if="${i != currentPage}" th:href="@{${pageUrlPrefix}+${i} +${pageUrlPostfix}}" class="page-link">[[${i}]]</a></li>
                                                                 <li class="page-item"><a th:unless="${i != currentPage}" class="page-link">[[${i}]]</a></li>
@@ -277,11 +278,12 @@
                                 </div>
                                 <!-- category-sub-menu start -->
                                 <div class="category-sub-menu">
-                                    <ul th:each="b: ${brands}">
-                                        <li  class="has-sub"><a href="# ">[[${b.name}]]</a>
-                                            <ul  th:each="c: ${categories}">
-                                            <input type="hidden" value="brandId" th:with="brandId = ${b.id}"/>
-                                                <li><a href="#">[[${c.name}]]</a></li>
+                                    <ul th:each="b: ${brands}" th:with="brandId=${b.id}">
+                                        <li  class="has-sub"><a href="#">[[${b.name}]]</a>
+                                            <ul th:each="x: ${categories}" th:with="categoryId=${x.id}">
+                                                <input type="hidden" name="sortDir" th:value="${sortDir}">
+                                                <input type="hidden" name="sortField" th:value="${sortField}">
+                                                <li><a  th:href="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">[[${x.name}]]</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -290,14 +292,14 @@
                             </div>
                             <!--sidebar-categores-box end  -->
                             <!--sidebar-categores-box start  -->
-                            <div class="sidebar-categores-box">
+                       <!--     <div class="sidebar-categores-box">
                                 <div class="sidebar-title">
                                     <h2>Filter By</h2>
                                 </div>
-                                <!-- btn-clear-all start -->
+                                &lt;!&ndash; btn-clear-all start &ndash;&gt;
                                 <button class="btn-clear-all mb-sm-30 mb-xs-30">Clear all</button>
-                                <!-- btn-clear-all end -->
-                                <!-- filter-sub-area start -->
+                                &lt;!&ndash; btn-clear-all end &ndash;&gt;
+                                &lt;!&ndash; filter-sub-area start &ndash;&gt;
                                 <div class="filter-sub-area">
                                     <h5 class="filter-sub-titel">Brand</h5>
                                     <div class="categori-checkbox">
@@ -310,8 +312,8 @@
                                         </form>
                                     </div>
                                  </div>
-                                <!-- filter-sub-area end -->
-                                <!-- filter-sub-area start -->
+                                &lt;!&ndash; filter-sub-area end &ndash;&gt;
+                                &lt;!&ndash; filter-sub-area start &ndash;&gt;
                                 <div class="filter-sub-area pt-sm-10 pt-xs-10">
                                     <h5 class="filter-sub-titel">Categories</h5>
                                     <div class="categori-checkbox">
@@ -323,52 +325,8 @@
                                         </form>
                                     </div>
                                  </div>
-                                <!-- filter-sub-area end -->
-                                <!-- filter-sub-area start -->
-                                <div class="filter-sub-area pt-sm-10 pt-xs-10">
-                                    <h5 class="filter-sub-titel">Size</h5>
-                                    <div class="size-checkbox">
-                                        <form action="#">
-                                            <ul>
-                                                <li><input type="checkbox" name="product-size"><a href="#">S (3)</a></li>
-                                                <li><input type="checkbox" name="product-size"><a href="#">M (3)</a></li>
-                                                <li><input type="checkbox" name="product-size"><a href="#">L (3)</a></li>
-                                                <li><input type="checkbox" name="product-size"><a href="#">XL (3)</a></li>
-                                            </ul>
-                                        </form>
-                                    </div>
-                                </div>
-                                <!-- filter-sub-area end -->
-                                <!-- filter-sub-area start -->
-                                <div class="filter-sub-area pt-sm-10 pt-xs-10">
-                                    <h5 class="filter-sub-titel">Color</h5>
-                                    <div class="color-categoriy">
-                                        <form action="#">
-                                            <ul>
-                                                <li><span class="white"></span><a href="#">White (1)</a></li>
-                                                <li><span class="black"></span><a href="#">Black (1)</a></li>
-                                                <li><span class="Orange"></span><a href="#">Orange (3) </a></li>
-                                                <li><span class="Blue"></span><a href="#">Blue  (2) </a></li>
-                                            </ul>
-                                        </form>
-                                    </div>
-                                </div>
-                                <!-- filter-sub-area end -->
-                                <!-- filter-sub-area start -->
-                                <div class="filter-sub-area pt-sm-10 pb-sm-15 pb-xs-15">
-                                    <h5 class="filter-sub-titel">Dimension</h5>
-                                    <div class="categori-checkbox">
-                                        <form action="#">
-                                            <ul>
-                                                <li><input type="checkbox" name="product-categori"><a href="#">40x60cm (6)</a></li>
-                                                <li><input type="checkbox" name="product-categori"><a href="#">60x90cm (6)</a></li>
-                                                <li><input type="checkbox" name="product-categori"><a href="#">80x120cm (6)</a></li>
-                                            </ul>
-                                        </form>
-                                    </div>
-                                 </div>
-                                <!-- filter-sub-area end -->
-                            </div>
+                                &lt;!&ndash; filter-sub-area end &ndash;&gt;
+                            </div>-->
                             <!--sidebar-categores-box end  -->
                             <!-- category-sub-menu start -->
                             <div class="sidebar-categores-box mb-sm-0 mb-xs-0">
@@ -376,13 +334,8 @@
                                     <h2>Brands</h2>
                                 </div>
                                 <div class="category-tags">
-                                    <ul>
-                                        <li><a href="# ">Devita</a></li>
-                                        <li><a href="# ">Cameras</a></li>
-                                        <li><a href="# ">Sony</a></li>
-                                        <li><a href="# ">Computer</a></li>
-                                        <li><a href="# ">Big Sale</a></li>
-                                        <li><a href="# ">Accessories</a></li>
+                                    <ul th:each="b: ${brands}"  th:with="brandId=${b.id}">
+                                        <li><a th:href="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">[[${b.name}]]</a></li>
                                     </ul>
                                 </div>
                                 <!-- category-sub-menu end -->
@@ -484,7 +437,7 @@
                                                             <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                                         </div>
                                                     </div>
-                                                    <button class="add-to-cart" type="submit">Add to cart</button>
+                                                    <button  class="add-to-cart" type="submit">Add to cart</button>
                                                 </form>
                                             </div>
                                             <div class="product-additional-info pt-25">
@@ -551,6 +504,7 @@
             <script src="/js/scrollUp.min.js"></script>
             <!-- Main/Activator js -->
             <script src="/js/main.js"></script>
+            <script src="/js/add_to_cart.js" ></script>>
     </body>
 
 <!-- shop-left-sidebar31:48-->

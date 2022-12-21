@@ -3,7 +3,6 @@ package com.eworld.projector;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.eworld.dto.cart.CartDto;
 import com.eworld.dto.order.OrderDetailDto;
 import com.eworld.dto.order.OrderDto;
 import com.eworld.entity.OrderDetail;
@@ -16,12 +15,6 @@ public class OrderDetailProjector {
 				.id(entity.getId())
 				.quantity(entity.getQuantity())
 				.productPrice(entity.getProductPrice())
-				.cart(CartDto.builder()
-						.product(entity.getProduct())
-						.build())
-				.order(OrderDto.builder()
-						.id(entity.getOrder().getId())
-						.build())
 				.build();
 		
 				
@@ -38,12 +31,6 @@ public class OrderDetailProjector {
 				.id(entity.getId())
 				.quantity(entity.getQuantity())
 				.productPrice(entity.getProductPrice())
-				.cart(CartDto.builder()
-						.product(entity.getProduct())
-						.build())
-				.order(OrderDto.builder()
-						.id(entity.getOrder().getId())
-						.build())
 				.build();
 				
 	}

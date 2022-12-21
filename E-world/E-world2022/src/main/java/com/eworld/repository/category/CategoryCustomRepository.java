@@ -7,7 +7,6 @@ import com.eworld.entity.Category;
 import com.eworld.filter.CategoryFilter;
 
 public interface CategoryCustomRepository{
-	
 	Page<Category> findPaging(CategoryFilter filter, Pageable pageable);
 
 }

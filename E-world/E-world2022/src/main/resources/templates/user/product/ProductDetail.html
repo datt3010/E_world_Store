@@ -42,8 +42,9 @@
         <link rel="stylesheet" href="/css/responsive.css">
         <!-- Modernizr js -->
         <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-    </head>
-    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+    <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
     <!--[if lt IE 8]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
@@ -92,7 +93,7 @@
                                             <img th:src="@{|/images/product/${product.logo}|}" alt="product image">
                                         </a>
                                     </div>
-                                    <div class="lg-image">
+                                  <!--  <div class="lg-image">
                                         <a class="popup-img venobox vbox-item" href="/static/images/product/large-size/2.jpg" data-gall="myGallery">
                                             <img th:src="@{|/images/product/${product.logo}|}" alt="product image">
                                         </a>
@@ -116,16 +117,16 @@
                                         <a class="popup-img venobox vbox-item" href="/static/images/product/large-size/6.jpg" data-gall="myGallery">
                                             <img th:src="@{|/images/product/${product.logo}|}" alt="product image">
                                         </a>
-                                    </div>
+                                    </div>-->
                                 </div>
-                                <div class="product-details-thumbs slider-thumbs-1">                                        
+                             <!--   <div class="product-details-thumbs slider-thumbs-1">
                                     <div class="sm-image"><img src="/images/product/small-size/1.jpg" alt="product image thumb"></div>
                                     <div class="sm-image"><img src="/images/product/small-size/2.jpg" alt="product image thumb"></div>
                                     <div class="sm-image"><img src="/images/product/small-size/3.jpg" alt="product image thumb"></div>
                                     <div class="sm-image"><img src="/images/product/small-size/4.jpg" alt="product image thumb"></div>
                                     <div class="sm-image"><img src="/images/product/small-size/5.jpg" alt="product image thumb"></div>
                                     <div class="sm-image"><img src="/images/product/small-size/6.jpg" alt="product image thumb"></div>
-                                </div>
+                                </div>-->
                             </div>
                             <!--// Product Details Left -->
                         </div>
@@ -163,19 +164,19 @@
                                         </div>
                                     </div>
                                     <div class="single-add-to-cart">
-                                        <form action="#" class="cart-quantity">
+                                        <form th:attr="ng-click=@{|cart.add(${product.id})|}"  action="#" class="cart-quantity">
                                             <div class="quantity">
                                                 <label>Quantity</label>
                                                 <div class="cart-plus-minus">
                                                     <input class="cart-plus-minus-box" value="1" type="text">
-                                                    <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                                     <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                                <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                                 </div>
                                             </div>
-                                            <button class="add-to-cart" type="submit">Add to cart</button>
+                                            <button   class="add-to-cart" type="submit" >Add to cart</button>
                                         </form>
                                     </div>
-                                    <div class="product-additional-info pt-25">
+                    <!--                <div class="product-additional-info pt-25">
                                         <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a>
                                         <div class="product-social-sharing pt-25">
                                             <ul>
@@ -185,7 +186,7 @@
                                                 <li class="instagram"><a href="#"><i class="fa fa-instagram"></i>Instagram</a></li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="block-reassurance">
                                         <ul>
                                             <li>
@@ -363,10 +364,10 @@
                                     <span>Các sản phẩm cùng loại</span>
                                 </h2>
                             </div>
-                            <div class="row">
-                                <div  class="product-active owl-carousel">
-                                    <div  th:each="p:${product.category.products}" class="col-lg-12">
-                                        <div   class="single-product-wrap">
+                            <div   class="row">
+                                <div class="product-active owl-carousel">
+                                    <div  th:each="p:${product.category.products}"   class="col-lg-12">
+                                        <div  class="single-product-wrap">
                                             <div class="product-image">
                                                 <a  th:href="@{|/chitietsanpham/${p.id}|}">
                                                     <img th:src="@{|/images/product/${p.logo}|}">
@@ -396,7 +397,7 @@
                                                 </div>
                                                 <div class="add-actions">
                                                     <ul class="add-actions-link">
-                                                        <li class="add-cart active"><a href="#">Add to cart</a></li>
+                                                        <li class="add-cart active"><a th:attr="ng-click=@{|cart.add(${p.id})|}" href="#">Add to cart</a></li>
                                                         <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                                         <li><a class="links-details" th:href="@{|/chitietsanpham/${p.id}|}"><i class="fa fa-heart-o"></i></a></li>
                                                     </ul>
@@ -426,7 +427,7 @@
                             <div class="modal-inner-area row">
                                 <div class="col-lg-5 col-md-6 col-sm-6">
                                    <!-- Product Details Left -->
-                                    <div class="product-details-left">
+                               <!--     <div class="product-details-left">
                                         <div class="product-details-images slider-navigation-1">
                                             <div class="lg-image">
                                                 <img  th:src="@{|/images/product/${product.logo}|}" alt="product image">
@@ -447,15 +448,15 @@
                                                 <img th:src="@{|/images/product/${product.logo}|}" alt="product image">
                                             </div>
                                         </div>
-                                        <div class="product-details-thumbs slider-thumbs-1">
+                                      &lt;!&ndash;  <div class="product-details-thumbs slider-thumbs-1">
                                             <div class="sm-image"><img  th:src="@{|/images/product/${product.logo}|}" alt="product image thumb"></div>
                                             <div class="sm-image"><img  th:src="@{|/images/product/${product.logo}|}" alt="product image thumb"></div>
                                             <div class="sm-image"><img  th:src="@{|/images/product/${product.logo}|}" alt="product image thumb"></div>
                                             <div class="sm-image"><img  th:src="@{|/images/product/${product.logo}|}" alt="product image thumb"></div>
                                             <div class="sm-image"><img  th:src="@{|/images/product/${product.logo}|}" alt="product image thumb"></div>
                                             <div class="sm-image"><img  th:src="@{|/images/product/${product.logo}|}" alt="product image thumb"></div>
-                                        </div>
-                                    </div>
+                                        </div>&ndash;&gt;
+                                    </div>-->
                                     <!--// Product Details Left -->
                                 </div>
 
@@ -498,7 +499,7 @@
                                                     <div class="quantity">
                                                         <label>Quantity</label>
                                                         <div class="cart-plus-minus">
-                                                            <input class="cart-plus-minus-box" th:value="${product.quantity}" type="text">
+                                                            <input class="cart-plus-minus-box" ng-change="cart.saveToLocalStorage()" ng-model="item.qty" type="number" min="1" max="100">
                                                             <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                                             <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                                         </div>
@@ -570,6 +571,8 @@
             <script src="/js/scrollUp.min.js"></script>
             <!-- Main/Activator js -->
             <script src="/js/main.js"></script>
+            <script src="/js/add_to_cart.js"></script>
+
     </body>
 
 <!-- single-product31:32-->

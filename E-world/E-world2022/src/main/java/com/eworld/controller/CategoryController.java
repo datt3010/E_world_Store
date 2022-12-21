@@ -4,10 +4,14 @@ import com.eworld.dto.category.CategoryDto;
 import com.eworld.dto.category.CategoryInput;
 import com.eworld.dto.category.CategoryUpdate;
 import com.eworld.entity.Category;
+import com.eworld.filter.CategoryFilter;
 import com.eworld.service.CategoryService;
 import com.eworld.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,7 +64,8 @@ public class CategoryController {
 	
 	@RequestMapping("/listcategory")
 	public String listCategory(Model model) {
-		return listPage(model, 1, null, "id", "asc");
+
+		return listPage(model, 1, null, null,"id", "asc");
 	}
 	
 	@RequestMapping("category/{id}")
@@ -100,10 +105,19 @@ public class CategoryController {
 	public String listPage(Model model,
 			@PathVariable("pageNum") int pageNum,
 			@Param("keyword") String keyword,
+			@Param("brandId") Integer brandId,
 			@Param("sortField") String sortField,
 		   	@Param("sortDir") String sortDir)
 	{
-		Page<CategoryDto> listCategory = categorySerivce.findPaging(keyword, sortField, sortDir, pageNum);
+
+		CategoryFilter filter = CategoryFilter.builder()
+				.keyword(keyword)
+				.brandId(brandId)
+				.build();
+
+		Pageable pageable = PageRequest.of(pageNum-1, 3, sortDir.equals("asc")? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
+
+		Page<CategoryDto> listCategory = categorySerivce.findPaging(filter,pageable);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("totalPages", listCategory.getTotalPages());

@@ -42,8 +42,9 @@
         <link rel="stylesheet" href="/css/responsive.css">
         <!-- Modernizr js -->
         <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-    </head>
-    <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+    <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
     <!--[if lt IE 8]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
@@ -93,29 +94,28 @@
                                             <tr>
                                                 <th class="li-product-remove">remove</th>
                                                 <th class="li-product-thumbnail">images</th>
-                                                <th class="cart-product-name">Name</th>
-                                                <th class="li-product-price"> Price</th>
+                                                <th class="cart-product-name">Đơn giá</th>
+                                                <th class="li-product-price"> giá tiền</th>
                                                 <th class="li-product-stock-status">Quantity</th>
-                                                <th class="li-product-add-cart">add to cart</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-			                                   <tr th:each="cart: ${@cart.productInCart}" th:with="p=${cart.key}">
-                                                <td class="li-product-remove"><a th:href="@{|/shoppingcart/removeProduct/${p.id}|}"><i class="fa fa-times"></i></a></td>
-                                                <td class="li-product-thumbnail"><a th:href="@{|/images/product/${p.image}|}"><img th:src="@{|/images/product/${p.image}|}" width="200" height="200" alt=""></a></td>
-                                                <td class="li-product-name"><a href="#" th:text="${p.name}"></a></td>
-                                                <td class="li-product-price"><span class="amount" th:text="${p.price}"></span></td>
-                                                <td class="li-product-stock-status"><span class="in-stock" th:text="${cart.value}"></span></td>
-                                                <td class="li-product-add-cart"><a href="#">add to cart</a></td>
+			                                   <tr ng-repeat="item in cart.items">
+                                                <td class="li-product-remove"><a ng-click="cart.remove(item.id)"><i class="fa fa-times"></i></a></td>
+                                                <td class="li-product-thumbnail"><img ng-src="/images/product/{{item.logo}}" width="200" height="200"></td>
+                                                <td class="li-product-name">${{item.price | number:2}}</td>
+                                                <td class="li-product-price"><span class="amount">${{item.price * item.qty | number:2}}</span></td>
+                                                <td class="li-product-stock-status"><input ng-change="cart.saveToLocalStorage()" ng-model="item.qty" type="number" min="1" max="100"></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </form>
-                            <p style="font-size:20px;padding-top:10px;" class="minicart-total">Order value: <span>$[[${totalPrice}]]</span></p>
+                            <p style="font-size:20px;padding-top:10px;" class="minicart-total">Order value: <span>{{cart.amount}}</span></p>
                     		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">VAT: <span>10%</span></p>
-                      		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">Totals: <span>[[${totalPrice} +${totalPrice}*0.1]]</span></p>
-							<button th:formaction="@{/order}" formmethod="get" type="button" class="btn btn-primary">Check out</button>
+                      		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">Totals: <span>{{cart.amount + cart.amount*0.1}}</span></p>
+							<button th:formaction="@{/order}" formmethod="get" type="button" class="btn btn-primary">Check out</button> <hr>
+                            <button ng-click="cart.clear()" type="button" class="btn btn-primary">Clear</button>
                         </div>
                     </div>
                 </div>
@@ -497,6 +497,7 @@
             <script src="/js/scrollUp.min.js"></script>
             <!-- Main/Activator js -->
             <script src="/js/main.js"></script>
+            <script src="/js/add_to_cart.js"></script>
     </body>
 
 <!-- wishlist31:30-->

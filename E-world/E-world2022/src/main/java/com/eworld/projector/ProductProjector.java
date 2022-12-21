@@ -1,11 +1,11 @@
 package com.eworld.projector;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.eworld.dto.category.CategoryDto;
 import com.eworld.dto.product.ProductDto;
 import com.eworld.entity.Product;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductProjector {
 	
@@ -52,6 +52,7 @@ public class ProductProjector {
 				.collect(Collectors.toList());
 		
 			return ProductDto.builder()
+					.id(entity.getId())
 					.name(entity.getName())
 					.price(entity.getPrice())
 					.quantity(entity.getQuantity())
@@ -60,6 +61,7 @@ public class ProductProjector {
 					.description(entity.getDescription())
 					.urlVideo(entity.getUrlVideo())
 					.ngaybaohanh(entity.getNgaybaohanh())
+					.logo(entity.getImage())
 					.status(entity.getStatus())
 					.category(CategoryDto.builder()
 						.id(entity.getCategory().getId())
