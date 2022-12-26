@@ -28,6 +28,7 @@ public class ProductProjector {
 						.logo(entity.getCategory().getLogo())
 						.status(entity.getCategory().getStatus())
 						.build())
+				.orderDetails(entity.getOrderDetails())
 				.build();
 					
 	}

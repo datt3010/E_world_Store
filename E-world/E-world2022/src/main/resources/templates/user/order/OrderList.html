@@ -80,7 +80,7 @@
                 <table class="table table-hover">
                     <thead>
                     <tr >
-                        <th scope="col">Mã đơn hàng</th>
+                        <th scope="col">STT</th>
                         <th scope="col">Ngày mua</th>
                         <th scope="col">Tổng tiền</th>
                         <th scope="col">Trạng thái</th>
@@ -88,8 +88,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="order : ${orders}">
-                        <th>[[${order.id}]]</th>
+                    <tr th:each="order,state : ${orders}">
+                        <th>[[${state.index}]]</th>
                         <td th:text="${#dates.format(order.createdAt, 'dd-MM-yyyy')}">[[${order.createdAt}]]</td>
                         <td>[[${order.totalPrice}]]</td>
                         <td>[[${order.status}]]</td>

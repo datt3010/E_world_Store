@@ -22,5 +22,8 @@ public interface CategoryRepository extends JpaRepository<Category, Integer>, Ca
 	@Query("UPDATE Category SET status= :status WHERE id=:categoryId")
 	@Modifying
 	public void changeStatus(@Param(value = "status") CategoryStatus status, @Param(value = "categoryId") Integer id);
-	
+
+	@Query("SELECT DISTINCT c FROM Category c INNER JOIN Product p ON p.categoryId = c.id"
+	       +" WHERE p.id IN(SELECT od.productId FROM OrderDetail od INNER JOIN Order o ON o.id= od.orderId WHERE MONTH(o.createdAt)= :month)")
+	public List<Category> listCategoryHotSale(@Param(value = "month") Integer month);
 }

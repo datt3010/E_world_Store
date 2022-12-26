@@ -10,4 +10,8 @@ import lombok.Value;
 public class CustomerFilter {
 	
 	private String keyword;
+
+	private Integer month;
+
+	private Integer years;
 }

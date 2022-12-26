@@ -48,7 +48,17 @@ public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPag
 			whereClauseSqlBuilder.append(" c.firstName LIKE :keyword OR c.lastName LIKE :keyword OR c.gioitinh LIKE :keyword)");
 			parameterMap.put("keyword", "%" + filter.getKeyword() + "%");
 		}
-		
+
+		if(filter.getMonth() !=null){
+			whereClauseSqlBuilder.append(" AND MONTH(c.createAt)= :month ");
+			parameterMap.put("month", filter.getMonth());
+		}
+
+		if(filter.getYears() !=null){
+			whereClauseSqlBuilder.append(" AND YEAR(c.createAt) = :years ");
+			parameterMap.put("years", filter.getYears());
+		}
+
 		String orderClause = makeOrderClause(pageable.getSort(), Sortable.CUSTOMER, "c");
 		
 		countSqlBuilder.append(whereClauseSqlBuilder);

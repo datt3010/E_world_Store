@@ -1,4 +1,4 @@
-package com.eworld.controller;
+package com.eworld.controller.admin;
 
 import com.eworld.dto.email.EmailDto;
 import com.eworld.service.EmailService;

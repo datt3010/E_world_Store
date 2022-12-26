@@ -127,13 +127,6 @@ DECLARE @account_id INT
 SELECT @account_id = id FROM account
 
 INSERT INTO account_role(account_id,role_id) VALUES(@account_id,'3');
-
-CREATE TRIGGER trg_account_delete ON account 
-AFTER DELETE
-AS DECLARE @account_id INT 
-SELECT @account_id = id FROM account
-DELETE FROM account_role WHERE @account_id IN(SELECT account_id FROM account_role);
-
 SELECT * FROM account
 SELECT * FROM account_role;
 SELECT * FROM role;
@@ -172,5 +165,37 @@ select top 3 p.name, p.price from product p inner join order_detail od on od.pro
 group by p.name
 order by sum(od.quantity) desc
 
-select * from orders
+select * from orders where account_id = 34
 select * from order_detail
+
+select count(a.id) from account a inner join  account_role ar on ar.account_id = a.id
+where ar.role_id=3 and MONTH(a.create_at) =1
+
+select distinct count(p.id) from product p inner join order_detail od on od.product_id = p.id
+where od.order_id IN (select os.id FROM orders os where MONTH(os.created_at) = 12)
+
+select sum(o.total_price) as 'Doanh thu tháng 12' from orders o where MONTH(o.created_at)=12
+
+select distinct *  from category c inner join product p on p.category_id = c.id
+where p.id in(select od.product_id  from order_detail od inner join orders o on o.id= od.order_id where MONTH(o.created_at)=12);
+
+select sum(o.total_price) from orders o where MONTH(o.created_at) = 12;
+
+select distinct * from product p inner join order_detail od on od.product_id = p.id
+group by p.id
+order by od.quantity asc;
+
+SELECT
+       SUM(o.total_price) AS transaction_amount
+FROM account a inner join orders o on o.account_id = a.id
+WHERE o.account_id IN
+      (
+          SELECT
+                 o.account_id
+          FROM orders o
+  
+      )
+GROUP BY o.account_id,a.first_name,a.last_name
+ORDER BY o.account_id
+
+select * from account	

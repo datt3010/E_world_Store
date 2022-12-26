@@ -1,7 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="zxx" xmlns:th="https://www.thymeleaf.org">
-
-<!-- login-register31:27-->
+<html class="no-js" lang="zxx" xnlms:th="https://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -45,28 +43,16 @@
 	<link rel="stylesheet" href="/css/login.css">
 	<!-- Responsive CSS -->
 	<link rel="stylesheet" href="/css/responsive.css">
-	
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-	<!-- Modernizr js -->
 	<script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-	
-  <script src="https://apis.google.com/js/api:client.js"></script>
 </head>
-<body>
-	<!--[if lt IE 8]>
-		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-	<![endif]-->
+<body  ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl" >
 	<!-- Begin Body Wrapper -->
 	<div class="body-wrapper">
 		<!-- Begin Header Area -->
 		<header>
-			<!-- Begin Header Top Area -->
 			<div th:replace="/layout/user/Header.html"></div>
-			<!-- Header Top Area End Here -->
-			<!-- Begin Header Middle Area -->
-			<div th:replace="/layout/user/container.html"></div>
-			<!-- Header Middle Area End Here -->
-			<!-- Begin Header Bottom Area -->
+			<div   th:replace="/layout/user/container.html"></div>
 			<div class="mobile-menu-area d-lg-none d-xl-none col-12">
 				<div class="container">
 					<div class="row">
@@ -126,8 +112,8 @@
 		<div th:replace="/layout/user/footer.html"></div>
 		<!-- Footer Area End Here -->
 	</div>
-	<!-- Body Wrapper End Here -->
-	<!-- jQuery-V1.12.4 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<script src="/js/add_to_cart.js" ></script>
 	<script src="js/vendor/jquery-1.12.4.min.js"></script>
 	<!-- Popper js -->
 	<script src="js/vendor/popper.min.js"></script>

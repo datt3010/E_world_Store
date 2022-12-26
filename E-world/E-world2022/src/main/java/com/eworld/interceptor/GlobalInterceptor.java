@@ -1,8 +1,10 @@
 package com.eworld.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.eworld.contstant.CategoryStatus;
+import com.eworld.dto.brand.BrandDto;
+import com.eworld.filter.BrandFilter;
+import com.eworld.service.BrandService;
+import com.eworld.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,11 +14,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.eworld.contstant.CategoryStatus;
-import com.eworld.dto.brand.BrandDto;
-import com.eworld.filter.BrandFilter;
-import com.eworld.service.BrandService;
-import com.eworld.service.CategoryService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class GlobalInterceptor implements HandlerInterceptor{

@@ -123,4 +123,12 @@ public class ProductServiceImpl implements ProductService {
 	public Page<Product> findProductByCategoryId(Integer categoryId , Pageable pageable) {
 		return productRepo.listProductByCategoryId(categoryId,pageable);
 	}
+
+	@Override
+	public Page<ProductDto> listProductHotSale(Integer month, Pageable pageable) {
+		Page<Product> page = productRepo.listProductHotSale(month,pageable);
+		List<ProductDto> listDto = ProductProjector.convertToPageDto(page.getContent());
+		return new PageImpl<>(listDto,pageable,page.getTotalElements());
+	}
+
 }

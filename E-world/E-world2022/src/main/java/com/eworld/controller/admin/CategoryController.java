@@ -1,4 +1,4 @@
-package com.eworld.controller;
+package com.eworld.controller.admin;
 
 import com.eworld.dto.category.CategoryDto;
 import com.eworld.dto.category.CategoryInput;

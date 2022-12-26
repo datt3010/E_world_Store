@@ -70,10 +70,10 @@
 									<table class="table table-striped">
 										<thead>
 											<tr>
-										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Tên</a></th>
-										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Giá</a></th>
+										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId != null ? '&categoryId=' + categoryId : ''}}">Tên</a></th>
+										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId != null ? '&categoryId=' + categoryId : ''}}">Giá</a></th>
 												<th scope="col">Loại</th>
-										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=quantity&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Số lượng</a></th>
+										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=quantity&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId != null ? '&categoryId=' + categoryId : ''}}">Số lượng</a></th>
 												<th scope="col">Ngày bảo hành</th>
 												<th scope="col"> Ảnh</th>
 												<th scope="col"> </th>
@@ -96,7 +96,7 @@
 								</div>
 							</div>
 							<span style="margin-left:2rem;">Total Items: [[${totalItems}]]- Page [[${currentPage}]] of [[${totalPages}]]</span>
-							<nav th:if="${totalPages >1}" th:with="pageUrlPostfix='?sortField=' +${sortField} + '&sortDir=' +${sortDir}+ ${keyword !=null ? '&keyword=' + keyword : ''}" style="margin-left:60rem;" aria-label="Page navigation example">
+							<nav th:if="${totalPages >1}" th:with="pageUrlPostfix='?sortField=' +${sortField} + '&sortDir=' +${sortDir}+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId != null ? '&categoryId=' + categoryId : ''}" style="margin-left:60rem;" aria-label="Page navigation example">
 								<ul th:with="pageUrlPrefix='/admin/listproduct/page/'" class="pagination">
 									<li style="padding-right:10px;" class="page-item"><a th:if="${currentPage > 1}" th:href="@{${pageUrlPrefix} + ${currentPage -1} +${pageUrlPostfix}}" class="page-link" href="#">Previous</a></li>
 									<span style=" padding-right:10px; padding-top:8px;" class="page-item" aria-label="Previous" th:unless="${currentPage >1}">Previous</span>&nbsp;&nbsp;

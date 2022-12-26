@@ -131,4 +131,9 @@ public class CustomerServiceImpl implements CustomerService {
 		
 	}
 
+	@Override
+	public List<Account> listAccountTotalPrice(Integer month) {
+		return customerRepo.listAccountTotalPrice(month);
+	}
+
 }

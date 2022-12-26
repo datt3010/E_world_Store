@@ -1,4 +1,4 @@
-package com.eworld.controller;
+package com.eworld.controller.admin;
 
 import com.eworld.dto.staff.StaffDto;
 import com.eworld.dto.staff.StaffInput;

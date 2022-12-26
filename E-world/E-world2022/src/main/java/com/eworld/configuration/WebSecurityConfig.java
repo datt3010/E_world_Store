@@ -1,4 +1,5 @@
 package com.eworld.configuration;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 @Configuration
-public class WebSecurityConfig {
+public class WebSecurityConfig{
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -26,7 +27,7 @@ public class WebSecurityConfig {
         http.cors().disable();
 
         http.authorizeHttpRequests()
-                .antMatchers("/order/**", "/checkout/**","/doimatkhau").authenticated()
+                .antMatchers("/order/**", "/checkout/**","/doimatkhau","/admin/**").authenticated()
                 .antMatchers("/admin/customer", "/admin/listcustomer").hasAnyRole("ADMIN", "STAFF")
                 .antMatchers("/admin/staff/**", "/admin/liststaff/**").hasRole("ADMIN")
                 .anyRequest().permitAll();
@@ -61,7 +62,7 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .antMatchers("/js/**", "/css/**", "/images/**", "/api/**");
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/error", "/dist/**");
     }
 
     @Bean
@@ -74,4 +75,5 @@ public class WebSecurityConfig {
     public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> getToken(){
         return new DefaultAuthorizationCodeTokenResponseClient();
     }
+
 }

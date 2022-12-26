@@ -3,11 +3,8 @@ package com.eworld.service.impl;
 import com.eworld.dto.order.OrderDto;
 import com.eworld.entity.Order;
 import com.eworld.entity.OrderDetail;
-import com.eworld.entity.Product;
-import com.eworld.repository.customer.CustomerRepository;
 import com.eworld.repository.order.OrderDetailRepository;
 import com.eworld.repository.order.OrderRepository;
-import com.eworld.repository.product.ProductRepository;
 import com.eworld.service.ShoppingCartService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,9 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,13 +25,13 @@ import java.util.stream.Collectors;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Transactional(readOnly = true)
 public class ShoppingCartServiceImpl  implements ShoppingCartService {
-
+/*
 	@Autowired
 	private ProductRepository productRepo;
 	
     private Map<Product, Integer> products = new HashMap<>();
 	@Autowired
-	private CustomerRepository customerRepository;
+	private CustomerRepository customerRepository;*/
 
 	@Autowired
 	private OrderRepository orderRepository;

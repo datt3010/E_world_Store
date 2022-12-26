@@ -46,10 +46,6 @@
     <script src="/js/add_to_cart.js"></script>
 </head>
     <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
-    <!--[if lt IE 8]>
-		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-	<![endif]-->
-        <!-- Begin Body Wrapper -->
         <div class="body-wrapper">
             <!-- Begin Header Area -->
             <header>
@@ -78,8 +74,8 @@
                 <div class="container">
                     <div class="breadcrumb-content">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li class="active">About Us</li>
+                            <li><a href="index.html" th:text="#{lbl_home}"></a></li>
+                            <li class="active" th:text="#{lbl_aboutUs}"></li>
                         </ul>
                     </div>
                 </div>
@@ -92,10 +88,10 @@
                         <!-- About Text Start -->
                         <div class="col-lg-6 order-last order-lg-first">
                             <div class="about-text-wrap">
-                                <h2><span>Provide Best</span>Product For You</h2>
-                                <p>We provide the best Beard oile all over the world. We are the worldd best store in indi for Beard Oil. You can buy our product without any hegitation because they truste us and buy our product without any hagitation because they belive and always happy buy our product.</p>
-                                <p>Some of our customer say’s that they trust us and buy our product without any hagitation because they belive us and always happy to buy our product.</p>
-                                <p>We provide the beshat they trusted us and buy our product without any hagitation because they belive us and always happy to buy.</p>
+                                <h2  th:text="#{lbl_aboutUs_span_h21}"><span th:text="#{lbl_aboutUs_span_h2}"></span></h2>
+                                <p th:text="#{lbl_aboutUs_p}"></p>
+                                <p th:text="#{lbl_aboutUs_p1}"></p>
+                                <p th:text="#{lbl_aboutUs_p2}"></p>
                             </div>
                         </div>
                         <!-- About Text End -->
@@ -194,7 +190,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="li-section-title capitalize mb-25">
-                                <h2><span>our team</span></h2>
+                                <h2><span th:text="#{lbl_aboutUs_title_p}"></span></h2>
                             </div>
                         </div>
                     </div> <!-- section title end -->
@@ -206,7 +202,7 @@
                                 </div>
                                 <div class="team-content text-center">
                                     <h3>Huỳnh Tấn Đạt</h3>
-                                    <p>Leader</p>
+                                    <p th:text="#{lbl_aboutUs_leader}"></p>
                                     <a href="#">dathtps18655@fpt.edu.vn</a>
                                     <div class="team-social">
                                         <a href="#"><i class="fa fa-facebook"></i></a>
@@ -223,8 +219,8 @@
                                     <img src="/images/staff/tung.jpg" alt="Our Team Member">
                                 </div>
                                 <div class="team-content text-center">
-                                    <h3>Trần Lê Thanh Tùng</h3>
-                                    <p>Member</p>
+                                    <h3>Bùi Thanh Tùng</h3>
+                                    <p th:text="#{lbl_aboutUs_member}"></p>
                                     <a href="#">Tung6900@gmail.com</a>
                                     <div class="team-social">
                                         <a href="#"><i class="fa fa-facebook"></i></a>
@@ -242,7 +238,7 @@
                                 </div>
                                 <div class="team-content text-center">
                                     <h3>Nguyễn Đăng Trình</h3>
-                                    <p>Member</p>
+                                    <p th:text="#{lbl_aboutUs_member}"></p>
                                     <a href="#">xammaachi9@gmail.com</a>
                                     <div class="team-social">
                                         <a href="#"><i class="fa fa-facebook"></i></a>
@@ -258,122 +254,7 @@
             </div>
             <!-- team area wrapper end -->
             <!-- Begin Footer Area -->
-            <div class="footer">
-                <!-- Begin Footer Static Top Area -->
-                <div class="footer-static-top">
-                    <div class="container">
-                        <!-- Begin Footer Shipping Area -->
-                        <div class="footer-shipping pt-60 pb-55 pb-xs-25">
-                            <div class="row">
-                                <!-- Begin Li's Shipping Inner Box Area -->
-                                <div class="col-lg-3 col-md-6 col-sm-6 pb-sm-55 pb-xs-55">
-                                    <div class="li-shipping-inner-box">
-                                        <div class="shipping-icon">
-                                            <img src="/images/shipping-icon/1.png" alt="Shipping Icon">
-                                        </div>
-                                        <div class="shipping-text">
-                                            <h2>Free Delivery</h2>
-                                            <p>And free returns. See checkout for delivery dates.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Li's Shipping Inner Box Area End Here -->
-                                <!-- Begin Li's Shipping Inner Box Area -->
-                                <div class="col-lg-3 col-md-6 col-sm-6 pb-sm-55 pb-xs-55">
-                                    <div class="li-shipping-inner-box">
-                                        <div class="shipping-icon">
-                                            <img src="/images/shipping-icon/2.png" alt="Shipping Icon">
-                                        </div>
-                                        <div class="shipping-text">
-                                            <h2>Safe Payment</h2>
-                                            <p>Pay with the world's most popular and secure payment methods.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Li's Shipping Inner Box Area End Here -->
-                                <!-- Begin Li's Shipping Inner Box Area -->
-                                <div class="col-lg-3 col-md-6 col-sm-6 pb-xs-30">
-                                    <div class="li-shipping-inner-box">
-                                        <div class="shipping-icon">
-                                            <img src="/images/shipping-icon/3.png" alt="Shipping Icon">
-                                        </div>
-                                        <div class="shipping-text">
-                                            <h2>Shop with Confidence</h2>
-                                            <p>Our Buyer Protection covers your purchasefrom click to delivery.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Li's Shipping Inner Box Area End Here -->
-                                <!-- Begin Li's Shipping Inner Box Area -->
-                                <div class="col-lg-3 col-md-6 col-sm-6 pb-xs-30">
-                                    <div class="li-shipping-inner-box">
-                                        <div class="shipping-icon">
-                                            <img src="/images/shipping-icon/4.png" alt="Shipping Icon">
-                                        </div>
-                                        <div class="shipping-text">
-                                            <h2>24/7 Help Center</h2>
-                                            <p>Have a question? Call a Specialist or chat online.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Li's Shipping Inner Box Area End Here -->
-                            </div>
-                        </div>
-                        <!-- Footer Shipping Area End Here -->
-                    </div>
-                </div>
-                <!-- Footer Static Top Area End Here -->
-                <!-- Begin Footer Static Middle Area -->
-                <div th:replace="/layout/user/footer.html"></div>
-                <!-- Footer Static Middle Area End Here -->
-                <!-- Begin Footer Static Bottom Area -->
-                <div class="footer-static-bottom pt-55 pb-55">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <!-- Begin Footer Links Area -->
-                                <div class="footer-links">
-                                    <ul>
-                                        <li><a href="#">Online Shopping</a></li>
-                                        <li><a href="#">Promotions</a></li>
-                                        <li><a href="#">My Orders</a></li>
-                                        <li><a href="#">Help</a></li>
-                                        <li><a href="#">Customer Service</a></li>
-                                        <li><a href="#">Support</a></li>
-                                        <li><a href="#">Most Populars</a></li>
-                                        <li><a href="#">New Arrivals</a></li>
-                                        <li><a href="#">Special Products</a></li>
-                                        <li><a href="#">Manufacturers</a></li>
-                                        <li><a href="#">Our Stores</a></li>
-                                        <li><a href="#">Shipping</a></li>
-                                        <li><a href="#">Payments</a></li>
-                                        <li><a href="#">Warantee</a></li>
-                                        <li><a href="#">Refunds</a></li>
-                                        <li><a href="#">Checkout</a></li>
-                                        <li><a href="#">Discount</a></li>
-                                        <li><a href="#">Refunds</a></li>
-                                        <li><a href="#">Policy Shipping</a></li>
-                                    </ul>
-                                </div>
-                                <!-- Footer Links Area End Here -->
-                                <!-- Begin Footer Payment Area -->
-                                <div class="copyright text-center">
-                                    <a href="#">
-                                        <img src="images/payment/1.png" alt="">
-                                    </a>
-                                </div>
-                                <!-- Footer Payment Area End Here -->
-                                <!-- Begin Copyright Area -->
-                                <div class="copyright text-center pt-25">
-                                    <span><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></span>
-                                </div>
-                                <!-- Copyright Area End Here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Footer Static Bottom Area End Here -->
-            </div>
+            <div th:replace="/layout/user/footer.html"></div>
             <!-- Footer Area End Here -->
         </div>
         <!-- Body Wrapper End Here -->

@@ -1,26 +1,21 @@
-package com.eworld.controller;
+package com.eworld.controller.user;
 
-import com.eworld.dto.product.ProductDto;
 import com.eworld.entity.Product;
-import com.eworld.filter.ProductFilter;
 import com.eworld.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
 public class HomeController {
-
     @Autowired
     private ProductService productService;
 
@@ -34,7 +29,7 @@ public class HomeController {
         return "user/home/about-us";
     }
 
-    @GetMapping("blogdetail")
+/*    @GetMapping("blogdetail")
     public String blogDetail() {
         return "user/blog/BlogDetail";
     }
@@ -42,7 +37,7 @@ public class HomeController {
     @GetMapping("listblog")
     public String listBlog() {
         return "user/blog/blog-list";
-    }
+    }*/
 
     @ModelAttribute("smartPhones")
    public List<Product> listProductByCategoryId(){

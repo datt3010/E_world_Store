@@ -1,4 +1,4 @@
-package com.eworld.controller;
+package com.eworld.controller.user;
 
 import com.eworld.dto.category.CategoryDto;
 import com.eworld.dto.product.ProductDto;
@@ -16,10 +16,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,7 +47,7 @@ public class WebController {
 		return  listPage(model,1,null,"id","asc",null,null);
 	}
 
-	@RequestMapping("/product/page/{pageNum}")
+	@GetMapping("/product/page/{pageNum}")
 	public String listPage(Model model,
 			@PathVariable("pageNum") int pageNum,
 			@RequestParam(name="keyword", required = false)String keyword,
@@ -78,13 +75,15 @@ public class WebController {
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
 
-		return "user/product/Listproduct";
+		return "user/product/ListProduct.html";
 		}
 
 	@RequestMapping("/product/search")
 	public String searchByKey(Model model,
-					@RequestParam(value = "keyword",required = false)String keyword) {
-		return listPage(model, 1, keyword,"name", "asc",null,null);
+					@RequestParam(value = "keyword",required = false)String keyword,
+					@RequestParam(value = "categoryId", required = false) Integer categoryId,
+				    @RequestParam(value = "brandId",required = false) Integer brandId) {
+		return listPage(model, 1, keyword,"name", "asc",categoryId,brandId);
 	}
 
 	@RequestMapping("product/")

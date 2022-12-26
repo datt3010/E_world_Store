@@ -12,7 +12,7 @@ public class Sortable {
 			"id", "name", "status");
 	
 	public static final List<String> PRODUCT = Arrays.asList(
-			"id", "name", "status", "price", "category");
+			"id", "name", "status", "price", "category","quantity");
 	
 	public static final List<String> BRAND = Arrays.asList(
 			"id", "name");

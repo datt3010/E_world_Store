@@ -1,4 +1,4 @@
-package com.eworld.controller;
+package com.eworld.controller.user;
 
 import com.eworld.configuration.security.UserContext;
 import com.eworld.configuration.security.UserContextService;

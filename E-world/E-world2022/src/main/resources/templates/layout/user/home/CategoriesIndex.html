@@ -17,7 +17,7 @@
                                     </div>
                                     <div id="cate-toggle" class="category-menu-list">
                                         <ul>
-                                            <li th:each="c: ${cates}"><a href="shop-left-sidebar.html">[[${c.name}]]</a>
+                                            <li th:each="c: ${cates}"><a th:with="categoryId=${c.id}" th:href="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">[[${c.name}]]</a></li>
                                     </div>
                                 </div>
                                 <!--Category Menu End-->
@@ -30,19 +30,17 @@
                                         <!-- Begin Single Slide Area -->
                                         <div class="single-slide align-center-left animation-style-02 bg-4">
                                             <div class="slider-progress"></div>
-                                        	<a href=""><img src="/images/bg-banner/1.jpg"></a>
+                                        	<a th:href="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId: ''}+ ${brandId !=null ? '&brandId=' + brandId: ''}}"><img src="/images/bg-banner/1.jpg"></a>
                                         </div>
                                         <!-- Single Slide Area End Here -->
                                         <!-- Begin Single Slide Area -->
                                         <div class="single-slide align-center-left animation-style-01 bg-5">
                                             <div class="slider-progress"></div>
-                                           <a href=""><img src="/images/bg-banner/1.jpg"></a>
+                                           <a th:href="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId: ''}+ ${brandId !=null ? '&brandId=' + brandId: ''}}"><img src="/images/bg-banner/1.jpg"></a>
                                         </div>
-                                        <!-- Single Slide Area End Here -->
-                                        <!-- Begin Single Slide Area -->
                                         <div class="single-slide align-center-left animation-style-02 bg-6">
                                             <div class="slider-progress"></div>
-                                    <a href=""><img src="/images/bg-banner/1.jpg"></a>
+                                    <a th:href="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId: ''}+ ${brandId !=null ? '&brandId=' + brandId: ''}}"><img src="/images/bg-banner/1.jpg"></a>
                                         </div>
                                         <!-- Single Slide Area End Here -->
                                     </div>

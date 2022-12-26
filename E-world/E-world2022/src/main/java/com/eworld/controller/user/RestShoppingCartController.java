@@ -1,4 +1,4 @@
-package com.eworld.controller;
+package com.eworld.controller.user;
 
 import com.eworld.dto.product.ProductDto;
 import com.eworld.service.ProductService;

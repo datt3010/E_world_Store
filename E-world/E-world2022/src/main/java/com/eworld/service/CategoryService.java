@@ -24,5 +24,7 @@ public interface CategoryService {
 	public void changeStatus(Integer id);
 	
 	public CategoryDto getDetail(Integer id);
+
+	public List<CategoryDto> listCategoryHotSale(Integer month);
 		
 }

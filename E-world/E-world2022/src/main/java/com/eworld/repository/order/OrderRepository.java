@@ -1,8 +1,7 @@
 package com.eworld.repository.order;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.eworld.entity.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -12,4 +11,10 @@ public interface OrderRepository extends JpaRepository<Order, Integer>, OrderCus
 
     @Query("SELECT o FROM Order o WHERE o.account.username = :username")
     List<Order> findByUserName(@Param(value = "username") String username);
+
+    @Query("SELECT SUM(o.totalPrice) FROM Order o WHERE MONTH(o.createdAt)= :month")
+    public Long sumRevenueByMonth(@Param(value = "month")Integer month);
+
+    @Query("SELECT SUM(o.totalPrice) FROM Order o WHERE YEAR(o.createdAt) = :years")
+    public Long sumRevenueByYear(@Param(value = "years") Integer year);
 }

@@ -81,4 +81,10 @@ public class CategoryServiceImpl implements CategoryService {
 		
 		return dto;
 	}
+
+	@Override
+	public List<CategoryDto> listCategoryHotSale(Integer month) {
+		List<CategoryDto> listDto = CategoryProjector.convertToPageDto(categoryRepo.listCategoryHotSale(month));
+		return  listDto;
+	}
 }

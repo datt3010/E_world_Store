@@ -24,6 +24,7 @@ public class OrderProjector {
 				.totalPrice(entity.getTotalPrice())
 				.status(entity.getStatus())
 				.createdAt(entity.getCreatedAt())
+				.paymentMethod(entity.getPaymentMethod())
 				.account(UserContext.builder()
 						.id(entity.getAccount().getId())
 						.firstName(entity.getAccount().getFirstName())

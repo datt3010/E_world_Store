@@ -87,9 +87,11 @@
                     <div class="col-12">
                         <div class="card">
                       	<div class="card-body">
-							<form>
+							<form th:action="@{/admin/listcustomer/page/1}" method="get">
 						  <div class="form-group">
 						    <input name="keyword" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
+							  <input type="hidden" name="sortField" th:value="${sortField}">
+							  <input type="hidden" name="sortDir" th:value="${sortDir}">
 						  </div>
 						</form>
 								<h4 class="card-title">Danh sách khách hàng</h4>
@@ -97,11 +99,11 @@
 									<table class="table table-striped">
 										<thead>
 											<tr>
-										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">Mã khách hàng</a></th>
-										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">Tên khách hàng</a></th>
-										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=age&sortDir=' + ${reverseSortDir}}">age</a></th>
+										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Mã khách hàng</a></th>
+										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Tên khách hàng</a></th>
+										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=age&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">age</a></th>
 												<th scope="col">Ngày sinh</th>
-										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=gioitinh&sortDir=' + ${reverseSortDir}}">Giới tính</a></th>
+										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=gioitinh&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Giới tính</a></th>
 												<th scope="col"> Ảnh</th>
 												<th scope="col"></th>
 												<th scope="col"></th>
@@ -122,23 +124,40 @@
 									</table>
 								</div>
 							</div>
-									<span style="margin-left:2rem;">Total Items: [[${totalItems}]]- Page [[${currentPage}]] of [[${totalPages}]]</span>
-							<nav aria-label="Page navigation example" style="margin-left: 80rem;">
-								<ul class="pagination">
-								<li class="page-item">
-									<a class="page-link" th:if="${currentPage > 1}" th:href="@{'/admin/listcustomer/page/' + ${currentPage - 1} + '?sortField=id&sortDir=' + ${reverseSortDir}}" aria-label="Previous">Previous</a>
-									<span aria-label="Previous" th:unless="${currentPage >1}">Previous</span>
-									&nbsp;&nbsp;
-									</li>
-									<span th:each="i: ${#numbers.sequence(1, totalPages)}" class="page-item">
-									<span><a th:if="${i != currentPage}" th:href="@{'/admin/listcustomer/page/' +${i} + '?sortField=id&sortDir=' + ${reverseSortDir}}">[[${i}]]</a>
-									    <span th:unless="${i != currentPage}">[[${i}]]</span> &nbsp;
-									</span> &nbsp;&nbsp;
-									</span>
-									<li class="page-item">
-									<a class="page-link" th:if="${currentPage < totalPages}" th:href="@{'/admin/listcustomer/page/' + ${currentPage + 1} + '?sortField=id&sortDir=' + ${reverseSortDir}}" aria-label="Next">Next</a>
-									<span th:unless="${currentPage < totalPages}">Next</span>
-									</li>
+							<span style="margin-left:2rem;">Total Items: [[${totalItems}]]- Page [[${currentPage}]] of [[${totalPages}]]</span>
+							<nav th:if="${totalPages >1}" th:with="pageUrlPostfix='?sortField=' +${sortField} + '&sortDir=' +${sortDir}+ ${keyword !=null ? '&keyword=' + keyword : ''}" style="margin-left:60rem;" aria-label="Page navigation example">
+								<ul th:with="pageUrlPrefix='/admin/listcustomer/page/'" class="pagination">
+									<li style="padding-right:10px;" class="page-item"><a th:if="${currentPage > 1}" th:href="@{'/admin/listcustomer/page/' + ${currentPage -1} +${pageUrlPostfix}}" class="page-link" href="#">Previous</a></li>
+									<span style=" padding-right:10px; padding-top:8px;" class="page-item" aria-label="Previous" th:unless="${currentPage >1}">Previous</span>&nbsp;&nbsp;
+									<th:block th:if="${totalPages <=10}">
+										<ul  th:each="i: ${#numbers.sequence(1, totalPages)}">
+											<li class="page-item"><a th:if="${i != currentPage}" th:href="@{${pageUrlPrefix}+${i} +${pageUrlPostfix}}" class="page-link">[[${i}]]</a></li>
+											<li class="page-item"><a th:unless="${i != currentPage}" class="page-link">[[${i}]]</a></li>
+										</ul>
+									</th:block>
+									<th:block th:if="${totalPages >10}">
+										<th:block th:if="${currentPage <=5 || currentPage > totalPages -4}">
+											<ul  th:each="i: ${#numbers.sequence(1, totalPages)}">
+												<li class="page-item"><a th:if="${i != currentPage}" th:href="@{${pageUrlPrefix}+${i} +${pageUrlPostfix}}" class="page-link">[[${i}]]</a></li>
+												<li class="page-item"><a th:unless="${i != currentPage}" class="page-link">[[${i}]]</a></li>
+											</ul>
+											<a th:href="@{${pageUrlPrefix} + 6 +${pageUrlPostfix}}">...</a>
+											<ul  th:each="i: ${#numbers.sequence(totalPages-4, totalPages)}">
+												<li class="page-item"><a th:if="${i != currentPage}" th:href="@{${pageUrlPrefix}+${i} +${pageUrlPostfix}}" class="page-link">[[${i}]]</a></li>
+												<li class="page-item"><a th:unless="${i != currentPage}" class="page-link">[[${i}]]</a></li>
+											</ul>
+										</th:block>
+										<th:block th:if="${currentPage >5 && currentPage < totalPages -4}">
+											<a th:href="@{${pageUrlPrefix} + ${currentPage -5} + ${pageUrlPostfix}}">...</a>
+											<ul  th:each="i: ${#numbers.sequence(currentPage-4, currentPage+4)}">
+												<li class="page-item"><a th:if="${i != currentPage}" th:href="@{${pageUrlPrefix}+${i} +${pageUrlPostfix}}" class="page-link">[[${i}]]</a></li>
+												<li class="page-item"><a th:unless="${i != currentPage}" class="page-link">[[${i}]]</a></li>
+											</ul>
+											<a th:href="@{${pageUrlPrefix} + ${currentPage+5} + ${pageUrlPostfix}}">...</a>
+										</th:block>
+									</th:block>
+									<li style="padding-left:10px;" class="page-item"><a th:if="${currentPage < totalPages}" th:href="@{${pageUrlPrefix  }+${currentPage +1}+${pageUrlPostfix}}" class="page-link">Next</a></li>
+									<span style=" padding-left:10px; padding-top:8px;" th:unless="${currentPage < totalPages}">Next</span>
 								</ul>
 							</nav>
                         </div>

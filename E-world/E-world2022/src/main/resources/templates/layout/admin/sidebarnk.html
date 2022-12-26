@@ -18,10 +18,10 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <a sec:authorize="hasRole('ADMIN')" class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="icon-note menu-icon"></i><span class="nav-text">Nhân viên</span>
                         </a>
-                        <ul aria-expanded="false">
+                        <ul  aria-expanded="false">
                             <li><a th:href="@{/admin/liststaff}">Danh sách nhân viên</a></li>
                             <li><a th:href="@{/admin/staff}">Quản lý nhân viên</a></li>
                         </ul>
@@ -55,17 +55,21 @@
                     </li>
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-notebook menu-icon"></i><span class="nav-text">Pages</span>
+                            <i class="icon-menu menu-icon"></i><span class="nav-text">Đơn hàng</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="./page-login.html">Login</a></li>
-                            <li><a href="./page-register.html">Register</a></li>
-                            <li><a href="./page-lock.html">Lock Screen</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-404.html">Error 404</a></li>
-                                </ul>
-                            </li>
+                            <li><a th:href="@{/admin/listorder}" aria-expanded="false">Danh sách đơn hàng</a></li>
+<!--
+                            <li><a th:href="@{/admin/blog}" aria-expanded="false">Quản lý đơn hàng</a></li>
+-->
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-menu menu-icon"></i><span class="nav-text">Thống kê</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a th:href="@{/admin/statistical}" aria-expanded="false">Thống kê</a></li>
                         </ul>
                     </li>
                 </ul>
