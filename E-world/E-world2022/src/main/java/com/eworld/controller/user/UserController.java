@@ -28,6 +28,9 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String homeLogin() {
+        if(userContextService.getUserContext() !=null){
+            return "redirect:/";
+        }
         return "user/login/login";
     }
 

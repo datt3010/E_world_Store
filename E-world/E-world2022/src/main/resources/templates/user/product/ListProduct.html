@@ -1,4 +1,4 @@
- <!doctype html>
+<!doctype html>
 <html  class="no-js" lang="zxx" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
@@ -88,10 +88,10 @@
                                         <p>Sort By:</p>
                                         <select onChange="window.location.href=this.value" class="nice-select">
                                             <option th:value="@{product}">Normally</option>
-                                        	<option th:value="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">Name (A - Z)</option>
-                                            <option th:value="@{'/product/page/1'+'?sortField=name&sortDir=desc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">Name (Z - A)</option>
-                                            <option th:value="@{'/product/page/1'+'?sortField=price&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">Price (Low &gt; High)</option>
-                                            <option th:value="@{'/product/page/1'+'?sortField=price&sortDir=desc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">Price (High &gt; Low)</option>
+                                        	<option th:value="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''}  + ${brandId !=null ? '&brandId=' + brandId:''} +${categoryId !=null ? '&categoryId=' + categoryId:''}}">Name (A - Z)</option>
+                                            <option th:value="@{'/product/page/1'+'?sortField=name&sortDir=desc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${brandId !=null ? '&brandId=' + brandId:''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}}">Name (Z - A)</option>
+                                            <option th:value="@{'/product/page/1'+'?sortField=price&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${brandId !=null ? '&brandId=' + brandId:''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}}">Price (Low &gt; High)</option>
+                                            <option th:value="@{'/product/page/1'+'?sortField=price&sortDir=desc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${brandId !=null ? '&brandId=' + brandId:''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}}">Price (High &gt; Low)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                                                                 </div>
                                                                 <h4><a class="product_name" href="single-product.html">[[${p.name}]]</a></h4>
                                                                 <div class="price-box">
-                                                                    <span class="new-price">[[${p.price}]]</span>
+                                                                    <span class="new-price">$[[${p.price}]]</span>
                                                                 </div>
                                                             </div>
                                                             <div class="add-actions">
@@ -177,7 +177,7 @@
                                                                 </div>
                                                                 <h4><a class="product_name" th:href="|@{/chitietsanpham/${p.id}}|">[[${p.name}]]</a></h4>
                                                                 <div class="price-box">
-                                                                    <span class="new-price">[[${p.price}]]</span>
+                                                                    <span class="new-price">$[[${p.price}]]</span>
                                                                 </div>
                                                                 <p>[[${p.description}]]</p>
                                                             </div>
@@ -200,7 +200,7 @@
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6">
                                                 <span style="margin-left:2rem;">Total Items: [[${totalProduct}]]- Page [[${currentPage}]] of [[${totalPages}]]</span>
-                                                <nav th:if="${totalPages >1}" th:with="pageUrlPostfix='?sortField=' +${sortField} + '&sortDir=' +${sortDir}+ ${keyword !=null ? '&keyword=' + keyword : ''} +${categoryId !=null ? '&categoryId=' +categoryId:''} +${brandId !=null ? '&brandId=' +brandId:''}" aria-label="Page navigation example">
+                                                <nav th:if="${totalPages >1}" th:with="pageUrlPostfix='?sortField=' +${sortField} + '&sortDir=' +${sortDir}+ ${keyword !=null ? '&keyword=' + keyword : ''} +${brandId !=null ? '&brandId=' +brandId:''} +${categoryId !=null ? '&categoryId=' +categoryId:''} " aria-label="Page navigation example">
                                                     <ul th:with="pageUrlPrefix='/product/page/'" class="pagination">
                                                         <li style="padding-right:10px;" class="page-item"><a th:if="${currentPage > 1}" th:href="@{${pageUrlPrefix} + ${currentPage -1} +${pageUrlPostfix}}" class="page-link" href="#">Previous</a></li>
                                                         <span style=" padding-right:10px; padding-top:8px;" class="page-item" aria-label="Previous" th:unless="${currentPage >1}">Previous</span>&nbsp;&nbsp;
@@ -256,7 +256,7 @@
                                                 <input type="hidden" name="sortDir" th:value="${sortDir}">
                                                 <input type="hidden" name="sortField" th:value="${sortField}">
                                                 <input type="hidden" name="brandId" th:value="${brandId}">
-                                                <li><a  th:href="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId: ''}+ ${brandId !=null ? '&brandId=' + brandId: ''}}">[[${x.name}]]</a></li>
+                                                <li><a  th:href="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${brandId !=null ? '&brandId=' + brandId: ''} +${categoryId !=null ? '&categoryId=' + categoryId: ''}}">[[${x.name}]]</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -308,7 +308,7 @@
                                 </div>
                                 <div class="category-tags">
                                     <ul th:each="b: ${brands}"  th:with="brandId=${b.id}">
-                                        <li><a th:href="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}+ ${brandId !=null ? '&brandId=' + brandId:''}}">[[${b.name}]]</a></li>
+                                        <li><a th:href="@{'/product/page/1'+'?sortField=name&sortDir=asc'+ ${keyword !=null ? '&keyword=' + keyword : ''} + ${brandId !=null ? '&brandId=' + brandId:''} + ${categoryId !=null ? '&categoryId=' + categoryId:''}}">[[${b.name}]]</a></li>
                                     </ul>
                                 </div>
                                 <!-- category-sub-menu end -->

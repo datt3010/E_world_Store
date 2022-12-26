@@ -97,12 +97,18 @@ public class ProductController {
 			if(result.hasErrors()) {
 				return "admin/product/ProductDashBoard";
 			}
-			String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-			input.setLogo(fileName);
+			if(file == null & file.isEmpty()){
+				input.setLogo(null);
+				productService.update(id,input);
+			}
+			else{
+				String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+				input.setLogo(fileName);
 
-			productService.update(id, input);
-			String uploadDir = "src/main/resources/static/images/staff/";
-			uploadService.save(file, uploadDir);
+				productService.update(id, input);
+				String uploadDir = "src/main/resources/static/images/staff/";
+				uploadService.save(file, uploadDir);
+			}
 			model.addAttribute("message", "Update thành công");
 		
 			return "admin/product/ProductDashBoard";

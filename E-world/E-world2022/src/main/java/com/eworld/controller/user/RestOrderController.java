@@ -1,4 +1,4 @@
-package com.eworld.controller;
+package com.eworld.controller.user;
 
 import com.eworld.dto.order.OrderDto;
 import com.eworld.repository.order.OrderRepository;

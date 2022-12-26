@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
 				product.setModels(input.getModels());
 				product.setStatus(input.getStatus());
 				product.setCategory(category);
-				product.setImage(input.getLogo());
+				product.setImage(input.getLogo().isEmpty() ? null : input.getLogo());
 				product.setUrlVideo(input.getUrlVideo());
 
 			productRepo.save(product);

@@ -44,13 +44,13 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository, Fin
 
 		if(filter.getBrandId() !=null && filter.getCategoryId() == null){
 			whereClauseSqlBuilder.append(" AND p.categoryId");
-			subClause.append(" IN (SELECT cb.categoryId FROM CategoryBrand cb WHERE cb.brandId = :brandId)");
+			subClause.append(" IN (SELECT cb.categoryId FROM CategoryBrand cb WHERE cb.brand.id = :brandId)");
 			parameterMap.put("brandId", filter.getBrandId());
 		}
 
 		if(filter.getBrandId()!=null && filter.getCategoryId()!=null){
 			whereClauseSqlBuilder.append(" AND p.categoryId = :categoryId");
-			subClause.append(" AND p.categoryId IN (SELECT cb FROM CategoryBrand cb WHERE cb.categoryId= :categoryId AND cb.brandId = :brandId)");
+			subClause.append(" AND :categoryId IN (SELECT cb FROM CategoryBrand cb WHERE cb.categoryId= :categoryId AND cb.brandId = :brandId)");
 			parameterMap.put("categoryId", filter.getCategoryId());
 			parameterMap.put("brandId", filter.getBrandId());
 		}
