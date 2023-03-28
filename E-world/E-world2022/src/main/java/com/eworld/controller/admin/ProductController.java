@@ -1,7 +1,6 @@
 package com.eworld.controller.admin;
 
 import com.eworld.contstant.CategoryStatus;
-import com.eworld.contstant.ProductStatus;
 import com.eworld.dto.product.ProductDto;
 import com.eworld.dto.product.ProductInput;
 import com.eworld.dto.product.ProductUpdate;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -59,30 +58,28 @@ public class ProductController {
 	@PostMapping("/product/insert")
 	public String insert(Model model,@ModelAttribute("product") @Valid ProductInput input,
 			BindingResult result,
-			@RequestParam("image") MultipartFile file) throws IOException {
-			
+			@RequestParam("image") MultipartFile[] file) throws IOException {
+
 		if(result.hasErrors()) {
 			return"admin/product/ProductDashBoard";
 		}
-		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		input.setLogo(fileName);
-		productService.create(input);
 		String uploadDirectory = "src/main/resources/static/images/product/";
-		uploadService.save(file, uploadDirectory);
+		List<String> fileNames = uploadService.saveMulitpleFiles(Arrays.asList(file), uploadDirectory);
+		productService.create(input,fileNames);
 		model.addAttribute("message", "Insert thành công");
 		
 		return "forward:/admin/product";
 	}
 	
 	@RequestMapping("/listproduct/delete/{id}")
-	public String delete(@PathVariable("id") Integer id) {
-		productService.changeStatus(id);
+	public String changeStatusToInactive(@PathVariable("id") Integer id) {
+		productService.changeStatusToInactive(id);
 		return "redirect:/admin/listproduct";
 	}
 	
 	@RequestMapping("/listproduct/{id}")
 	public String detail(Model model,@PathVariable("id") Integer id) {
-		ProductDto dto = productService.getDetail(id);
+		ProductDto dto = productService.getDetailById(id);
 		model.addAttribute("product",dto);	
 		return "admin/product/ProductDashBoard";
 	}
@@ -92,23 +89,14 @@ public class ProductController {
 			@PathVariable("id") Integer id, 
 			@ModelAttribute("product") @Valid ProductUpdate input,
 			BindingResult result,
-			@RequestParam("image") MultipartFile file) throws IOException,MissingPathVariableException {
+			@RequestParam("image") MultipartFile[] file) throws IOException,MissingPathVariableException {
 			
 			if(result.hasErrors()) {
 				return "admin/product/ProductDashBoard";
 			}
-			if(file == null & file.isEmpty()){
-				input.setLogo(null);
-				productService.update(id,input);
-			}
-			else{
-				String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-				input.setLogo(fileName);
-
-				productService.update(id, input);
-				String uploadDir = "src/main/resources/static/images/staff/";
-				uploadService.save(file, uploadDir);
-			}
+		String uploadDirectory = "src/main/resources/static/images/product/";
+		List<String> fileNames = uploadService.saveMulitpleFiles(Arrays.asList(file), uploadDirectory);
+		productService.update(id, input, fileNames);
 			model.addAttribute("message", "Update thành công");
 		
 			return "admin/product/ProductDashBoard";
@@ -136,7 +124,7 @@ public class ProductController {
 		
 		model.addAttribute("sortField", "id");
 		model.addAttribute("sortDir", "asc");
-		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"asc":"desc");
+		model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
 
 		model.addAttribute("listProduct", listProduct);
 

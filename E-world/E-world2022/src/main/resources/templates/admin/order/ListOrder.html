@@ -97,11 +97,12 @@
                                                 <td th:text="${#dates.format(o.createdAt, 'dd-MM-yyyy')}">[[${o.createdAt}]]</td>
                                                 <td>[[${o.paymentMethod}]]</td>
                                                 <td><select onChange="window.location.href=this.value"  class="form-control">
-                                                    <option selected>[[${o.status}]]</option>
-                                                    <option  th:value="@{|/admin/order/process/${o.id}|}">IN_PROCRESS</option>
-                                                    <option  th:value="@{|/admin/order/delivery/${o.id}|}">DELIVERING</option>
-                                                    <option  th:value="@{|/admin/order/success/${o.id}|}">SUCESSFULLY</option>
+                                                    <option selected >[[${o.status}]]</option>
+                                                    <option  th:value="@{|/admin/order/process/${o.id}|}">Process</option>
+                                                    <option  th:value="@{|/admin/order/delivery/${o.id}|}">Delivering</option>
+                                                    <option  th:value="@{|/admin/order/success/${o.id}|}">Successfully</option>
                                                 </select></td>
+                                                <td><a th:href="@{|/admin/listorder/${o.id}|}">Chi tiết đơn hàng</a></td>
 											</tr>
 										</tbody>
 									</table>

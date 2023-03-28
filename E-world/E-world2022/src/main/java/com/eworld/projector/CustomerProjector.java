@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.eworld.dto.customer.CustomerDto;
+import com.eworld.dto.profile.AccountProfileDto;
 import com.eworld.entity.Account;
 
 public class CustomerProjector {
@@ -12,20 +13,21 @@ public class CustomerProjector {
 		return CustomerDto.builder()
 				.createdAt(entity.getCreateAt())
 				.id(entity.getId())
-				.firstName(entity.getFirstName())
-				.lastName(entity.getLastName())
-				.address(entity.getAddress())
 				.username(entity.getUsername())
 				.password(entity.getPassword())
-				.email(entity.getEmail())
-				.address(entity.getAddress())
-				.dateOfBirth(entity.getDateOfBirth())
-				.gioitinh(entity.getGioitinh())
-				.phone(entity.getPhone())
-				.nationality(entity.getNationality())
-				.status(entity.getStatus())
-				.logo(entity.getImage())
-				.age(entity.getAge())
+				.accountProfileDto(AccountProfileDto.builder()
+						.accountId(entity.getId())
+						.firstName(entity.getAccountProfile().getFirstName())
+						.lastName(entity.getAccountProfile().getLastName())
+						.logo(entity.getAccountProfile().getImage())
+						.phone(entity.getAccountProfile().getPhone())
+						.email(entity.getAccountProfile().getEmail())
+						.status(entity.getAccountProfile().getStatus())
+						.nationality(entity.getAccountProfile().getNationality())
+						.gioitinh(entity.getAccountProfile().getGioitinh())
+						.dateOfBirth(entity.getAccountProfile().getDateOfBirth())
+						.address(entity.getAccountProfile().getAddress())
+						.build())
 				.build();
 	}
 	
@@ -40,17 +42,18 @@ public class CustomerProjector {
 				.createdAt(entity.getCreateAt())
 				.username(entity.getUsername())
 				.password(entity.getPassword())
-				.firstName(entity.getFirstName())
-				.lastName(entity.getLastName())
-				.age(entity.getAge())
-				.address(entity.getAddress())
-				.nationality(entity.getNationality())
-				.dateOfBirth(entity.getDateOfBirth())
-				.email(entity.getEmail())
-				.phone(entity.getPhone())
-				.logo(entity.getImage())
-				.gioitinh(entity.getGioitinh())
-				.status(entity.getStatus())
+				.accountProfileDto(AccountProfileDto.builder()
+						.firstName(entity.getAccountProfile().getFirstName())
+						.lastName(entity.getAccountProfile().getLastName())
+						.status(entity.getAccountProfile().getStatus())
+						.email(entity.getAccountProfile().getEmail())
+						.phone(entity.getAccountProfile().getPhone())
+						.nationality(entity.getAccountProfile().getNationality())
+						.logo(entity.getAccountProfile().getImage())
+						.dateOfBirth(entity.getAccountProfile().getDateOfBirth())
+						.address(entity.getAccountProfile().getAddress())
+						.gioitinh(entity.getAccountProfile().getGioitinh())
+						.build())
 				.build();
 	}
 }

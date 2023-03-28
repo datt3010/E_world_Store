@@ -11,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -47,9 +45,9 @@ public class CustomerController {
 		if(result.hasErrors()) {
 			return "admin/customer/CustomerDashBoard";
 		}
-		
+
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		input.setLogo(fileName);
+		input.getAccountProfileDto().setLogo(fileName);
 		
 		customerService.create(input);
 		String uploadDirectory = "src/main/resources/static/images/staff/";
@@ -88,12 +86,16 @@ public class CustomerController {
 			if(result.hasErrors()) {
 				return "admin/customer/CustomerDashBoard";
 			}
-			String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-			input.setLogo(fileName);
-			
+			if(file==null) {
+				input.getAccountProfileDto().setLogo(null);
+			}
+			if(!file.isEmpty()){
+				String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+				input.getAccountProfileDto().setLogo(fileName);
+				String uploadDir = "src/main/resources/static/images/staff/";
+				uploadService.save(file, uploadDir);
+			}
 			customerService.update(id, input);
-			String uploadDir = "src/main/resources/static/images/staff/";
-			uploadService.save(file, uploadDir);
 			model.addAttribute("message", "Update thành công");
 		
 		return "forward:/admin/customer";

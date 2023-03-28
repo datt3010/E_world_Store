@@ -12,7 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 @Controller
 public class UserController {
@@ -36,11 +41,16 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String executeLogin(Model model,
-                               @RequestParam(name = "username", required = false)String username){
-      if(userContextService.userExists(username) == false){
-          model.addAttribute("message", "username is not exists");
-          return "user/login/login";
-      }
+                               @RequestParam(name = "username",required = false) String username,
+                               @RequestParam(name ="password", required = false) String password){
+        String token =accountService.handleTokenJwt(username, password);
+        if(StringUtils.isEmpty(token)){
+            return "user/login/login";
+        }
+//        if(!userContextService.findCurrent().orElseThrow().getUsername().equals(username)){
+//            model.addAttribute("message","User is not exists");
+//            return "user/login/login";
+//        }
       return "user/home/index";
     }
 
@@ -106,7 +116,7 @@ public class UserController {
         OAuth2User socialUser = auth.getPrincipal();
         String email = socialUser.getAttribute("email").toString();
         try {
-            UserContext userContext = accountService.findbyUsernameOrEmail(email);
+            UserContext userContext = accountService.findByUsername(email);
             userContextService.setAccount(userContext);
         } catch (Exception e) {
             UserContext userContext = userContextService.createFormSocial(socialUser);

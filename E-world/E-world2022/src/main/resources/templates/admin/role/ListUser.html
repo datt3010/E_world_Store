@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+  <link rel="icon" type="image/png" sizes="16x16" href="/admin/images/favicon.png">
+  <link href="/admin/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="/admin/css/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="preloader">
+  <div class="loader">
+    <svg class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+    </svg>
+  </div>
+</div>
+<div id="main-wrapper">
+  <div class="nav-header">
+    <div class="brand-logo">
+      <a href="index.html">
+        <b class="logo-abbr"><img src="/admin/images/logo.png" alt=""> </b>
+        <span class="logo-compact"><img src="/admin/images/logo-compact.png" alt=""></span>
+        <span class="brand-title">
+                        <img src="/admin/images/logo-text.png" alt="">
+                    </span>
+      </a>
+    </div>
+  </div>
+  <div th:replace="/layout/admin/header.html"></div>
+  <div th:replace="/layout/admin/sidebarnk.html"></div>
+  <div class="content-body">
+
+    <div class="row page-titles mx-0">
+      <div class="col p-md-0">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+          <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+        </ol>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <form th:action="@{/admin/liststaff/page/1}" method="get">
+                <div class="form-group">
+                  <input name="keyword" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
+                  <input type="hidden" name="sortDir" th:value="${sortDir}">
+                  <input type="hidden" name="sortField" th:value="${sortField}">
+                </div>
+              </form>
+              <h4 class="card-title">Danh sách nhân viên</h4>
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th scope="col"><a th:href="@{'/admin/listuser/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Mã khách hàng</a></th>
+                    <th scope="col"><a th:href="@{'/admin/listuser/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Tên khách hàng</a></th>
+                    <th scope="col">Ngày sinh</th>
+                    <th scope="col"><a th:href="@{'/admin/listuser/page/' + ${currentPage} + '?sortField=gioitinh&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Giới tính</a></th>
+                    <th scope="col"> Ảnh</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="c: ${listCustomer}">
+                    <td>[[${c.id}]]</td>
+                    <td>[[${c.firstName} +' '+ ${c.lastName}]]</td>
+                    <td th:text="${#dates.format(c.dateOfBirth, 'dd-MM-yyyy')}">[[${c.dateOfBirth}]]</td>
+                    <td>[[${c.gioitinh}]]</td>
+                    <td><img th:src="@{|/images/staff/${c.logo}|}" width="80" height="50"/></td>
+                    <td><a th:href="@{|/admin/listuser/${c.id}|}">Edit</a></td>
+                    <td><a th:href="@{|/admin/listuser/delete/${c.id}|}">Delete</a></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <span style="margin-left:2rem;">Total Items: [[${totalItems}]]- Page [[${currentPage}]] of [[${totalPages}]]</span>
+            <nav th:if="${totalPages >1}" th:with="pageUrlPostfix='?sortField=' +${sortField} + '&sortDir=' +${sortDir}+ ${keyword !=null ? '&keyword=' + keyword : ''}" style="margin-left:60rem;" aria-label="Page navigation example">
+              <ul th:with="pageUrlPrefix='/admin/listuser/page/'" class="pagination">
+                <li style="padding-right:10px;" class="page-item"><a th:if="${currentPage > 1}" th:href="@{'/admin/listuser/page/' + ${currentPage -1} +${pageUrlPostfix}}" class="page-link" href="#">Previous</a></li>
+                <span style=" padding-right:10px; padding-top:8px;" class="page-item" aria-label="Previous" th:unless="${currentPage >1}">Previous</span>&nbsp;&nbsp;
+                <th:block th:if="${totalPages <=10}">
+                  <ul  th:each="i: ${#numbers.sequence(1, totalPages)}">
+                    <li class="page-item"><a th:if="${i != currentPage}" th:href="@{${pageUrlPrefix}+${i} +${pageUrlPostfix}}" class="page-link">[[${i}]]</a></li>
+                    <li class="page-item"><a th:unless="${i != currentPage}" class="page-link">[[${i}]]</a></li>
+                  </ul>
+                </th:block>
+                <th:block th:if="${totalPages >10}">
+                  <th:block th:if="${currentPage <=5 || currentPage > totalPages -4}">
+                    <ul  th:each="i: ${#numbers.sequence(1, totalPages)}">
+                      <li class="page-item"><a th:if="${i != currentPage}" th:href="@{${pageUrlPrefix}+${i} +${pageUrlPostfix}}" class="page-link">[[${i}]]</a></li>
+                      <li class="page-item"><a th:unless="${i != currentPage}" class="page-link">[[${i}]]</a></li>
+                    </ul>
+                    <a th:href="@{${pageUrlPrefix} + 6 +${pageUrlPostfix}}">...</a>
+                    <ul  th:each="i: ${#numbers.sequence(totalPages-4, totalPages)}">
+                      <li class="page-item"><a th:if="${i != currentPage}" th:href="@{${pageUrlPrefix}+${i} +${pageUrlPostfix}}" class="page-link">[[${i}]]</a></li>
+                      <li class="page-item"><a th:unless="${i != currentPage}" class="page-link">[[${i}]]</a></li>
+                    </ul>
+                  </th:block>
+                  <th:block th:if="${currentPage >5 && currentPage < totalPages -4}">
+                    <a th:href="@{${pageUrlPrefix} + ${currentPage -5} + ${pageUrlPostfix}}">...</a>
+                    <ul  th:each="i: ${#numbers.sequence(currentPage-4, currentPage+4)}">
+                      <li class="page-item"><a th:if="${i != currentPage}" th:href="@{${pageUrlPrefix}+${i} +${pageUrlPostfix}}" class="page-link">[[${i}]]</a></li>
+                      <li class="page-item"><a th:unless="${i != currentPage}" class="page-link">[[${i}]]</a></li>
+                    </ul>
+                    <a th:href="@{${pageUrlPrefix} + ${currentPage+5} + ${pageUrlPostfix}}">...</a>
+                  </th:block>
+                </th:block>
+                <li style="padding-left:10px;" class="page-item"><a th:if="${currentPage < totalPages}" th:href="@{${pageUrlPrefix  }+${currentPage +1}+${pageUrlPostfix}}" class="page-link">Next</a></li>
+                <span style=" padding-left:10px; padding-top:8px;" th:unless="${currentPage < totalPages}">Next</span>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:replace="/layout/admin/footer.html"></div>
+</div>
+<script src="/admin/plugins/common/common.min.js"></script>
+<script src="/admin/js/custom.min.js"></script>
+<script src="/admin/js/settings.js"></script>
+<script src="/admin/js/gleek.js"></script>
+<script src="/admin/js/styleSwitcher.js"></script>
+
+<script src="/admin/plugins/tables/js/jquery.dataTables.min.js"></script>
+<script src="/admin/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+<script src="/admin/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+
+</body>
+
+</html>

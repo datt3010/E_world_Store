@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import com.eworld.contstant.CategoryStatus;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

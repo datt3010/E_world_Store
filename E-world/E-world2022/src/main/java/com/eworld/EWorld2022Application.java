@@ -9,5 +9,4 @@ public class EWorld2022Application {
 	public static void main(String[] args) {
 		SpringApplication.run(EWorld2022Application.class, args);
 	}
-
 }

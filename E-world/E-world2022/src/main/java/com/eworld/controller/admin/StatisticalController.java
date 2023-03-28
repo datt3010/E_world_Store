@@ -108,17 +108,17 @@ public class StatisticalController {
     @ModelAttribute("listProductHotSale")
     public List<ProductDto> listProductHotSale(@RequestParam(value = "month", required = false)Integer month){
         Pageable pageable = PageRequest.of(0,3,Sort.by("id").ascending());
-        Page<ProductDto> listProductHotSale = productService.listProductHotSale(12,pageable);
+        Page<ProductDto> listProductHotSale = productService.listProductHotSale(1,pageable);
         return listProductHotSale.getContent();
     }
 
     @ModelAttribute("listCategoryHotSale")
     public List<CategoryDto> listCategoryHotSale(@RequestParam(value = "month", required = false)Integer month){
-        return categoryService.listCategoryHotSale(12);
+        return categoryService.listCategoryHotSale(1);
     }
 
     @ModelAttribute("listAccountTotalPrice")
     public List<Account> listAccountTotalPrice(@RequestParam(value = "month",required = false) Integer month){
-        return customerService.listAccountTotalPrice(12);
+        return customerService.listAccountTotalPrice(1);
     }
 }

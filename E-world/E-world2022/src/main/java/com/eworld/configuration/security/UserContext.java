@@ -1,6 +1,7 @@
 package com.eworld.configuration.security;
 
 import com.eworld.entity.Account;
+import com.eworld.entity.AccountProfile;
 import com.eworld.entity.AccountRole;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,6 +24,8 @@ import java.util.stream.Stream;
 public class UserContext implements UserDetails {
 
     private Account account;
+
+    private AccountProfile accountProfile;
     @NotBlank(message = "{Account.password}")
     @Size(min =4, max = 50, message = "{Account.password.size}")
     private String password;
@@ -72,6 +75,8 @@ public class UserContext implements UserDetails {
 		if(userRoles == null) {
         return Set.of();
     }
-        return userRoles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole().getName())).collect(Collectors.toSet());
+        return userRoles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole().getName()))
+                .collect(Collectors.toSet());
 }
 }

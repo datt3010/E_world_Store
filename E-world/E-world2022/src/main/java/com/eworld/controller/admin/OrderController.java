@@ -82,7 +82,13 @@ public class OrderController {
 	}
 	@RequestMapping("order/success/{id}")
 	public String changeSucess(@PathVariable("id") Integer id){
-		orderService.changeStatus(OrderStatus.SUCESSFULLY, id);
+		orderService.changeStatus(OrderStatus.SUCCESSFULLY, id);
 		return "redirect:/admin/listorder";
+	}
+
+	@RequestMapping("/listorder/{id}")
+	public String orderDetail(@PathVariable("id")Integer id,Model model){
+		model.addAttribute("orders",orderService.findById(id));
+		return "admin/order/OrderDetail";
 	}
 }

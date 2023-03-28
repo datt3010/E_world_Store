@@ -5,10 +5,12 @@ import com.eworld.dto.staff.StaffDto;
 import com.eworld.dto.staff.StaffInput;
 import com.eworld.dto.staff.StaffUpdate;
 import com.eworld.entity.Account;
+import com.eworld.entity.AccountProfile;
 import com.eworld.entity.AccountRole;
 import com.eworld.entity.Role;
 import com.eworld.filter.StaffFilter;
 import com.eworld.projector.StaffProjector;
+import com.eworld.repository.customer.CustomerProfileRepository;
 import com.eworld.repository.role.AccountRoleRepository;
 import com.eworld.repository.role.RoleRepository;
 import com.eworld.repository.staff.StaffRepository;
@@ -38,6 +40,9 @@ public class StaffServiceImpl implements StaffService {
     @Autowired
     private AccountRoleRepository accountRoleRepository;
 
+    @Autowired
+    private CustomerProfileRepository customerProfileRepository;
+
     @Override
     public Account findById(Integer id) {
         return staffRepository.findById(id).get();
@@ -62,17 +67,19 @@ public class StaffServiceImpl implements StaffService {
                 .createAt(date)
                 .username(input.getUsername())
                 .password(input.getPassword())
-                .firstName(input.getFirstName())
-                .lastName(input.getLastName())
-                .age(input.getAge())
-                .address(input.getAddress())
-                .nationality(input.getNationality())
-                .dateOfBirth(input.getDateOfBirth())
-                .email(input.getEmail())
-                .phone(input.getPhone())
-                .image(input.getLogo())
-                .status(input.getStatus())
-                .gioitinh(input.getGioitinh())
+                .build();
+        AccountProfile accountProfile = AccountProfile.builder()
+                .accountId(account.getId())
+                .firstName(input.getAccountProfileDto().getFirstName())
+                .lastName(input.getAccountProfileDto().getLastName())
+                .address(input.getAccountProfileDto().getAddress())
+                .nationality(input.getAccountProfileDto().getNationality())
+                .dateOfBirth(input.getAccountProfileDto().getDateOfBirth())
+                .email(input.getAccountProfileDto().getEmail())
+                .phone(input.getAccountProfileDto().getPhone())
+                .image(input.getAccountProfileDto().getLogo())
+                .status(input.getAccountProfileDto().getStatus())
+                .gioitinh(input.getAccountProfileDto().getGioitinh())
                 .build();
 
         AccountRole accountRole = accountRoleRepository.findByAccountId(account.getId());
@@ -84,6 +91,7 @@ public class StaffServiceImpl implements StaffService {
                 .build()));
 
         staffRepository.save(account);
+        customerProfileRepository.save(accountProfile);
         return StaffDto.builder()
                 .id(account.getId())
                 .build();
@@ -110,19 +118,20 @@ public class StaffServiceImpl implements StaffService {
         Date date = Date.from(instant);
 
         Account account = findById(id);
+        AccountProfile accountProfile = customerProfileRepository.findByAccountId(account.getId());
         account.setCreateAt(date);
         account.setUsername(input.getUsername());
         account.setPassword(input.getPassword());
-        account.setFirstName(input.getFirstName());
-        account.setLastName(input.getLastName());
-        account.setAge(input.getAge());
-        account.setDateOfBirth(input.getDateOfBirth());
-        account.setAddress(input.getAddress());
-        account.setEmail(input.getEmail());
-        account.setGioitinh(input.getGioitinh());
-        account.setStatus(input.getStatus());
-        account.setImage(input.getLogo());
+        account.getAccountProfile().setFirstName(input.getAccountProfileDto().getFirstName());
+        account.getAccountProfile().setLastName(input.getAccountProfileDto().getLastName());
+        account.getAccountProfile().setDateOfBirth(input.getAccountProfileDto().getDateOfBirth());
+        account.getAccountProfile().setAddress(input.getAccountProfileDto().getAddress());
+        account.getAccountProfile().setEmail(input.getAccountProfileDto().getEmail());
+        account.getAccountProfile().setGioitinh(input.getAccountProfileDto().getGioitinh());
+        account.getAccountProfile().setStatus(input.getAccountProfileDto().getStatus());
+        account.getAccountProfile().setImage(input.getAccountProfileDto().getLogo());
         staffRepository.save(account);
+        customerProfileRepository.save(accountProfile);
 
         return StaffDto.builder().id(id).build();
     }

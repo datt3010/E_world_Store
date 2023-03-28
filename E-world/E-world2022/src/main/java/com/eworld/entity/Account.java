@@ -27,6 +27,12 @@ public class Account {
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     Set<AccountRole> accountRoles;
 
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    Set<SocialConnection> socialConnections;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "account")
+    private  AccountProfile accountProfile;
+
     @CreatedDate
     @Column(updatable = false)
     private Date createAt;
@@ -38,30 +44,5 @@ public class Account {
     private String username;
 
     private String password;
-
-    private String email;
-
-    private Integer age;
-
-    private String phone;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
-    private Gender gioitinh;
-
-    private String firstName;
-
-    private String lastName;
-
-    private Date dateOfBirth;
-
-    private String address;
-
-    private String nationality;
-
-    private String image;
-
-    @Enumerated(EnumType.STRING)
-    private UserStatus status;
 
 }

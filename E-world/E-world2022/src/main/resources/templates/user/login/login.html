@@ -82,10 +82,8 @@
 					<div class="col-sm-12 col-md-12 col-xs-12 col-lg-9 mb-30">
 						<form th:action="@{/login}" method="post">
 							<div class="login-form" style="margin-top:2rem;margin-left:12rem;">
-<!--
-								<span class="text-danger" th:text="@{message}"></span>
--->
 								<h4 class="login-title">Đăng nhập</h4>
+								<span th:if="${param.error != null}" class="text-danger">Username or password is not valid</span>
 								<div class="row">
 									<div class="col-md-12 mb-20">
 										<label>Username or email address*</label>
@@ -97,8 +95,8 @@
 									</div>
 									<div class="col-12">
 										<button class="register-button mt-0">Login</button><br>
-										<!--<a th:href="@{/oauth2/authorization/google}">Login with Google</a><br>
-										<a href="">Login with facebook</a><br>-->
+										<a th:href="@{/oauth2/authorization/google}">Login with Google</a><br>
+										<a href="">Login with facebook</a><br>
 									</div>
 								</div>
 								<span><a th:href="@{/dangky}">Chưa có tài khoản?</a></span>

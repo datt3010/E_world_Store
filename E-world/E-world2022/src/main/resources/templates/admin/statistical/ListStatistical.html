@@ -56,10 +56,10 @@
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Danh sách các loại sản phẩm bán chạy theo tháng</button>
                 </li>
-                <li sec:authorize="hasRole('ADMIN')" class="nav-item" role="presentation">
+                <li sec:authorize="hasRole('Admin')" class="nav-item" role="presentation">
                   <button class="nav-link" id="revenue-tab" data-toggle="tab" data-target="#revenue" type="button" role="tab" aria-controls="revenue" aria-selected="false">Doanh thu</button>
                 </li>
-                <li sec:authorize="hasAnyRole('ADMIN','STAFF')" class="nav-item" role="presentation">
+                <li sec:authorize="hasAnyRole('Admin','Staff')" class="nav-item" role="presentation">
                   <button class="nav-link" id="customer-tab" data-toggle="tab" data-target="#customer" type="button" role="tab" aria-controls="customer" aria-selected="false">Danh sách khách hàng mua nhiều nhất trong tháng</button>
                 </li>
               </ul>
@@ -79,7 +79,6 @@
                       <th scope="col">STT</th>
                       <th scope="col">Tên khách hàng</th>
                       <th scope="col">Ngày sinh</th>
-                      <th scope="col">Tuổi</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -87,7 +86,6 @@
                       <th scope="row">[[${state.index}]]</th>
                       <td>[[${a.firstName} + ${a.lastName}]]</td>
                       <td th:text="${#dates.format(a.dateOfBirth, 'dd-MM-yyyy')}">[[${a.dateOfBirth}]]</td>
-                      <td>[[${a.age}]]</td>
                     </tr>
                     </tbody>
                   </table>
@@ -154,7 +152,7 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="tab-pane fade show active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
+                <div class="tab-pane fade" id="customer" role="tabpanel" aria-labelledby="customer-tab">
                   <table class="table table-striped">
                     <thead>
                     <tr>

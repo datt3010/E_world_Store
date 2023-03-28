@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -46,7 +45,7 @@ public class StaffController {
         }
 
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        input.setLogo(fileName);
+        input.getAccountProfileDto().setLogo(fileName);
 
         staffService.create(input);
         String uploadDirectory = "src/main/resources/static/images/staff/";
@@ -86,7 +85,7 @@ public class StaffController {
             return "admin/staff/StaffDashBoard";
         }
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        input.setLogo(fileName);
+        input.getAccountProfileDto().setLogo(fileName);
 
         staffService.update(id, input);
         String uploadDir = "src/main/resources/static/images/staff/";
@@ -117,7 +116,7 @@ public class StaffController {
 
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc")?"asc":"desc");
+        model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
 
         return "admin/staff/ListStaff";
     }

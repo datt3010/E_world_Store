@@ -14,6 +14,8 @@ public class RestShoppingCartController {
 
     @GetMapping("{id}")
     public ProductDto getOne(@PathVariable("id")Integer id){
-        return productService.findbyId(id);
+       ProductDto dto = new ProductDto();
+       dto = productService.findById(id);
+        return  dto;
     }
 }

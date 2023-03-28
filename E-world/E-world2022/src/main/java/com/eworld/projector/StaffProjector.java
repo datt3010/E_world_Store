@@ -1,5 +1,6 @@
 package com.eworld.projector;
 
+import com.eworld.dto.profile.AccountProfileDto;
 import com.eworld.dto.staff.StaffDto;
 import com.eworld.entity.Account;
 
@@ -11,20 +12,22 @@ public class StaffProjector {
         return StaffDto.builder()
                 .createdAt(entity.getCreateAt())
                 .id(entity.getId())
-                .firstName(entity.getFirstName())
-                .lastName(entity.getLastName())
-                .address(entity.getAddress())
+                .accountProfileDto(AccountProfileDto.builder()
+                        .accountId(entity.getId())
+                        .firstName(entity.getAccountProfile().getFirstName())
+                        .lastName(entity.getAccountProfile().getLastName())
+                        .address(entity.getAccountProfile().getAddress())
+                        .email(entity.getAccountProfile().getEmail())
+                        .address(entity.getAccountProfile().getAddress())
+                        .dateOfBirth(entity.getAccountProfile().getDateOfBirth())
+                        .gioitinh(entity.getAccountProfile().getGioitinh())
+                        .phone(entity.getAccountProfile().getPhone())
+                        .nationality(entity.getAccountProfile().getNationality())
+                        .status(entity.getAccountProfile().getStatus())
+                        .logo(entity.getAccountProfile().getImage())
+                        .build())
                 .username(entity.getUsername())
                 .password(entity.getPassword())
-                .email(entity.getEmail())
-                .address(entity.getAddress())
-                .dateOfBirth(entity.getDateOfBirth())
-                .gioitinh(entity.getGioitinh())
-                .phone(entity.getPhone())
-                .nationality(entity.getNationality())
-                .status(entity.getStatus())
-                .logo(entity.getImage())
-                .age(entity.getAge())
                 .build();
     }
 
@@ -39,17 +42,18 @@ public class StaffProjector {
                 .createdAt(entity.getCreateAt())
                 .username(entity.getUsername())
                 .password(entity.getPassword())
-                .firstName(entity.getFirstName())
-                .lastName(entity.getLastName())
-                .age(entity.getAge())
-                .address(entity.getAddress())
-                .nationality(entity.getNationality())
-                .dateOfBirth(entity.getDateOfBirth())
-                .email(entity.getEmail())
-                .phone(entity.getPhone())
-                .logo(entity.getImage())
-                .gioitinh(entity.getGioitinh())
-                .status(entity.getStatus())
+                .accountProfileDto(AccountProfileDto.builder()
+                        .firstName(entity.getAccountProfile().getFirstName())
+                        .lastName(entity.getAccountProfile().getLastName())
+                        .address(entity.getAccountProfile().getAddress())
+                        .nationality(entity.getAccountProfile().getNationality())
+                        .dateOfBirth(entity.getAccountProfile().getDateOfBirth())
+                        .email(entity.getAccountProfile().getEmail())
+                        .phone(entity.getAccountProfile().getPhone())
+                        .logo(entity.getAccountProfile().getImage())
+                        .gioitinh(entity.getAccountProfile().getGioitinh())
+                        .status(entity.getAccountProfile().getStatus())
+                        .build())
                 .build();
     }
 }

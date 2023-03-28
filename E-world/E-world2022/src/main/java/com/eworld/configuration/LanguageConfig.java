@@ -18,8 +18,9 @@ public class LanguageConfig  implements WebMvcConfigurer {
     @Bean(name = "localeResolver")
     public LocaleResolver getLocaleResolver()  {
         CookieLocaleResolver resolver= new CookieLocaleResolver();
+        Locale vnLocale = new Locale("vi","VN");
         resolver.setCookieDomain("myAppLocaleCookie");
-        resolver.setDefaultLocale(Locale.ENGLISH);
+        resolver.setDefaultLocale(vnLocale);
         resolver.setCookieMaxAge(60*60);
         return resolver;
     }

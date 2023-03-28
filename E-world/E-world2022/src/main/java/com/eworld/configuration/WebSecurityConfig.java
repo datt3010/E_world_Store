@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationC
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 @Configuration
@@ -32,20 +34,34 @@ public class WebSecurityConfig{
                 .antMatchers("/admin/staff/**", "/admin/liststaff/**").hasRole("ADMIN")
                 .anyRequest().permitAll();
 
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
         http.exceptionHandling()
                 .accessDeniedPage("/404");
 
+//        http.formLogin()
+//                .loginPage("/login")
+//                .loginProcessingUrl("/login")
+//                .defaultSuccessUrl("/")
+//                .failureUrl("/login");
         http.formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/")
-                .failureUrl("/404");
+                .failureUrl("/login?error=true")
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint((request, response, authException) ->{
+                  response.sendRedirect("/login?error=true");
+                    })
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                  response.sendRedirect("/login?error=true");
+                    });
 
         http.rememberMe().tokenValiditySeconds(30*24*60*60);
 
         http.logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
+                .deleteCookies("JSESSIONID")
                 .addLogoutHandler(new SecurityContextLogoutHandler());
 
         http.oauth2Login()
@@ -74,6 +90,16 @@ public class WebSecurityConfig{
     @Bean
     public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> getToken(){
         return new DefaultAuthorizationCodeTokenResponseClient();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(){
+        return new JwtAuthenticationFilter();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler(){
+        return new CustomAuthenticationFailureHandler();
     }
 
 }

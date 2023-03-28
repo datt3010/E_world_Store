@@ -102,7 +102,7 @@
                                         <tbody>
 			                                   <tr ng-repeat="item in cart.items">
                                                 <td class="li-product-remove"><a ng-click="cart.remove(item.id)"><i class="fa fa-times"></i></a></td>
-                                                <td class="li-product-thumbnail"><img ng-src="/images/product/{{item.logo}}" width="200" height="200"></td>
+                                                <td class="li-product-thumbnail"><img ng-src="/images/product/{{item.productImages[0].image}}" alt="cart products" width="200px" height="200px"></td>
                                                 <td class="li-product-name">${{item.price | number:2}}</td>
                                                 <td class="li-product-price"><span class="amount">${{item.price * item.qty | number:2}}</span></td>
                                                 <td class="li-product-stock-status"><input ng-change="cart.saveToLocalStorage()" ng-model="item.qty" type="number" min="1" max="100"></td>
@@ -114,8 +114,8 @@
                             <p style="font-size:20px;padding-top:10px;" class="minicart-total">Order value: <span>{{cart.amount}}</span></p>
                     		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">VAT: <span>10%</span></p>
                       		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">Totals: <span>{{cart.amount + cart.amount*0.1}}</span></p>
-							<button th:formaction="@{/order}" formmethod="get" type="button" class="btn btn-primary">Check out</button> <hr>
-                            <button ng-click="cart.clear()" type="button" class="btn btn-primary">Clear</button>
+                            <span style="font-size:20px;"><a th:href="@{/order/checkout}">Check out</a></span> <br>
+                            <span style="font-size:20px;"><a href="#"  ng-click="cart.clear()">Clear</a></span>
                         </div>
                     </div>
                 </div>

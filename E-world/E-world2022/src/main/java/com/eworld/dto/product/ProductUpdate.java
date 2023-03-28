@@ -1,19 +1,18 @@
 package com.eworld.dto.product;
 
-import java.util.Date;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.eworld.contstant.ProductStatus;
-
+import com.eworld.entity.ProductImages;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.Set;
 
 @Data
 @Builder
@@ -22,6 +21,8 @@ import lombok.NoArgsConstructor;
 public class ProductUpdate {
 	
 	private Date createdAt;
+
+	private Date updatedAt;
 	
 	@NotBlank(message = "{Product.name}")
 	@Size(min = 4, max = 100, message = "{Size.product.name}" )
@@ -35,8 +36,6 @@ public class ProductUpdate {
 	
 	private String description;
 	
-	private String logo;
-	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "{Product.ngaybaohanh}")
 	private Date ngaybaohanh;
@@ -46,11 +45,10 @@ public class ProductUpdate {
 	
 	@NotBlank(message = "{Product.urlVideo}")
 	private String urlVideo;
-	
-	@NotNull(message = "{Product.models}")
-	private Integer models;
 
 	private Integer categoryId;
+
+	private Set<ProductImages> productImages;
 	
 	
 }

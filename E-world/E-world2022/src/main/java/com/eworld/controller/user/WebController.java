@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@RequestMapping("product")
 public class WebController {
 
 	@Autowired
@@ -32,22 +33,21 @@ public class WebController {
 	@Autowired
 	private OrderService orderService;
 
-	@RequestMapping("chitietsanpham/{id}")
-	public String getDetails(Model model, @PathVariable("id")Integer id) {
-
-		ProductDto dto = productService.getDetail(id);
-
+	@RequestMapping("/{name}")
+	public String getDetails(Model model, @PathVariable("name")String name) {
+		productService.increaseViews(name);
+		ProductDto dto = productService.getDetail(name);
 		model.addAttribute("product", dto);
 
 		return "user/product/ProductDetail";
 	}
 
-	@RequestMapping("/product")
+	@RequestMapping
 	public String listAll(Model model) {
 		return  listPage(model,1,null,"id","asc",null,null);
 	}
 
-	@GetMapping("/product/page/{pageNum}")
+	@GetMapping("/page/{pageNum}")
 	public String listPage(Model model,
 			@PathVariable("pageNum") int pageNum,
 			@RequestParam(name="keyword", required = false)String keyword,
@@ -78,7 +78,7 @@ public class WebController {
 		return "user/product/ListProduct.html";
 		}
 
-	@RequestMapping("/product/search")
+	@RequestMapping("/search")
 	public String searchByKey(Model model,
 					@RequestParam(value = "keyword",required = false)String keyword,
 					@RequestParam(value = "categoryId", required = false) Integer categoryId,

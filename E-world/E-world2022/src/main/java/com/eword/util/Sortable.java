@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Sortable {
 
-	public static final List<String> CUSTOMER = Arrays.asList(
-			"id", "firstName", "lastName", "age", "gioitinh");
+	public static final List<String> User = Arrays.asList(
+			"id", "firstName", "lastName", "gioitinh");
 	
 	public static final List<String> CATEGORY = Arrays.asList(
 			"id", "name", "status");
@@ -19,10 +19,6 @@ public class Sortable {
 	
 	public static final List<String> ORDER = Arrays.asList(
 			"id", "totalPrice");
-
-	public static  final List<String> STAFF = Arrays.asList(
-			"id","lastName", "age", "gioitinh"
-	);
 	public static final List<String> BLOG = Arrays.asList(
 			"id", "name", "status"
 	);

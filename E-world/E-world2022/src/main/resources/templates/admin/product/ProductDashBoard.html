@@ -142,14 +142,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-website">Model<span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-6">
-                                                <input th:field="*{models}" type="text" class="form-control" id="val-website" name="val-website" placeholder="1231231">
-                                              	 <span class="text-danger" style="color:red;"  th:if="${#fields.hasErrors('models')}" th:errors="*{models}"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-phoneus">Status <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
@@ -165,8 +157,8 @@
                                             <label class="col-lg-4 col-form-label" for="val-skill">Ảnh sản phẩm  <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                           <input  type="file" onchange="readURL(this);" class="form-control" id="val-confirm-password" name="image">
-                                           <img id="image" th:src="@{|/images/product/*{logo}}">
+                                           <input  type="file" multiple onchange="readURL(this);" class="form-control" id="val-confirm-password" name="image">
+                                                <img th:each="pi: *{productImages}" width="80" height="50"  th:src="@{|/images/product/${pi.image}|}" alt="Li's Product Image">
                                             </div>
                                         </div>
                                                <div class="form-group row">
@@ -181,7 +173,7 @@
                                             <div class="col-lg-8 ml-auto">
                                                 <button th:formaction="@{/admin/product/insert}" formmethod="post" type="submit" class="btn btn-primary">Insert</button>
                                                 <button th:formaction="@{|/admin/listproduct/${id}|}" formmethod="post" type="submit" class="btn btn-primary">Update</button>
-                                                <button th:formaction="@{|/admin/listproduct/delete/${id}|}" formmethod="get" type="submit" class="btn btn-primary">Delete</button>
+                                                <button th:formaction="@{|/admin/listproduct/delete/${id}|}" formmethod="post" type="submit" class="btn btn-primary">Delete</button>
                                             </div>
                                         </div>
                                     </form>
@@ -219,7 +211,6 @@
     <script src="/admin/js/gleek.js"></script>
     <script src="/admin/js/styleSwitcher.js"></script>
 	<script src="/js/category.js"></script>
-
     <script src="/admin/plugins/validation/jquery.validate.min.js"></script>
     <script src="/admin/plugins/validation/jquery.validate-init.js"></script>
 

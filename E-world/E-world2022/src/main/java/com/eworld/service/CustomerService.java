@@ -4,7 +4,6 @@ import com.eworld.dto.customer.CustomerDto;
 import com.eworld.dto.customer.CustomerInput;
 import com.eworld.dto.customer.CustomerUpdate;
 import com.eworld.entity.Account;
-import com.eworld.entity.Product;
 import com.eworld.filter.CustomerFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

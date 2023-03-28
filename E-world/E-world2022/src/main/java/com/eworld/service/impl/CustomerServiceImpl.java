@@ -5,10 +5,12 @@ import com.eworld.dto.customer.CustomerDto;
 import com.eworld.dto.customer.CustomerInput;
 import com.eworld.dto.customer.CustomerUpdate;
 import com.eworld.entity.Account;
+import com.eworld.entity.AccountProfile;
 import com.eworld.entity.AccountRole;
 import com.eworld.entity.Role;
 import com.eworld.filter.CustomerFilter;
 import com.eworld.projector.CustomerProjector;
+import com.eworld.repository.customer.CustomerProfileRepository;
 import com.eworld.repository.customer.CustomerRepository;
 import com.eworld.repository.role.AccountRoleRepository;
 import com.eworld.repository.role.RoleRepository;
@@ -38,6 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private AccountRoleRepository accountRoleRepository;
 
+	@Autowired
+	private CustomerProfileRepository customerProfileRepository;
+
 	@Override
 	public Account findById(Integer id) {
 		return customerRepo.findById(id).get();
@@ -63,17 +68,19 @@ public class CustomerServiceImpl implements CustomerService {
 				.createAt(date)
 				.username(input.getUsername())
 				.password(input.getPassword())
-				.firstName(input.getFirstName())
-				.lastName(input.getLastName())
-				.age(input.getAge())
-				.address(input.getAddress())
-				.nationality(input.getNationality())
-				.dateOfBirth(input.getDateOfBirth())
-				.email(input.getEmail())
-				.phone(input.getPhone())
-				.image(input.getLogo())
-				.status(input.getStatus())
-				.gioitinh(input.getGioitinh())
+				.build();
+		AccountProfile accountProfile = AccountProfile.builder()
+				.accountId(account.getId())
+				.firstName(input.getAccountProfileDto().getFirstName())
+				.lastName(input.getAccountProfileDto().getLastName())
+				.address(input.getAccountProfileDto().getAddress())
+				.nationality(input.getAccountProfileDto().getNationality())
+				.dateOfBirth(input.getAccountProfileDto().getDateOfBirth())
+				.email(input.getAccountProfileDto().getEmail())
+				.phone(input.getAccountProfileDto().getPhone())
+				.image(input.getAccountProfileDto().getLogo())
+				.status(input.getAccountProfileDto().getStatus())
+				.gioitinh(input.getAccountProfileDto().getGioitinh())
 				.build();
 
 		AccountRole accountRole = accountRoleRepository.findByAccountId(account.getId());
@@ -85,6 +92,7 @@ public class CustomerServiceImpl implements CustomerService {
 				.build()));
 
 		customerRepo.save(account);
+		customerProfileRepository.save(accountProfile);
 		return CustomerDto.builder()
 				.id(account.getId())
 				.build();
@@ -113,22 +121,23 @@ public class CustomerServiceImpl implements CustomerService {
 		Date date = Date.from(instant);
 		
 		Account account = findById(id);
+		AccountProfile accountProfile = customerProfileRepository.findByAccountId(account.getId());
 		account.setCreateAt(date);
-		account.setUsername(input.getUsername());
 		account.setPassword(input.getPassword());
-		account.setFirstName(input.getFirstName());
-		account.setLastName(input.getLastName());
-		account.setAge(input.getAge());
-		account.setDateOfBirth(input.getDateOfBirth());
-		account.setAddress(input.getAddress());
-		account.setEmail(input.getEmail());
-		account.setGioitinh(input.getGioitinh());
-		account.setStatus(input.getStatus());
-		account.setImage(input.getLogo());
+
+		accountProfile = AccountProfile.builder()
+				.firstName(input.getAccountProfileDto().getFirstName())
+				.lastName(input.getAccountProfileDto().getLastName())
+				.dateOfBirth(input.getAccountProfileDto().getDateOfBirth())
+				.address(input.getAccountProfileDto().getAddress())
+				.email(input.getAccountProfileDto().getEmail())
+				.gioitinh(input.getAccountProfileDto().getGioitinh())
+				.status(input.getAccountProfileDto().getStatus())
+				.image(input.getAccountProfileDto().getLogo())
+				.build();
+		account.setAccountProfile(accountProfile);
 		customerRepo.save(account);
-	
 		return CustomerDto.builder().id(id).build();
-		
 	}
 
 	@Override

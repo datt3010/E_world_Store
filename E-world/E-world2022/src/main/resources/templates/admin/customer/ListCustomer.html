@@ -101,22 +101,20 @@
 											<tr>
 										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Mã khách hàng</a></th>
 										<th scope="col"><a th:href="@{'/admin/listcustomer/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Tên khách hàng</a></th>
-										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=age&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">age</a></th>
-												<th scope="col">Ngày sinh</th>
+										<th scope="col">Ngày sinh</th>
 										<th scope="col"><a th:href="@{'/admin/listproduct/page/' + ${currentPage} + '?sortField=gioitinh&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Giới tính</a></th>
-												<th scope="col"> Ảnh</th>
-												<th scope="col"></th>
-												<th scope="col"></th>
+										<th scope="col"> Ảnh</th>
+										<th scope="col"></th>
+										<th scope="col"></th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr th:each="c: ${listCustomer}">
 												<td>[[${c.id}]]</td>
-												<td>[[${c.firstName} +' '+ ${c.lastName}]]</td>
-												<td>[[${c.age}]]</td>
-												<td th:text="${#dates.format(c.dateOfBirth, 'dd-MM-yyyy')}">[[${c.dateOfBirth}]]</td>
-												<td>[[${c.gioitinh}]]</td>
-												<td><img th:src="@{|/images/staff/${c.logo}|}" width="80" height="50"/></td>
+												<td>[[${c.accountProfileDto.firstName} +' '+ ${c.accountProfileDto.lastName}]]</td>
+												<td th:text="${#dates.format(c.accountProfileDto.dateOfBirth, 'dd-MM-yyyy')}">[[${c.accountProfileDto.dateOfBirth}]]</td>
+												<td>[[${c.accountProfileDto.gioitinh}]]</td>
+												<td><img th:src="@{|/images/staff/${c.accountProfileDto.logo}|}" width="80" height="50"/></td>
 												<td><a th:href="@{|/admin/listcustomer/${c.id}|}">Edit</a></td>
 												<td><a th:href="@{|/admin/listcustomer/delete/${c.id}|}">Delete</a></td>
 											</tr>

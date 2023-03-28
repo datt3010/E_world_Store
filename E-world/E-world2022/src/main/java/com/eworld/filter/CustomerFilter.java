@@ -14,4 +14,6 @@ public class CustomerFilter {
 	private Integer month;
 
 	private Integer years;
+
+	private Integer roleId;
 }

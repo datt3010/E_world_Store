@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  profile:
+    active: dev
+  datasource:
+      username: sa
+      password: songlong123
+      url: jdbc:sqlserver://localhost;database=e_world;encrypt=true;trustServerCertificate=true
+  jpa:
+    hibernate:
+      dd-auto: update

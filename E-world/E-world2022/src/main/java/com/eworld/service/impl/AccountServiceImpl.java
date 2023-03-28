@@ -1,22 +1,30 @@
 package com.eworld.service.impl;
 
+import com.eworld.configuration.JwtServiceProvider;
 import com.eworld.configuration.security.UserContext;
 import com.eworld.contstant.Gender;
 import com.eworld.contstant.UserStatus;
 import com.eworld.entity.Account;
+import com.eworld.entity.AccountProfile;
 import com.eworld.entity.AccountRole;
 import com.eworld.entity.Role;
+import com.eworld.repository.customer.CustomerProfileRepository;
 import com.eworld.repository.customer.CustomerRepository;
 import com.eworld.repository.role.AccountRoleRepository;
 import com.eworld.repository.role.RoleRepository;
 import com.eworld.service.AccountService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.Random;
 import java.util.Set;
 
 @Service
@@ -30,6 +38,15 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRoleRepository accountRoleRepository;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtServiceProvider jwtServiceProvider;
+
+    @Autowired
+    private CustomerProfileRepository customerProfileRepository;
+
     @Override
     @Transactional
     public UserContext create(UserContext input) {
@@ -38,23 +55,24 @@ public class AccountServiceImpl implements AccountService {
         Date date = Date.from(instant);
 
         Role role = roleRepository.findById("2").orElseThrow();
-
         Account account = Account.builder()
                 .createAt(date)
                 .username(input.getUsername())
                 .password(input.getPassword())
-                .firstName(input.getFirstName())
-                .lastName(input.getLastName())
-                .email("email@gmail.com")
-                .phone("0909442487")
-                .gioitinh(Gender.Nam)
-                .age(18)
-                .dateOfBirth(date)
-                .address("Go O Moi")
-                .nationality("VN")
-                .image("images.jpg")
-                .status(UserStatus.ACTIVE)
                 .build();
+
+        AccountProfile accountProfile = AccountProfile.builder()
+                        .firstName(input.getFirstName())
+                        .lastName(input.getLastName())
+                        .image(input.getImage())
+                        .status(UserStatus.ACTIVE)
+                        .email(input.getEmail())
+                        .address(null)
+                        .nationality("VN")
+                        .phone(null)
+                        .dateOfBirth(date)
+                        .account(account)
+                        .build();
 
         AccountRole accountRole = accountRoleRepository.findByAccountId(account.getId());
                 account.setAccountRoles(Set.of(accountRole = AccountRole.builder()
@@ -64,8 +82,8 @@ public class AccountServiceImpl implements AccountService {
                         .roleId(role.getId())
                         .build()));
 
+        account.setAccountProfile(accountProfile);
         customerRepository.save(account);
-
 
         return UserContext.builder().id(account.getId()).build();
     }
@@ -86,8 +104,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public UserContext findbyUsernameOrEmail(String username) {
-        Account account = customerRepository.findByUsernameOrEmail(username);
+    public UserContext findByUsername(String username) {
+        Account account = customerRepository.findByUsername(username);
         return UserContext.builder().username(account.getUsername()).build();
     }
 
@@ -97,17 +115,19 @@ public class AccountServiceImpl implements AccountService {
         Instant instant = Instant.now();
         Date date = Date.from(instant);
         Role role = roleRepository.findById("2").orElseThrow();
-
+        int randomNumber = new Random().nextInt(9000)+1000;
         Account account = Account.builder()
                 .createAt(date)
                 .username(input.getUsername())
-                .password(input.getPassword())
+                .password("e_world" + randomNumber)
+                .build();
+        AccountProfile accountProfile = AccountProfile.builder()
+                .accountId(account.getId())
                 .firstName(input.getFirstName())
                 .lastName(input.getLastName())
                 .email(input.getEmail())
                 .phone("0865057229")
                 .gioitinh(Gender.Nam)
-                .age(18)
                 .dateOfBirth(date)
                 .address("Go O Moi")
                 .nationality("VN")
@@ -123,7 +143,7 @@ public class AccountServiceImpl implements AccountService {
                 .roleId(role.getId())
                 .build()));
         customerRepository.save(account);
-        return UserContext.builder().id(account.getId()).build();
+        return UserContext.builder().id(account.getId()).accountProfile(accountProfile).build();
     }
 
     @Override
@@ -136,5 +156,19 @@ public class AccountServiceImpl implements AccountService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String handleTokenJwt(String username, String password) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        username,
+                        password
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtServiceProvider.generateToken((UserContext) authentication.getPrincipal());
+
+        return jwt;
     }
 }

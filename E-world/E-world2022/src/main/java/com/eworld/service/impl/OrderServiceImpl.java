@@ -55,11 +55,7 @@ public class OrderServiceImpl implements OrderService {
 				.totalPrice(order.getTotalPrice())
 				.orderDetails(order.getOrderDetails())
 				.account(UserContext.builder()
-						.id(order.getAccount().getId())
-						.username(order.getAccount().getUsername())
-						.firstName(order.getAccount().getFirstName())
-						.lastName(order.getAccount().getLastName())
-						.build())
+						.username(order.getAccount().getUsername()).build())
 				.build();
 	}
 

@@ -87,7 +87,7 @@
 												<td>[[${p.category.name}]]</td>
 												<td>[[${p.quantity}]]</td>
 												<td th:text="${#dates.format(p.ngaybaohanh, 'dd-MM-yyyy')}">[[${p.ngaybaohanh}]]</td>
-												<td><img th:src="@{|/images/product/${p.logo}|}" width="80" height="50"/></td>
+												<td><img width="80" height="50"  th:src="@{|/images/product/${#lists.isEmpty(p.productImages) ? 'default-image.jpg' : p.productImages[0].image}|}" alt="Li's Product Image"></td>
 												<td><a th:href="@{|/admin/listproduct/${p.id}|}">Edit</a></td>
 												<td><a th:href="@{|/admin/listproduct/delete/${p.id}|}">Delete</a></td>
 											</tr>

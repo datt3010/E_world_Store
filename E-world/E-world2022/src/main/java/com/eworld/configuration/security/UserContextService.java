@@ -38,23 +38,23 @@ public class UserContextService implements UserDetailsManager, Serializable {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = customerRepository.findByUsernameOrEmail(username);
+        Account account = customerRepository.findByUsername(username);
         Set<AccountRole> accountRole = accountRoleRepository.listRoleByAccountId(account.getId());
 
         return UserContext.builder()
                 .id(account.getId())
                 .username(account.getUsername())
                 .password(pe.encode(account.getPassword()))
-                .firstName(account.getFirstName())
-                .lastName(account.getLastName())
-                .fullName(account.getFirstName() + " " +account.getLastName())
-                .email(account.getEmail())
-                .image(account.getImage())
+                .firstName(account.getAccountProfile().getFirstName())
+                .lastName(account.getAccountProfile().getLastName())
+                .fullName(account.getAccountProfile().getFirstName() + " " +account.getAccountProfile().getLastName())
+                .email(account.getAccountProfile().getEmail())
+                .image(account.getAccountProfile().getImage())
                 .accountNonLocked(true)
                 .accountNonExpired(true)
                 .credentialsNonExpired(true)
                 .accountRoles(accountRole)
-                .enabled(account.getStatus().equals(UserStatus.ACTIVE)?true :false)
+                .enabled(account.getAccountProfile().getStatus().equals(UserStatus.ACTIVE)?true :false)
                 .build();
     }
 
@@ -121,7 +121,7 @@ public class UserContextService implements UserDetailsManager, Serializable {
     public UserContext createFormSocial(OAuth2User socialUser){
         UserContext userContext = new UserContext(socialUser);
         accountService.createFormSocial(userContext);
-        return accountService.findbyUsernameOrEmail(userContext.getEmail());
+        return accountService.findByUsername(userContext.getEmail());
     }
 
     public boolean hasAnyRole(String ... roles){
@@ -139,7 +139,7 @@ public class UserContextService implements UserDetailsManager, Serializable {
         }
         else if (principal instanceof  OAuth2User){
             String email = ((UserContext)principal).getEmail();
-            userContext = accountService.findbyUsernameOrEmail(email);
+            userContext = accountService.findByUsername(email);
         }
         return userContext;
     }

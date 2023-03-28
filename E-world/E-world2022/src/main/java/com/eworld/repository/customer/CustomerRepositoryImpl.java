@@ -10,7 +10,9 @@ import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPagingJpaRepository<Account> {
@@ -32,8 +34,8 @@ public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPag
 		
 		StringBuilder whereClauseSqlBuilder = new StringBuilder(50)
 				.append(" WHERE 1=1")
-				.append(" AND ar.roleId=3")
-				.append(" AND c.status LIKE 'ACTIVE'");
+				.append(" AND ar.roleId=2")
+				.append(" AND c.accountProfile.status LIKE 'ACTIVE'");
 
 		Map<String, Object> parameterMap = new LinkedHashMap<>();
 		
@@ -41,11 +43,11 @@ public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPag
 			whereClauseSqlBuilder.append(" AND(");
 			
 			if(StringUtils.isNumeric(filter.getKeyword())) {
-				whereClauseSqlBuilder.append(" c.id = :keywordInt OR c.age = :keywordInt OR");
+				whereClauseSqlBuilder.append(" c.id = :keywordInt OR");
 				parameterMap.put("keywordInt", Integer.parseInt(filter.getKeyword()));
 			}
 			
-			whereClauseSqlBuilder.append(" c.firstName LIKE :keyword OR c.lastName LIKE :keyword OR c.gioitinh LIKE :keyword)");
+			whereClauseSqlBuilder.append(" c.accountProfile.firstName LIKE :keyword OR c.accountProfile.lastName LIKE :keyword OR c.accountProfile.gioitinh LIKE :keyword)");
 			parameterMap.put("keyword", "%" + filter.getKeyword() + "%");
 		}
 
@@ -59,7 +61,7 @@ public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPag
 			parameterMap.put("years", filter.getYears());
 		}
 
-		String orderClause = makeOrderClause(pageable.getSort(), Sortable.CUSTOMER, "c");
+		String orderClause = makeOrderClause(pageable.getSort(), Sortable.User, "c");
 		
 		countSqlBuilder.append(whereClauseSqlBuilder);
 		
@@ -74,5 +76,4 @@ public class CustomerRepositoryImpl implements CustomerCustomRepository, FindPag
 	public EntityManager getEntityManager() {
 		return em;
 	}
-
 }

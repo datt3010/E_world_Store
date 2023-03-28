@@ -56,7 +56,7 @@
                                                  <ul  class="minicart-product-list">
                                                     <li ng-repeat="item in cart.items">
                                                         <a href="single-product.html" class="minicart-product-image">
-                                                            <img ng-src="/images/product/{{item.logo}}" alt="cart products">
+                                                            <img ng-src="/images/product/{{item.productImages[0].image}}" alt="cart products">
                                                         </a>
                                                         <div class="minicart-product-details">
                                                             <h6>{{item.name}}<a href="single-product.html"></a></h6>
@@ -69,7 +69,7 @@
                                                 </ul>
                                                 <p class="minicart-total">Total: <span>{{cart.amount}} $</span></p>
                                                 <div class="minicart-button">
-                                                    <a th:href="@{/shoppingcart}" class="li-button li-button-dark li-button-fullwidth li-button-sm">
+                                                    <a th:href="@{/product/shoppingcart}" class="li-button li-button-dark li-button-fullwidth li-button-sm">
                                                         <span>View Full Cart</span>
                                                     </a>
                                                 </div>

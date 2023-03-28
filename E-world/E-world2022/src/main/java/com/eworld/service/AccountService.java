@@ -10,9 +10,11 @@ public interface AccountService {
 
    public UserContext changePassword(UserContext userContext);
 
-   public UserContext findbyUsernameOrEmail(String username);
+   public UserContext findByUsername(String username);
 
    public UserContext createFormSocial(UserContext input);
 
    public boolean checkExistUser(String username);
+
+   public String handleTokenJwt(String username, String password);
 }
