@@ -46,6 +46,11 @@ public class CustomerController {
 			return "admin/customer/CustomerDashBoard";
 		}
 
+		if(customerService.checkPatternPhone(input.getAccountProfileDto().getPhone())){
+			model.addAttribute("message","phone is not valid");
+			return "admin/customer/CustomerDashBoard";
+		}
+
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		input.getAccountProfileDto().setLogo(fileName);
 		

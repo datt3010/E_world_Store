@@ -1,7 +1,6 @@
 package com.eworld.configuration.security;
 
 import com.eworld.entity.Account;
-import com.eworld.entity.AccountProfile;
 import com.eworld.entity.AccountRole;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +24,6 @@ public class UserContext implements UserDetails {
 
     private Account account;
 
-    private AccountProfile accountProfile;
     @NotBlank(message = "{Account.password}")
     @Size(min =4, max = 50, message = "{Account.password.size}")
     private String password;
@@ -36,24 +34,16 @@ public class UserContext implements UserDetails {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
-    @NotBlank(message = "{Account.firstName}")
-    @Size(min = 5, max = 60, message = "{Account.firstName.size}")
-    private String firstName;
-    @NotBlank(message = "{Account.lastName}")
-    @Size(min = 5, max = 60, message = "{Account.lastName.size}")
-    private String lastName;
-    private String fullName;
+
+    private  String fullName;
     private Integer id;
     Set<AccountRole>  accountRoles;
-    private String email;
-
-    private String image;
 
     public UserContext(OAuth2User socialUser){
         this.username = socialUser.getName();
-        this.email = socialUser.getAttribute("email");
-        this.firstName = socialUser.getAttribute("family_name");
-        this.lastName = socialUser.getAttribute("given_name");
+        this.account.getAccountProfile().setEmail(socialUser.getAttribute("email"));
+        this.account.getAccountProfile().setFirstName(socialUser.getAttribute("family_name"));
+        this.account.getAccountProfile().setLastName(socialUser.getAttribute("family_name"));
     }
 
     boolean isStaff(){

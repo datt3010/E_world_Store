@@ -1,5 +1,6 @@
 package com.eworld.service.impl;
 
+import com.eworld.contstant.Gender;
 import com.eworld.contstant.UserStatus;
 import com.eworld.dto.customer.CustomerDto;
 import com.eworld.dto.customer.CustomerInput;
@@ -61,27 +62,27 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		Instant instant = Instant.now();
 		Date date = Date.from(instant);
-
 		Role role = roleRepository.findById("3").orElseThrow();
-		
+
 		Account account = Account.builder()
 				.createAt(date)
 				.username(input.getUsername())
 				.password(input.getPassword())
 				.build();
 		AccountProfile accountProfile = AccountProfile.builder()
-				.accountId(account.getId())
+				.account(account)
 				.firstName(input.getAccountProfileDto().getFirstName())
 				.lastName(input.getAccountProfileDto().getLastName())
-				.address(input.getAccountProfileDto().getAddress())
-				.nationality(input.getAccountProfileDto().getNationality())
-				.dateOfBirth(input.getAccountProfileDto().getDateOfBirth())
 				.email(input.getAccountProfileDto().getEmail())
 				.phone(input.getAccountProfileDto().getPhone())
+				.gioitinh(input.getAccountProfileDto().getGioitinh())
+				.dateOfBirth(input.getAccountProfileDto().getDateOfBirth())
+				.address(input.getAccountProfileDto().getAddress())
+				.nationality(input.getAccountProfileDto().getNationality())
 				.image(input.getAccountProfileDto().getLogo())
 				.status(input.getAccountProfileDto().getStatus())
-				.gioitinh(input.getAccountProfileDto().getGioitinh())
 				.build();
+		account.setAccountProfile(accountProfile);
 
 		AccountRole accountRole = accountRoleRepository.findByAccountId(account.getId());
 		account.setAccountRoles(Set.of(accountRole = AccountRole.builder()
@@ -92,7 +93,6 @@ public class CustomerServiceImpl implements CustomerService {
 				.build()));
 
 		customerRepo.save(account);
-		customerProfileRepository.save(accountProfile);
 		return CustomerDto.builder()
 				.id(account.getId())
 				.build();
@@ -145,4 +145,8 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerRepo.listAccountTotalPrice(month);
 	}
 
+	public boolean checkPatternPhone(String phone){
+		String pattern = "^0(3[2-9]|5[689]|7[0|6-9]|8[1-5]|9[0|3|4|5|7|8])\\d{7}$";
+		return phone.matches(pattern);
+	}
 }

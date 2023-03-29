@@ -2,7 +2,9 @@ package com.eworld.controller.user;
 
 import com.eworld.configuration.security.UserContext;
 import com.eworld.configuration.security.UserContextService;
+import com.eworld.contstant.UserStatus;
 import com.eworld.service.AccountService;
+import com.eworld.service.TwilioService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 @Controller
 public class UserController {
@@ -30,6 +31,9 @@ public class UserController {
     private UserContextService userContextService;
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private TwilioService twilioService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String homeLogin() {
@@ -129,5 +133,29 @@ public class UserController {
     public String oauth2LoginFailure(Model model) {
         model.addAttribute("message", "Login is failed");
         return "user/error/404";
+    }
+
+    @RequestMapping(value = "/quenmatkhau", method = RequestMethod.GET)
+    public String viewForgotPassword(){
+        return "user/login/forgotpassword";
+    }
+    @RequestMapping(value = "/quenmatkhau", method = RequestMethod.POST)
+    public String forgotPassword(Model model,
+                                 @RequestParam(name = "username", required = false) String username){
+        UserContext userContext = accountService.getByUserName(username);
+        if(userContext.getAccount()== null){
+            model.addAttribute("message", "username is not exists");
+            return "user/login/forgotpassword";
+        }
+        else{
+            if(userContext.getAccount().getAccountProfile().getStatus().equals(UserStatus.INACTIVE) || userContext.getAccount().getAccountProfile().getPhone() == null){
+                model.addAttribute("message","This user is not acctepted");
+                return "user/login/forgotpassword";
+            }
+            twilioService.sendOTPForPasswordReset(userContext);
+            model.addAttribute("message","Xac nhan thanh cong");
+            username = "";
+            return "user/login/forgotpassword";
+        }
     }
 }

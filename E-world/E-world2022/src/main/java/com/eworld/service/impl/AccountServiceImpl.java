@@ -62,11 +62,11 @@ public class AccountServiceImpl implements AccountService {
                 .build();
 
         AccountProfile accountProfile = AccountProfile.builder()
-                        .firstName(input.getFirstName())
-                        .lastName(input.getLastName())
-                        .image(input.getImage())
+                        .firstName(input.getAccount().getAccountProfile().getFirstName())
+                        .lastName(input.getAccount().getAccountProfile().getLastName())
+                        .image(input.getAccount().getAccountProfile().getImage())
                         .status(UserStatus.ACTIVE)
-                        .email(input.getEmail())
+                        .email(input.getAccount().getAccountProfile().getEmail())
                         .address(null)
                         .nationality("VN")
                         .phone(null)
@@ -83,6 +83,7 @@ public class AccountServiceImpl implements AccountService {
                         .build()));
 
         account.setAccountProfile(accountProfile);
+        input.setAccount(account);
         customerRepository.save(account);
 
         return UserContext.builder().id(account.getId()).build();
@@ -116,16 +117,17 @@ public class AccountServiceImpl implements AccountService {
         Date date = Date.from(instant);
         Role role = roleRepository.findById("2").orElseThrow();
         int randomNumber = new Random().nextInt(9000)+1000;
+
         Account account = Account.builder()
                 .createAt(date)
                 .username(input.getUsername())
                 .password("e_world" + randomNumber)
                 .build();
         AccountProfile accountProfile = AccountProfile.builder()
-                .accountId(account.getId())
-                .firstName(input.getFirstName())
-                .lastName(input.getLastName())
-                .email(input.getEmail())
+                .account(account)
+                .firstName(input.getAccount().getAccountProfile().getFirstName())
+                .lastName(input.getAccount().getAccountProfile().getLastName())
+                .email(input.getAccount().getAccountProfile().getEmail())
                 .phone("0865057229")
                 .gioitinh(Gender.Nam)
                 .dateOfBirth(date)
@@ -134,6 +136,7 @@ public class AccountServiceImpl implements AccountService {
                 .image("images.jpg")
                 .status(UserStatus.ACTIVE)
                 .build();
+        account.setAccountProfile(accountProfile);
 
         AccountRole accountRole = accountRoleRepository.findByAccountId(account.getId());
         account.setAccountRoles(Set.of(accountRole = AccountRole.builder()
@@ -142,8 +145,10 @@ public class AccountServiceImpl implements AccountService {
                 .role(role)
                 .roleId(role.getId())
                 .build()));
+
+        input.setAccount(account);
         customerRepository.save(account);
-        return UserContext.builder().id(account.getId()).accountProfile(accountProfile).build();
+        return UserContext.builder().id(account.getId()).account(account).build();
     }
 
     @Override
@@ -170,5 +175,11 @@ public class AccountServiceImpl implements AccountService {
         String jwt = jwtServiceProvider.generateToken((UserContext) authentication.getPrincipal());
 
         return jwt;
+    }
+
+    @Override
+    public UserContext getByUserName(String username) {
+        Account account = customerRepository.findByUsername(username);
+        return UserContext.builder().account(account).build();
     }
 }
