@@ -2,6 +2,8 @@ package com.eworld.projector;
 
 import com.eworld.configuration.security.UserContext;
 import com.eworld.dto.order.OrderDto;
+import com.eworld.entity.Account;
+import com.eworld.entity.AccountProfile;
 import com.eworld.entity.Order;
 
 import java.util.List;
@@ -27,8 +29,12 @@ public class OrderProjector {
 				.paymentMethod(entity.getPaymentMethod())
 				.account(UserContext.builder()
 						.id(entity.getAccount().getId())
-						.firstName(entity.getAccount().getAccountProfile().getFirstName())
-						.lastName(entity.getAccount().getAccountProfile().getLastName())
+						.account(Account.builder()
+								.accountProfile(AccountProfile.builder()
+										.firstName(entity.getAccount().getAccountProfile().getFirstName())
+										.lastName(entity.getAccount().getAccountProfile().getLastName())
+										.build())
+								.build())
 						.username(entity.getAccount().getUsername())
 						.build())
 				.orderDetails(entity.getOrderDetails())
@@ -44,8 +50,12 @@ public class OrderProjector {
 					.createdAt(entity.getCreatedAt())
 					.account(UserContext.builder()
 							.id(entity.getAccount().getId())
-							.firstName(entity.getAccount().getAccountProfile().getFirstName())
-							.lastName(entity.getAccount().getAccountProfile().getLastName())
+							.account(Account.builder()
+									.accountProfile(AccountProfile.builder()
+											.firstName(entity.getAccount().getAccountProfile().getFirstName())
+											.lastName(entity.getAccount().getAccountProfile().getLastName())
+											.build())
+									.build())
 							.build())
 					.totalPrice(entity.getTotalPrice())
 					.build();

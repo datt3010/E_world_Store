@@ -25,4 +25,6 @@ public interface CustomerService {
 	public CustomerDto update(Integer id, CustomerUpdate input);
 
 	public List<Account> listAccountTotalPrice(Integer month);
+
+	public boolean checkPatternPhone(String phone);
 }

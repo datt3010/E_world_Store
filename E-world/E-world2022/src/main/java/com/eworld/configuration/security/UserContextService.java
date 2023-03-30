@@ -2,6 +2,7 @@ package com.eworld.configuration.security;
 
 import com.eworld.contstant.UserStatus;
 import com.eworld.entity.Account;
+import com.eworld.entity.AccountProfile;
 import com.eworld.entity.AccountRole;
 import com.eworld.repository.customer.CustomerRepository;
 import com.eworld.repository.role.AccountRoleRepository;
@@ -45,11 +46,15 @@ public class UserContextService implements UserDetailsManager, Serializable {
                 .id(account.getId())
                 .username(account.getUsername())
                 .password(pe.encode(account.getPassword()))
-                .firstName(account.getAccountProfile().getFirstName())
-                .lastName(account.getAccountProfile().getLastName())
+                .account(Account.builder()
+                        .accountProfile(AccountProfile.builder()
+                                .firstName(account.getAccountProfile().getFirstName())
+                                .lastName(account.getAccountProfile().getLastName())
+                                .email(account.getAccountProfile().getEmail())
+                                .image(account.getAccountProfile().getImage())
+                                .build())
+                        .build())
                 .fullName(account.getAccountProfile().getFirstName() + " " +account.getAccountProfile().getLastName())
-                .email(account.getAccountProfile().getEmail())
-                .image(account.getAccountProfile().getImage())
                 .accountNonLocked(true)
                 .accountNonExpired(true)
                 .credentialsNonExpired(true)
@@ -121,7 +126,7 @@ public class UserContextService implements UserDetailsManager, Serializable {
     public UserContext createFormSocial(OAuth2User socialUser){
         UserContext userContext = new UserContext(socialUser);
         accountService.createFormSocial(userContext);
-        return accountService.findByUsername(userContext.getEmail());
+        return accountService.findByUsername(userContext.getAccount().getAccountProfile().getEmail());
     }
 
     public boolean hasAnyRole(String ... roles){
@@ -138,7 +143,7 @@ public class UserContextService implements UserDetailsManager, Serializable {
             userContext = ((UserContext) principal);
         }
         else if (principal instanceof  OAuth2User){
-            String email = ((UserContext)principal).getEmail();
+            String email = ((UserContext)principal).getAccount().getAccountProfile().getEmail();
             userContext = accountService.findByUsername(email);
         }
         return userContext;

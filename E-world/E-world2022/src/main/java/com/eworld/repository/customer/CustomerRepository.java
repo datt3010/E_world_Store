@@ -1,7 +1,9 @@
 package com.eworld.repository.customer;
 
 import com.eworld.contstant.UserStatus;
+import com.eworld.dto.profile.AccountProfileDto;
 import com.eworld.entity.Account;
+import com.eworld.entity.AccountProfile;
 import com.eworld.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,4 +37,9 @@ public interface CustomerRepository extends JpaRepository<Account, Integer>,Cust
 	     +" GROUP BY a.id, ac.address, a.createAt, ac.dateOfBirth, ac.email, ac.firstName, ac.gioitinh, ac.image, ac.lastName, ac.nationality, a.password, ac.phone, ac.status, a.username"
 	     +" ORDER BY SUM(o.totalPrice) DESC")
 	public List<Account> listAccountTotalPrice(@Param(value = "month") Integer month);
+
+	@Query("FROM AccountProfile ac JOIN Account a"
+	      +" ON a.id = ac.accountId"
+	      +" WHERE a.username LIKE :username")
+	public AccountProfile getByUsername(@Param(value = "username") String username);
 }

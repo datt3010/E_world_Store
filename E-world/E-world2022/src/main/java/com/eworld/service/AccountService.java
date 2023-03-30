@@ -1,6 +1,7 @@
 package com.eworld.service;
 
 import com.eworld.configuration.security.UserContext;
+import com.eworld.dto.profile.AccountProfileDto;
 
 public interface AccountService {
 
@@ -17,4 +18,6 @@ public interface AccountService {
    public boolean checkExistUser(String username);
 
    public String handleTokenJwt(String username, String password);
+
+   public UserContext getByUserName(String username);
 }

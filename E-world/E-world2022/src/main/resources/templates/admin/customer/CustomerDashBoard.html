@@ -199,6 +199,7 @@
                                             <div class="col-lg-6">
                                                 <input th:field="*{AccountProfileDto.phone}" type="text" class="form-control" id="val-currency" name="phoneNumber" placeholder="0909442487">
                                         <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('AccountProfileDto.phone')}" th:errors="*{AccountProfileDto.phone}"></span>
+                                                <span class="text-danger" th:text="${message}"></span>
                                             </div>
                                         </div>
                                               <div class="form-group row">
