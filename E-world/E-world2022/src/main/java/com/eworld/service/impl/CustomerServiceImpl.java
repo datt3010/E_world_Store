@@ -23,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +47,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Account findById(Integer id) {
-		return customerRepo.findById(id).get();
+		return customerRepo.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Account not found with id " + id));
 	}
 
 	@Override
@@ -101,7 +103,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public CustomerDto getDetails(Integer id) {
 		
-		Account account = customerRepo.findById(id).get();
+		Account account = customerRepo.findById(id).orElseThrow(() -> new IllegalStateException("Not found entity"));
 		CustomerDto dto = CustomerProjector.convertToDetailDto(account);
 		
 		return dto;

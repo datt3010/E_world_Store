@@ -35,16 +35,24 @@ public class UserContext implements UserDetails {
     private boolean credentialsNonExpired;
     private boolean enabled;
 
+    private String firstName;
+
+    private String lastName;
+
+    private String image;
+
+    private String email;
+
     private  String fullName;
     private Integer id;
     Set<AccountRole>  accountRoles;
 
-    public UserContext(OAuth2User socialUser){
-        this.username = socialUser.getName();
-        this.account.getAccountProfile().setEmail(socialUser.getAttribute("email"));
-        this.account.getAccountProfile().setFirstName(socialUser.getAttribute("family_name"));
-        this.account.getAccountProfile().setLastName(socialUser.getAttribute("family_name"));
-    }
+//    public UserContext(OAuth2User socialUser){
+//        this.username = socialUser.getName();
+//        this.firstName =(socialUser.getAttribute("family_name"));
+//        this.lastName = (socialUser.getAttribute("given_name"));
+//        this.image =(socialUser.getAttribute("picture"));
+//    }
 
     boolean isStaff(){
         return (accountRoles !=null && !accountRoles.isEmpty());

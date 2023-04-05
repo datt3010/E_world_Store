@@ -28,11 +28,11 @@ public class CustomStaffRepositoryImpl implements CustomStaffRepository, FindPag
 
         StringBuilder countSqlBuilder = new StringBuilder(100)
                 .append(" SELECT COUNT(c.id) FROM Account c")
-                .append(" LEFT JOIN FETCH AccountRole ar ON ar.accountId = c.id");
+                .append(" LEFT JOIN FETCH AccountRole ar ON ar.accountUsername = c.username");
 
         StringBuilder selectSqlBuilder = new StringBuilder(100)
                 .append(" SELECT c FROM Account c")
-                .append(" LEFT JOIN FETCH AccountRole ar ON ar.accountId = c.id");
+                .append(" LEFT JOIN FETCH AccountRole ar ON ar.accountUsername = c.username");
 
         StringBuilder whereClauseSqlBuilder = new StringBuilder(50)
                 .append(" WHERE 1=1")

@@ -48,10 +48,16 @@ public class UserContextService implements UserDetailsManager, Serializable {
                 .password(pe.encode(account.getPassword()))
                 .account(Account.builder()
                         .accountProfile(AccountProfile.builder()
+                                .account(account)
                                 .firstName(account.getAccountProfile().getFirstName())
                                 .lastName(account.getAccountProfile().getLastName())
                                 .email(account.getAccountProfile().getEmail())
                                 .image(account.getAccountProfile().getImage())
+                                .phone(account.getAccountProfile().getPhone())
+                                .status(account.getAccountProfile().getStatus())
+                                .dateOfBirth(account.getAccountProfile().getDateOfBirth())
+                                .nationality(account.getAccountProfile().getNationality())
+                                .address(account.getAccountProfile().getAddress())
                                 .build())
                         .build())
                 .fullName(account.getAccountProfile().getFirstName() + " " +account.getAccountProfile().getLastName())
@@ -124,9 +130,11 @@ public class UserContextService implements UserDetailsManager, Serializable {
         return accountService.checkExistUser(username);
     }
     public UserContext createFormSocial(OAuth2User socialUser){
-        UserContext userContext = new UserContext(socialUser);
-        accountService.createFormSocial(userContext);
-        return accountService.findByUsername(userContext.getAccount().getAccountProfile().getEmail());
+        UserContext userContext = accountService.findByUsername(socialUser.getAttribute("email"));
+        if(!userExists(userContext.getAccount().getUsername())){
+            accountService.createFormSocial(userContext, socialUser);
+        }
+        return userContext;
     }
 
     public boolean hasAnyRole(String ... roles){

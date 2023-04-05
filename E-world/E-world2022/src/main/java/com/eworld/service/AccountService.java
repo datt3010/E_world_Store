@@ -1,7 +1,7 @@
 package com.eworld.service;
 
 import com.eworld.configuration.security.UserContext;
-import com.eworld.dto.profile.AccountProfileDto;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 public interface AccountService {
 
@@ -13,11 +13,9 @@ public interface AccountService {
 
    public UserContext findByUsername(String username);
 
-   public UserContext createFormSocial(UserContext input);
+   public UserContext createFormSocial(UserContext input, OAuth2User oAuth2User);
 
    public boolean checkExistUser(String username);
 
    public String handleTokenJwt(String username, String password);
-
-   public UserContext getByUserName(String username);
 }

@@ -118,14 +118,10 @@ public class UserController {
     @RequestMapping("/oauth2/login/success")
     public String oauth2LoginSuccess(OAuth2AuthenticationToken auth) {
         OAuth2User socialUser = auth.getPrincipal();
-        String email = socialUser.getAttribute("email").toString();
-        try {
-            UserContext userContext = accountService.findByUsername(email);
+            String userName = socialUser.getAttribute("email");
+            UserContext userContext = accountService.findByUsername(userName);
+            userContext = userContextService.createFormSocial(socialUser);
             userContextService.setAccount(userContext);
-        } catch (Exception e) {
-            UserContext userContext = userContextService.createFormSocial(socialUser);
-            userContextService.setAccount(userContext);
-        }
         return "redirect:/";
     }
 
@@ -142,7 +138,7 @@ public class UserController {
     @RequestMapping(value = "/quenmatkhau", method = RequestMethod.POST)
     public String forgotPassword(Model model,
                                  @RequestParam(name = "username", required = false) String username){
-        UserContext userContext = accountService.getByUserName(username);
+        UserContext userContext = accountService.findByUsername(username);
         if(userContext.getAccount()== null){
             model.addAttribute("message", "username is not exists");
             return "user/login/forgotpassword";
