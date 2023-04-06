@@ -83,10 +83,11 @@
 						<form th:action="@{/login}" method="post">
 							<div class="login-form" style="margin-top:2rem;margin-left:12rem;">
 								<h4 class="login-title">Đăng nhập</h4>
+								<span  th:if="${param.username != null}"  class="text-danger">Username is not exists</span>
 								<span th:if="${param.error != null}" class="text-danger">Username or password is not valid</span>
 								<div class="row">
 									<div class="col-md-12 mb-20">
-										<label>Username or email address*</label>
+										<label>Username*</label>
 										<input class="mb-0" name="username" type="text">
 									</div>
 									<div class="col-md-12 mb-20">
@@ -94,11 +95,12 @@
 										<input class="mb-0" name="password" type="password">
 									</div>
 									<div class="col-12">
-										<button class="register-button mt-0">Login</button><br>
-										<a th:href="@{/oauth2/authorization/google}">Login with Google</a><br>
-										<a href="">Login with facebook</a><br>
+										<button class="register-button mt-0">Login</button>
 									</div>
+<!--									<div class="g-recaptcha" data-sitekey="6Ld4UGMlAAAAABSvNSw0JqFvf2rjw05KzanCkHtk"></div>-->
 								</div>
+								<span><a th:href="@{/oauth2/authorization/google}">Login with Google</a></span><br>
+								<span><a href="">Login with facebook</a></span><br>
 								<span><a th:href="@{/dangky}">Chưa có tài khoản?</a></span>
 							</div>
 						</form>
@@ -154,6 +156,7 @@
 	<script src="/js/scrollUp.min.js"></script>
 	<!-- Main/Activator js -->
 	<script src="/js/main.js"></script>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 </body>
 
 <!-- login-register31:27-->

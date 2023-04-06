@@ -35,6 +35,7 @@ public class UserController {
     @Autowired
     private TwilioService twilioService;
 
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String homeLogin() {
         if(userContextService.getUserContext() !=null){
@@ -47,6 +48,8 @@ public class UserController {
     public String executeLogin(Model model,
                                @RequestParam(name = "username",required = false) String username,
                                @RequestParam(name ="password", required = false) String password){
+
+
         String token =accountService.handleTokenJwt(username, password);
         if(StringUtils.isEmpty(token)){
             return "user/login/login";
@@ -55,7 +58,7 @@ public class UserController {
 //            model.addAttribute("message","User is not exists");
 //            return "user/login/login";
 //        }
-      return "user/home/index";
+            return "user/home/index";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -25,9 +24,7 @@ public class HomeController {
     private RequestService requestService;
 
     @GetMapping()
-    public String home(Model model, HttpServletRequest request){
-//        String clientIpAddress = requestService.getClientIPAdress(request);
-//        System.out.println(clientIpAddress);
+    public String home(Model model){
         return "user/home/Index";
     }
     @GetMapping("about-us")

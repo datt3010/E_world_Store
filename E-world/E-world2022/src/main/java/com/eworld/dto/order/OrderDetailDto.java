@@ -1,5 +1,6 @@
 package com.eworld.dto.order;
 
+import com.eworld.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +19,6 @@ public class OrderDetailDto {
 	private Double productPrice;
 
 	private OrderDto order;
+
+	private Product product;
 }

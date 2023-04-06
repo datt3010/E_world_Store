@@ -114,7 +114,7 @@
                             <p style="font-size:20px;padding-top:10px;" class="minicart-total">Order value: <span>{{cart.amount}}</span></p>
                     		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">VAT: <span>10%</span></p>
                       		  <p style="font-size:20px;padding-top:10px;" class="minicart-total">Totals: <span>{{cart.amount + cart.amount*0.1}}</span></p>
-                            <span style="font-size:20px;"><a th:href="@{/order/checkout}">Check out</a></span> <br>
+                            <span style="font-size:20px;"><a th:href="@{/product/order/checkout}">Check out</a></span> <br>
                             <span style="font-size:20px;"><a href="#"  ng-click="cart.clear()">Clear</a></span>
                         </div>
                     </div>

@@ -9,6 +9,8 @@ import com.eworld.repository.role.AccountRoleRepository;
 import com.eworld.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -39,34 +41,38 @@ public class UserContextService implements UserDetailsManager, Serializable {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = customerRepository.findByUsername(username);
-        Set<AccountRole> accountRole = accountRoleRepository.listRoleByAccountId(account.getId());
-
-        return UserContext.builder()
-                .id(account.getId())
-                .username(account.getUsername())
-                .password(pe.encode(account.getPassword()))
-                .account(Account.builder()
-                        .accountProfile(AccountProfile.builder()
-                                .account(account)
-                                .firstName(account.getAccountProfile().getFirstName())
-                                .lastName(account.getAccountProfile().getLastName())
-                                .email(account.getAccountProfile().getEmail())
-                                .image(account.getAccountProfile().getImage())
-                                .phone(account.getAccountProfile().getPhone())
-                                .status(account.getAccountProfile().getStatus())
-                                .dateOfBirth(account.getAccountProfile().getDateOfBirth())
-                                .nationality(account.getAccountProfile().getNationality())
-                                .address(account.getAccountProfile().getAddress())
-                                .build())
-                        .build())
-                .fullName(account.getAccountProfile().getFirstName() + " " +account.getAccountProfile().getLastName())
-                .accountNonLocked(true)
-                .accountNonExpired(true)
-                .credentialsNonExpired(true)
-                .accountRoles(accountRole)
-                .enabled(account.getAccountProfile().getStatus().equals(UserStatus.ACTIVE)?true :false)
-                .build();
+        try{
+            Account account = customerRepository.findByUsername(username);
+            Set<AccountRole> accountRole = accountRoleRepository.listRoleByAccountId(account.getId());
+            return UserContext.builder()
+                    .id(account.getId())
+                    .username(account.getUsername())
+                    .password(pe.encode(account.getPassword()))
+                    .account(Account.builder()
+                            .accountProfile(AccountProfile.builder()
+                                    .account(account)
+                                    .firstName(account.getAccountProfile().getFirstName())
+                                    .lastName(account.getAccountProfile().getLastName())
+                                    .email(account.getAccountProfile().getEmail())
+                                    .image(account.getAccountProfile().getImage())
+                                    .phone(account.getAccountProfile().getPhone())
+                                    .status(account.getAccountProfile().getStatus())
+                                    .dateOfBirth(account.getAccountProfile().getDateOfBirth())
+                                    .nationality(account.getAccountProfile().getNationality())
+                                    .address(account.getAccountProfile().getAddress())
+                                    .build())
+                            .build())
+                    .fullName(account.getAccountProfile().getFirstName() + " " +account.getAccountProfile().getLastName())
+                    .accountNonLocked(true)
+                    .accountNonExpired(true)
+                    .credentialsNonExpired(true)
+                    .accountRoles(accountRole)
+                    .enabled(account.getAccountProfile().getStatus().equals(UserStatus.ACTIVE)?true :false)
+                    .build();
+        }
+        catch (InternalAuthenticationServiceException ex){
+            throw  new BadCredentialsException("Invalid username or password");
+        }
     }
 
     public Optional<UserContext> findCurrent(){

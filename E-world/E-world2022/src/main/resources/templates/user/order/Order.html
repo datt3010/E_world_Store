@@ -86,12 +86,12 @@
 				    <div class="form-group col-md-6">
 				      <label for="date">Ngày mua</label>
 				      <input  type="text" class="form-control" id="date" disabled="true">
-                        <div id="accountId" style="visibility:hidden;" >[[${#authentication.principal.id}]]</div>
+                        <div id="accountId" style="visibility:hidden;" >[[${@sec.userContext.account.id}]]</div>
                     </div>
 				    <div class="form-group col-md-6">
 				      <label for="fullName">Người mua</label>
-				      <input type="text" class="form-control" id="fullName" th:value="${@sec.getUserContext.fullName}" disabled="disabled">
-                        <div id="username" style="visibility:hidden;">[[${#request.remoteUser}]]</div>
+				      <input type="text" class="form-control" id="fullName" th:value="${@sec.userContext.account.accountProfile.firstName}" disabled="disabled">
+                        <div id="username" style="visibility:hidden;">[[${@sec.userContext.account.username}]]</div>
                     </div>
 				  </div>
 				  <div class="form-row">

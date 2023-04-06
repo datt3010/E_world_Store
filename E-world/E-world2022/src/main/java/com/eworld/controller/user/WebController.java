@@ -1,5 +1,7 @@
 package com.eworld.controller.user;
 
+import com.eworld.configuration.security.UserContext;
+import com.eworld.configuration.security.UserContextService;
 import com.eworld.dto.category.CategoryDto;
 import com.eworld.dto.product.ProductDto;
 import com.eworld.filter.CategoryFilter;
@@ -32,6 +34,9 @@ public class WebController {
 
 	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private UserContextService userContextService;
 
 	@RequestMapping("/{name}")
 	public String getDetails(Model model, @PathVariable("name")String name) {
@@ -122,8 +127,8 @@ public class WebController {
 
 	@RequestMapping("/order/list")
 	public String listOrder(Model model, HttpServletRequest request){
-		String username = request.getRemoteUser();
-		model.addAttribute("orders",orderService.findByUserName(username));
+		UserContext userContext = userContextService.findCurrent().get();
+		model.addAttribute("orders",orderService.findByUserName(userContext.getAccount().getUsername()));
 		return "user/order/OrderList";
 	}
 }

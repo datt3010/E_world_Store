@@ -45,6 +45,9 @@ public class ProductProjector {
 			
 		List<ProductDto> listProductDto = entity.getCategory().getProducts().stream()
 				.map(e -> ProductDto.builder()
+						.createdAt(entity.getCreatedAt())
+						.updatedAt(entity.getUpdatedAt())
+						.categoryId(entity.getCategoryId())
 						.id(e.getId())
 						.name(e.getName())
 						.price(e.getPrice())

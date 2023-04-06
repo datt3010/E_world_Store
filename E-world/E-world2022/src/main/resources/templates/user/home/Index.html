@@ -45,8 +45,8 @@
 <body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
 <div class="body-wrapper">
     <header>
-        <div th:replace="/layout/user/Header.html"></div>
-        <div th:replace="/layout/user/container.html"></div>
+        <div th:replace="@{/layout/user/Header.html}"></div>
+        <div th:replace="@{/layout/user/container.html}"></div>
         <div class="mobile-menu-area d-lg-none d-xl-none col-12">
             <div class="container">
                 <div class="row">
@@ -59,7 +59,7 @@
     </header>
     <!-- Header Area End Here -->
     <!-- Begin Slider With Category Menu Area -->
-    <div th:replace="/layout/user/home/CategoriesIndex"></div>
+    <div th:replace="@{/layout/user/home/CategoriesIndex}"></div>
     <!-- Slider With Category Menu Area End Here -->
     <!-- Begin Li's Static Banner Area -->
     <div class="li-static-banner pt-20 pt-sm-30 pt-xs-30">

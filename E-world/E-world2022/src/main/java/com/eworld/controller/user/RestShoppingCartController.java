@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.*;
 public class RestShoppingCartController {
     @Autowired
     ProductService productService;
-
     @GetMapping("{id}")
     public ProductDto getOne(@PathVariable("id")Integer id){
-       ProductDto dto = new ProductDto();
-       dto = productService.findById(id);
+        ProductDto dto = new ProductDto();
+        dto = productService.findById(id);
         return  dto;
     }
 }

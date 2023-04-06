@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class WebSecurityConfig{
@@ -29,7 +30,7 @@ public class WebSecurityConfig{
         http.cors().disable();
 
         http.authorizeHttpRequests()
-                .antMatchers("/order/**", "/checkout/**","/doimatkhau","/admin/**").authenticated()
+                .antMatchers("/product/order/**", "/checkout/**","/doimatkhau","/admin/**").authenticated()
                 .antMatchers("/admin/customer", "/admin/listcustomer").hasAnyRole("ADMIN", "STAFF")
                 .antMatchers("/admin/staff/**", "/admin/liststaff/**").hasRole("ADMIN")
                 .anyRequest().permitAll();
@@ -39,22 +40,9 @@ public class WebSecurityConfig{
         http.exceptionHandling()
                 .accessDeniedPage("/404");
 
-//        http.formLogin()
-//                .loginPage("/login")
-//                .loginProcessingUrl("/login")
-//                .defaultSuccessUrl("/")
-//                .failureUrl("/login");
         http.formLogin()
                 .loginPage("/login")
-                .failureUrl("/login?error=true")
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint((request, response, authException) ->{
-                  response.sendRedirect("/login?error=true");
-                    })
-                .accessDeniedHandler((request, response, accessDeniedException) -> {
-                  response.sendRedirect("/login?error=true");
-                    });
+                .failureHandler(authenticationFailureHandler());
 
         http.rememberMe().tokenValiditySeconds(30*24*60*60);
 
@@ -100,6 +88,11 @@ public class WebSecurityConfig{
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler(){
         return new CustomAuthenticationFailureHandler();
+    }
+
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 
 }

@@ -56,15 +56,14 @@ public class Product implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoryId", referencedColumnName = "id")
 	@JsonIgnore
-
 	private Category category;
 	
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
 	private Set<OrderDetail> orderDetails;
 
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
-
 	private Set<ProductImages> productImages;
 
 

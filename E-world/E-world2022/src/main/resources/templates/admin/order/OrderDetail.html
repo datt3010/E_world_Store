@@ -71,7 +71,7 @@
                     <td>[[${detail.product.name}]]</td>
                     <td>[[${detail.quantity}]]</td>
                     <td>$[[*{#numbers.formatDecimal(detail.product.price,0,'COMMA',0,'POINT')}]]</td>
-                    <td><img th:src="@{|/images/product/${detail.product.image}|}" width="80" height="50"/></td>
+                    <td><img width="80" height="50"  th:src="@{|/images/product/${#lists.isEmpty(detail.product.productImages) ? 'default-image.jpg' : detail.product.productImages[0].image}|}" alt="Li's Product Image"></td>
                   </tr>
                   </tbody>
                 </table>
