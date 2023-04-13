@@ -5,7 +5,7 @@
 <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title> Register || E-Store</title>
+        <title> Đăng ký tài khoản</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon -->
@@ -75,7 +75,7 @@
                     <div class="breadcrumb-content">
                         <ul>
                             <li><a href="index.html">Home</a></li>
-                            <li class="active">Login Register</li>
+                            <li class="active">Đăng ký</li>
                         </ul>
                     </div>
                 </div>
@@ -89,16 +89,16 @@
                             <form th:action="@{/dangky}" th:object="${user}" method="post">
                                 <div class="login-form" style="margin-top:2rem;margin-left:12rem;">
                                     <span style="color:red;" th:text="${message}"></span>
-                                    <h4 class="login-title">Register</h4>
+                                    <h4 class="login-title">Đăng ký</h4>
                                     <div class="row">
                                         <div class="col-md-6 col-12 mb-20">
                                             <label>First Name*</label>
-                                            <input th:field="*{firstName}" class="mb-0" type="text">
+                                            <input th:field="*{account.accountProfile.firstName}" class="mb-0" type="text">
                                             <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
                                         </div>
                                         <div class="col-md-6 col-12 mb-20">
                                             <label>Last Name*</label>
-                                            <input th:field="*{lastName}" class="mb-0" type="text">
+                                            <input th:field="*{account.accountProfile.lastName}" class="mb-0" type="text">
                                             <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
                                         </div>
                                         <div class="col-md-12 mb-20">
