@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://${LOCAL_HOST};database=${DATABASE_NAME};encrypt=${ENCRYPT};trustServerCertificate=${TRUST_SERVER_CERTIFICATE}
+    url: jdbc:sqlserver://${LOCAL_HOST};database=${DATABASE_NAME};encrypt=${ENCRYPT};trustServerCertificate=${TRUST_SERVER_CERTIFICATE};
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     hibernate:
-      dialect: ${VERSION_SQL}
+      dialect: org.hibernate.dialect.SQLServer2019Dialect
     show-sql: false
     ddl-auto: update
   main:
