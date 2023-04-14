@@ -1,0 +1,28 @@
+version: '3'
+services:
+  myapp:
+    image: myapp
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src/main/resources:/app/resources
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://192.168.1.12;database=e_world;encrypt=true;trustServerCertificate=true
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: 'huynhtandat2002'
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    depends_on:
+      - db
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: 'huynhtandat2002'
+      MSSQL_PID: Express
+    volumes:
+      - db_data:/var/opt/mssql
+    ports:
+      - "1433:1433"
+volumes:
+  db_data:

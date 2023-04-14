@@ -23,12 +23,12 @@
                                         <ul class="ht-menu">
                                             <!-- Begin Setting Area -->
                                             <li th:unless="${@sec.authenticated}">
-                                                <div class="ht-setting-trigger"><span th:text="#{lbl_setting}"></span></div>
+                                                <div class="ht-setting-trigger"><span>Settings</span></div>
                                                 <div class="setting ht-setting">
                                                     <ul class="ht-setting-list">
-                                                        <li><a th:href="@{/login}" th:text="#{lbl_login}"></a></li>
-                                                        <li><a th:href="@{/dangky}" th:text="#{lbl_register}"></a></li>
-                                                        <li><a th:href="@{/}" th:text="#{lbl_home}"></a></li>
+                                                        <li><a th:href="@{/login}">Login</a></li>
+                                                        <li><a th:href="@{/dangky}" >Register</a></li>
+                                                        <li><a th:href="@{/}">Home</a></li>
                                                     </ul>
                                                 </div>
                                             </li>
@@ -57,18 +57,18 @@
                                             </li>-->
                                             <!-- Currency Area End Here -->
                                             <!-- Begin Language Area -->
-                                            <li>
-                                                <span class="language-selector-wrapper">Language :</span>
-                                                <div class="ht-language-trigger"><span>English</span></div>
-                                                <div class="language ht-language">
-                                                    <ul class="ht-setting-list">
-                                                        <li class="active"><a href="?language=en"><img src="/images/menu/flag-icon/1.jpg" alt="">English</a></li>
-                                                        <li><a href="?language=fr"><img src="/images/menu/flag-icon/2.jpg" alt="">Français</a></li>
-                                                        <li><a href="?language=vi"><img src="/images/menu/flag-icon/vietnam.png" width="25" height="20" alt="">Việt Nam</a></li>
-                                                        <li><a href="?language=es"><img src="/images/menu/flag-icon/spain.png" width="25" height="20" alt="">Spain</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>
+<!--                                            <li>-->
+<!--                                                <span class="language-selector-wrapper">Language :</span>-->
+<!--                                                <div class="ht-language-trigger"><span>English</span></div>-->
+<!--                                                <div class="language ht-language">-->
+<!--                                                    <ul class="ht-setting-list">-->
+<!--                                                        <li class="active"><a href="?language=en"><img src="/images/menu/flag-icon/1.jpg" alt="">English</a></li>-->
+<!--                                                        <li><a href="?language=fr"><img src="/images/menu/flag-icon/2.jpg" alt="">Français</a></li>-->
+<!--                                                        <li><a href="?language=vi"><img src="/images/menu/flag-icon/vietnam.png" width="25" height="20" alt="">Việt Nam</a></li>-->
+<!--                                                        <li><a href="?language=es"><img src="/images/menu/flag-icon/spain.png" width="25" height="20" alt="">Spain</a></li>-->
+<!--                                                    </ul>-->
+<!--                                                </div>-->
+<!--                                            </li>-->
                                             <!-- Language Area End Here -->
                                         </ul>
                                     </div>

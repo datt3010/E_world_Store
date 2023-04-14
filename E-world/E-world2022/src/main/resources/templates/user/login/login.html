@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Login Register || limupa - Digital Products Store
-	eCommerce Bootstrap 4 Template</title>
+<title>E-world Account</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="google-signin-client_id"
@@ -39,82 +38,49 @@
 	<link rel="stylesheet" href="/css/helper.css">
 	<!-- Main Style CSS -->
 	<link rel="stylesheet" href="/css/style.css">
-	
+
 	<link rel="stylesheet" href="/css/login.css">
 	<!-- Responsive CSS -->
 	<link rel="stylesheet" href="/css/responsive.css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+	<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
 	<script src="/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-<body  ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl" >
-	<!-- Begin Body Wrapper -->
-	<div class="body-wrapper">
-		<!-- Begin Header Area -->
-		<header>
-			<div th:replace="/layout/user/Header.html"></div>
-			<div   th:replace="/layout/user/container.html"></div>
-			<div class="mobile-menu-area d-lg-none d-xl-none col-12">
-				<div class="container">
-					<div class="row">
-						<div class="mobile-menu"></div>
-					</div>
-				</div>
-			</div>
-			<!-- Mobile Menu Area End Here -->
-		</header>
-		<!-- Header Area End Here -->
-		<!-- Begin Li's Breadcrumb Area -->
-		<div class="breadcrumb-area">
-			<div class="container">
-				<div class="breadcrumb-content">
-					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li class="active">Login</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<!-- Li's Breadcrumb Area End Here -->
-		<!-- Begin Login Content Area -->
-		<div class="page-section mb-60">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-12 col-md-12 col-xs-12 col-lg-9 mb-30">
-						<form th:action="@{/login}" method="post">
-							<div class="login-form" style="margin-top:2rem;margin-left:12rem;">
-								<h4 class="login-title">Đăng nhập</h4>
-								<span  th:if="${param.username != null}"  class="text-danger">Username is not exists</span>
-								<span th:if="${param.error != null}" class="text-danger">Username or password is not valid</span>
-								<div class="row">
-									<div class="col-md-12 mb-20">
-										<label>Username*</label>
-										<input class="mb-0" name="username" type="text">
-									</div>
-									<div class="col-md-12 mb-20">
-										<label>Password*</label>
-										<input class="mb-0" name="password" type="password">
-									</div>
-									<div class="col-12">
-										<button class="register-button mt-0">Login</button>
-									</div>
-<!--									<div class="g-recaptcha" data-sitekey="6Ld4UGMlAAAAABSvNSw0JqFvf2rjw05KzanCkHtk"></div>-->
-								</div>
-								<span><a th:href="@{/oauth2/authorization/google}">Login with Google</a></span><br>
-								<span><a href="">Login with facebook</a></span><br>
-								<span><a th:href="@{/dangky}">Chưa có tài khoản?</a></span>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+				<div class="card card-signin my-5">
+					<div class="card-body">
+						<h5 class="card-title text-center">Login with E-world</h5>
+						<form th:action="@{/login}" method="post" class="form-signin">
+							<span th:if="${param.username != null}"  class="text-danger">Username is not exists</span>
+							<span th:if="${param.error != null}" class="text-danger">Username or password is not valid</span>
+							<div class="form-label-group">
+								<input type="text" name="username" id="inputEmail" class="form-control" required>
 							</div>
+
+							<div class="form-label-group">
+								<input name="password" type="password" id="inputPassword" class="form-control" required>
+							</div>
+
+							<div class="custom-control custom-checkbox mb-3">
+								<input name="rememberMe" type="checkbox" class="custom-control-input" id="customCheck1">
+								<label class="custom-control-label" for="customCheck1">Remember password?</label>
+								<span style="float:right;"><a th:href="@{/dangky}">Chưa có tài khoản?</a></span>
+							</div>
+							<button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+							<hr class="my-4">
 						</form>
+						<a th:href="@{/oauth2/authorization/google}"><button style="font-size:15px;" class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i>Sign in with Google</button></a><br>
+						<button style="font-size:15px;"	 class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Login Content Area End Here -->
-		<!-- Begin Footer Area -->
-		<div th:replace="/layout/user/footer.html"></div>
+	</div>
 		<!-- Footer Area End Here -->
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-	<script src="/js/add_to_cart.js" ></script>
 	<script src="/js/vendor/jquery-1.12.4.min.js"></script>
 	<!-- Popper js -->
 	<script src="/js/vendor/popper.min.js"></script>
@@ -157,6 +123,7 @@
 	<!-- Main/Activator js -->
 	<script src="/js/main.js"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
+
 </body>
 
 <!-- login-register31:27-->

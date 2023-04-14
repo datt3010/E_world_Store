@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title th:text="#{lbl_title}"></title>
+    <title>E-world Store</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="/images/logo.png">
@@ -222,11 +222,11 @@
                     </div>
                     <div class="row">
                         <div class="product-active owl-carousel">
-                            <div class="col-lg-12" th:each="p: ${Mobiles}">
+                            <div th:each="p: ${Mobiles}"  class="col-lg-12">
                                 <!-- single-product-wrap start -->
                                 <div class="single-product-wrap">
                                     <div class="product-image">
-                                        <a th:href="@{|/chitietsanpham/${p.id}|}">
+                                        <a th:href="@{|/product/${p.name}|}">
                                         </a>
                                         <span class="sticker">New</span>
                                     </div>
@@ -246,7 +246,8 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <h4><a class="product_name" href="single-product.html">[[${p.name}]]</a></h4>
+                                            <img  th:src="@{|/images/product/${#lists.isEmpty(p.productImages) ? 'default-image.jpg' : p.productImages[0].image}|}">
+                                            <h4><a class="product_name"  th:href="@{|/product/${p.name}|}">[[${p.name}]]</a></h4>
                                             <div class="price-box">
                                                 <span class="new-price">$[[${p.price}]]</span>
                                             </div>
@@ -401,8 +402,8 @@
                                         <!-- single-product-wrap start -->
                                         <div  class="single-product-wrap">
                                             <div class="product-image">
-                                                <a href="single-product.html">
-                                                    <img src="images/product/large-size/2.jpg" alt="Li's Product Image">
+                                                <a  th:href="@{|/product/${p.name}|}">
+                                                    <img  th:src="@{|/images/product/${#lists.isEmpty(p.productImages) ? 'default-image.jpg' : p.productImages[0].image}|}">
                                                 </a>
                                                 <span class="sticker">New</span>
                                             </div>
@@ -430,7 +431,7 @@
                                                 <div class="add-actions">
                                                     <ul class="add-actions-link">
                                                         <li class="add-cart active"><a href="#" th:attr="ng-click=@{|cart.add(${p.id})|}">Add to cart</a></li>
-                                                        <li><a th:href="@{|/chitietsanpham/${p.id}|}" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                                        <li><a th:href="@{|/product/${p.name}|}" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -498,25 +499,5 @@
 <script src="/js/main.js"></script>
 <script src="/js/add_to_cart.js" ></script>
 <!-- Messenger Plugin chat Code -->
-<script>
-      var chatbox = document.getElementById('fb-customer-chat');
-      chatbox.setAttribute("page_id", "107792095526019");
-      chatbox.setAttribute("attribution", "biz_inbox");
-    </script>
-<script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          xfbml            : true,
-          version          : 'v15.0'
-        });
-      };
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
 </body>
 </html>
