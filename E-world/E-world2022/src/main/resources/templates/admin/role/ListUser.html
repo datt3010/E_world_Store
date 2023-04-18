@@ -70,10 +70,10 @@
                   <tbody>
                   <tr th:each="c: ${listCustomer}">
                     <td>[[${c.id}]]</td>
-                    <td>[[${c.firstName} +' '+ ${c.lastName}]]</td>
-                    <td th:text="${#dates.format(c.dateOfBirth, 'dd-MM-yyyy')}">[[${c.dateOfBirth}]]</td>
-                    <td>[[${c.gioitinh}]]</td>
-                    <td><img th:src="@{|/images/staff/${c.logo}|}" width="80" height="50"/></td>
+                    <td>[[${c.accountProfileDto.firstName} +' '+ ${c.accountProfileDto.lastName}]]</td>
+                    <td th:text="${#dates.format(c.accountProfileDto.dateOfBirth, 'dd-MM-yyyy')}">[[${c.accountProfileDto.dateOfBirth}]]</td>
+                    <td>[[${c.accountProfileDto.gioitinh}]]</td>
+                    <td><img th:src="@{|/images/staff/${c.accountProfileDto.logo}|}" width="80" height="50"/></td>
                     <td><a th:href="@{|/admin/listuser/${c.id}|}">Edit</a></td>
                     <td><a th:href="@{|/admin/listuser/delete/${c.id}|}">Delete</a></td>
                   </tr>

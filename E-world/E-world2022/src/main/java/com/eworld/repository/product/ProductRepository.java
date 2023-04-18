@@ -20,7 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, Prod
     Page<Product> listProductByCategoryId(@Param(value = "categoryId") Integer categoryId, Pageable pageable);
 
     @Query("SELECT DISTINCT p FROM Product p INNER JOIN OrderDetail od ON od.productId = p.id"
-          +" WHERE od.orderId IN(SELECT o.id FROM Order o WHERE MONTH(o.createdAt) = :month)")
+          +" WHERE od.orderId IN(SELECT o.id FROM Order o WHERE MONTH(o.createdAt) = MONTH(GETDATE()))")
     Page<Product> listProductHotSale(@Param(value = "month") Integer month, Pageable pageable);
 
     @Query("FROM Product p where p.name = :name")

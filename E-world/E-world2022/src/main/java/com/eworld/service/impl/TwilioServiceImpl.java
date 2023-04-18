@@ -3,6 +3,7 @@ package com.eworld.service.impl;
 import com.eworld.configuration.TwilioConfig;
 import com.eworld.configuration.security.UserContext;
 import com.eworld.entity.Account;
+import com.eworld.entity.Order;
 import com.eworld.repository.customer.CustomerRepository;
 import com.eworld.service.TwilioService;
 import com.twilio.rest.api.v2010.account.Message;
@@ -58,6 +59,16 @@ public class TwilioServiceImpl implements TwilioService {
         else{
             return Mono.error(new IllegalArgumentException("Invalid otp please retry"));
         }
+    }
+
+    @Override
+    public Mono<UserContext> sendNotifation(Account account, Order order) {
+        String phoneFormat = "+84" +account.getAccountProfile().getPhone().substring(1);
+        PhoneNumber to = new PhoneNumber(phoneFormat);
+        PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
+        String otpMessage = "Mã đơn hàng:" + order.getId()+ " đã xác nhận thành công, cảm ơn bạn đã trải nghiệm mua sắm tại eworld";
+        Message message = Message.creator(to,from,otpMessage).create();
+        return Mono.just(UserContext.builder().account(account).build());
     }
 
     private String generateOTP(){

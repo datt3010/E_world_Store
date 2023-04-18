@@ -49,15 +49,10 @@ public class UserController {
                                @RequestParam(name = "username",required = false) String username,
                                @RequestParam(name ="password", required = false) String password){
 
-
         String token =accountService.handleTokenJwt(username, password);
         if(StringUtils.isEmpty(token)){
             return "user/login/login";
         }
-//        if(!userContextService.findCurrent().orElseThrow().getUsername().equals(username)){
-//            model.addAttribute("message","User is not exists");
-//            return "user/login/login";
-//        }
             return "user/home/index";
     }
 

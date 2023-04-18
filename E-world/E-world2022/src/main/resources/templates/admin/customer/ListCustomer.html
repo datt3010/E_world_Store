@@ -85,7 +85,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div th:if="${totalItems != 0}" class="card">
                       	<div class="card-body">
 							<form th:action="@{/admin/listcustomer/page/1}" method="get">
 						  <div class="form-group">
@@ -159,6 +159,12 @@
 								</ul>
 							</nav>
                         </div>
+						<div th:if="${totalItems == 0}" class="jumbotron">
+							<h1 class="display-4">What wrong!</h1>
+							<p class="lead">There is nothing customer </p>
+							<hr class="my-4">
+							<a class="btn btn-primary btn-lg" th:href="@{/admin/liststaff}" role="button">Try again</a>
+						</div>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import com.eworld.contstant.OrderStatus;
 import com.eworld.contstant.UserStatus;
 import com.eworld.dto.customer.CustomerDto;
 import com.eworld.dto.order.OrderDto;
+import com.eworld.entity.Account;
 import com.eworld.entity.Order;
 import com.eworld.filter.OrderFilter;
 import com.eworld.projector.CustomerProjector;
@@ -14,6 +15,7 @@ import com.eworld.repository.order.OrderDetailRepository;
 import com.eworld.repository.order.OrderRepository;
 import com.eworld.repository.role.AccountRoleRepository;
 import com.eworld.service.OrderService;
+import com.eworld.service.TwilioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -37,6 +39,9 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private CustomerRepository customerRepository;
 
+	@Autowired
+	private TwilioService twilioService;
+
 	@Override
 	public Page<OrderDto> findpaging(OrderFilter filter, Pageable pageable ) {
 		Page<Order> page = orderRepository.findPaging(filter, pageable);
@@ -54,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
 				.paymentMethod(order.getPaymentMethod())
 				.totalPrice(order.getTotalPrice())
 				.orderDetails(order.getOrderDetails())
-				.account(UserContext.builder()
+				.account(Account.builder()
 						.username(order.getAccount().getUsername()).build())
 				.build();
 	}
@@ -75,6 +80,10 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional
 	public OrderDto changeStatus(OrderStatus status, Integer id) {
 		Order order = orderRepository.findById(id).orElseThrow();
+		Account account = customerRepository.findById(order.getAccount().getId()).orElseThrow();
+		if(status.equals(OrderStatus.SUCCESSFULLY)){
+			twilioService.sendNotifation(account, order);
+		}
 		order.setStatus(status);
 		orderRepository.save(order);
 		OrderDto dto = OrderProjector.convertToPageDto(order);
@@ -90,6 +99,5 @@ public class OrderServiceImpl implements OrderService {
 	public Long sumRevenueByYear(Integer years) {
 		return orderRepository.sumRevenueByYear(years);
 	}
-
 
 }
