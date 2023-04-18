@@ -20,7 +20,7 @@ spring:
       client:
         registration:
           google:
-            client-id: ${CLIENT_ID}
+            client-id: ${GOOGLE_CLIENT}
             client-secret: ${CLIENT_SECRET}
   mail:
     host: smtp.gmail.com
@@ -38,5 +38,5 @@ spring:
 JWT_SECRET: ${JWT_SECRET}
 twilio:
   account_id: ACac9cf2473f96b1ddbf8ed4212c58855e
-  auth_token: 6cb2fcb84de9d8ba7b7d8639efa7689d
+  auth_token: e304fdb1575a692eef716ca3db82d709
   trial_number: +14407502078

@@ -93,7 +93,7 @@
 												<td>[[${o.id}]]</td>
 												<td>[[${o.address}]]</td>
 												<td>[[${o.phone}]]</td>
-                                                <td>[[${o.account.firstName}]]</td>
+                                                <td>[[${o.account.accountProfile.firstName} + ''+ ${o.account.accountProfile.lastName}]]</td>
                                                 <td th:text="${#dates.format(o.createdAt, 'dd-MM-yyyy')}">[[${o.createdAt}]]</td>
                                                 <td>[[${o.paymentMethod}]]</td>
                                                 <td><select onChange="window.location.href=this.value"  class="form-control">

@@ -7,6 +7,7 @@ import com.eworld.configuration.security.UserContext;
 import com.eworld.contstant.OrderStatus;
 import com.eworld.contstant.PaymentMethod;
 import com.eworld.dto.customer.CustomerDto;
+import com.eworld.entity.Account;
 import com.eworld.entity.OrderDetail;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +35,7 @@ public class OrderDto {
 
 	private OrderStatus status;
 	
-	private UserContext account;
+	private Account account;
 	
 	private PaymentMethod paymentMethod;
 	

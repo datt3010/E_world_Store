@@ -1,42 +1,17 @@
-spring:
-  datasource:
-    url: jdbc:sqlserver://${LOCAL_HOST};database=${DATABASE_NAME};encrypt=${ENCRYPT};trustServerCertificate=${TRUST_SERVER_CERTIFICATE}
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
-    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  jpa:
-    hibernate:
-      dialect: ${VERSION_SQL}
-    show-sql: false
-    ddl-auto: update
-  main:
-    allow-circular-references: true
-    allow-bean-definition-overriding: true
-  security:
-    user:
-      name: ${SPRING_USERNAME}
-      password: ${SPRING_PASSWORD}
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: ${GOOGLE_CLIENTID}
-            client-secret: ${GOOGLE_SECRETID}
-  mail:
-    host: smtp.gmail.com
-    port: ${MAIL_PORT}
-    username: ${EMAIL_USERNAME}
-    password: ${EMAIL_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
-
-JWT_SECRET: ${JWT_SECRET}
-twilio:
-  account_id: ACac9cf2473f96b1ddbf8ed4212c58855e
-  auth_token: e304fdb1575a692eef716ca3db82d709
-  trial_number: +14407502078
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    info:
+      env:
+        enabled: true
+  info:
+    application:
+      name: e-world
+      description: E-commerce online
+      author: Tan Dat
+      version: '@project.version@'
+  spring:
+    profiles:
+      active: ${SPRING_PROFILES_ACTIVE}

@@ -142,7 +142,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="val-phoneus">Status <span class="text-danger">*</span>
+                                            <label class="col-lg-4 col-form-label" for="val-phones">Status <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
 												   <select th:field="*{status}" class="form-control" id="val-skill" name="val-skill">
@@ -157,7 +157,7 @@
                                             <label class="col-lg-4 col-form-label" for="val-skill">Ảnh sản phẩm  <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                           <input  type="file" multiple onchange="readURL(this);" class="form-control" id="val-confirm-password" name="image">
+                                           <input th:field="*{productImages}"  type="file" multiple onchange="readURL(this);" class="form-control" id="val-confirm-password" name="image">
                                                 <img th:each="pi: *{productImages}" width="80" height="50"  th:src="@{|/images/product/${pi.image}|}" alt="Li's Product Image">
                                             </div>
                                         </div>
@@ -169,7 +169,8 @@
                                            	 <span class="text-danger" style="color:red;"  th:if="${#fields.hasErrors('urlVideo')}" th:errors="*{urlVideo}"></span>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div
+                                                class="form-group row">
                                             <div class="col-lg-8 ml-auto">
                                                 <button th:formaction="@{/admin/product/insert}" formmethod="post" type="submit" class="btn btn-primary">Insert</button>
                                                 <button th:formaction="@{|/admin/listproduct/${id}|}" formmethod="post" type="submit" class="btn btn-primary">Update</button>
@@ -185,26 +186,8 @@
             </div>
             <!-- #/ container -->
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
-        
-        
-        <!--**********************************
-            Footer start
-        ***********************************-->
    		<div th:replace="/layout/admin/footer.html"></div>
-        <!--**********************************
-            Footer end
-        ***********************************-->
     </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
-
-    <!--**********************************
-        Scripts
-    ***********************************-->
     <script src="/admin/plugins/common/common.min.js"></script>
     <script src="/admin/js/custom.min.js"></script>
     <script src="/admin/js/settings.js"></script>
@@ -213,7 +196,6 @@
 	<script src="/js/category.js"></script>
     <script src="/admin/plugins/validation/jquery.validate.min.js"></script>
     <script src="/admin/plugins/validation/jquery.validate-init.js"></script>
-
 </body>
 
 </html>

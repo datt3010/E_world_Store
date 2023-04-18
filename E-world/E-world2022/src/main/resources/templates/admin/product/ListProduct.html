@@ -54,9 +54,9 @@
 			<!-- row -->
 
 			<div class="container-fluid">
-				<div class="row">
+				<div  class="row">
 					<div class="col-12">
-						<div class="card">
+						<div  th:if="${totalItems != 0}" class="card">
 							<div class="card-body">
 							<form th:action="@{/admin/listproduct/page/1}" method="get">
 						  <div class="form-group">
@@ -131,6 +131,12 @@
 									<span style=" padding-left:10px; padding-top:8px;" th:unless="${currentPage < totalPages}">Next</span>
 								</ul>
 							</nav>
+						</div>
+						<div th:if="${totalItems == 0}" class="jumbotron">
+							<h1 class="display-4">What wrong!</h1>
+							<p class="lead">There is nothing product </p>
+							<hr class="my-4">
+							<a class="btn btn-primary btn-lg" th:href="@{/admin/liststaff}" role="button">Try again</a>
 						</div>
 					</div>
 				</div>
