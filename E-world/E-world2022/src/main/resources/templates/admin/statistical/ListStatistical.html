@@ -84,8 +84,8 @@
                     <tbody>
                     <tr th:each="a,state: ${listAccount}">
                       <th scope="row">[[${state.index}]]</th>
-                      <td>[[${a.firstName} + ${a.lastName}]]</td>
-                      <td th:text="${#dates.format(a.dateOfBirth, 'dd-MM-yyyy')}">[[${a.dateOfBirth}]]</td>
+                      <td>[[${a.accountProfileDto.firstName} + ${a.accountProfileDto.lastName}]]</td>
+                      <td th:text="${#dates.format(a.accountProfileDto.dateOfBirth, 'dd-MM-yyyy')}">[[${a.accountProfileDto.dateOfBirth}]]</td>
                     </tr>
                     </tbody>
                   </table>
@@ -164,8 +164,8 @@
                     <tbody>
                     <tr th:each="a,state: ${listAccountTotalPrice}">
                       <th scope="row">[[${state.index}]]</th>
-                      <td>[[${a.firstName} + ${a.lastName}]]</td>
-                      <td>[[${a.address}]]</td>
+                      <td>[[${a.accountProfile.firstName} + ${a.accountProfile.lastName}]]</td>
+                      <td>[[${a.accountProfile.address}]]</td>
                     </tr>
                     </tbody>
                   </table>

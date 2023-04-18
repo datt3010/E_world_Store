@@ -35,7 +35,7 @@ public class RoleCustomRepositoryImpl implements  RoleCustomRepository, FindPagi
         StringBuilder whereClauseSqlBuilder = new StringBuilder(50)
                 .append(" WHERE 1=1")
                 .append(" AND ar.roleId=2")
-                .append(" AND c.status LIKE 'ACTIVE'");
+                .append(" AND c.accountProfile.status LIKE 'ACTIVE'");
 
         Map<String, Object> parameterMap = new LinkedHashMap<>();
 
@@ -47,7 +47,7 @@ public class RoleCustomRepositoryImpl implements  RoleCustomRepository, FindPagi
                 parameterMap.put("keywordInt", Integer.parseInt(filter.getKeyword()));
             }
 
-            whereClauseSqlBuilder.append(" c.firstName LIKE :keyword OR c.lastName LIKE :keyword OR c.gioitinh LIKE :keyword)");
+            whereClauseSqlBuilder.append(" c.accountProfile.firstName LIKE :keyword OR c.accountProfile.lastName LIKE :keyword OR c.accountProfile.gioitinh LIKE :keyword)");
             parameterMap.put("keyword", "%" + filter.getKeyword() + "%");
         }
 

@@ -114,39 +114,39 @@
                                         <label class="col-lg-4 col-form-label" for="val-username">First Name <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input th:field="*{firstName}" type="text" class="form-control" id="val-username" name="firstName" placeholder="Enter your First name">
-                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                                            <input th:field="*{AccountProfileDto.firstName}" type="text" class="form-control" id="val-username" name="firstName" placeholder="Enter your First name">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('AccountProfileDto.firstName')}" th:errors="*{AccountProfileDto.firstName}"></span>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" for="val-email">Last Name<span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input th:field="*{lastName}" type="text" class="form-control" id="val-email" name="lastName" placeholder="Enter your Last name">
-                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                                            <input th:field="*{AccountProfileDto.lastName}" type="text" class="form-control" id="val-email" name="lastName" placeholder="Enter your Last name">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('AccountProfileDto.lastName')}" th:errors="*{AccountProfileDto.lastName}"></span>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" for="val-confirm-password">Địa chỉ<span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <textarea th:field="*{address}" class="form-control" id="val-suggestions" name="address" rows="5" placeholder="Địa chỉ của bạn..."></textarea>
-                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                                            <textarea th:field="*{AccountProfileDto.address}" class="form-control" id="val-suggestions" name="address" rows="5" placeholder="Địa chỉ của bạn..."></textarea>
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('AccountProfileDto.address')}" th:errors="*{AccountProfileDto.address}"></span>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" for="val-suggestions">Ngày sinh <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input th:field="*{dateOfBirth}" type="date" class="form-control" id="val-password" name="dateOfBirth" placeholder="Nhập email của bạn..">
-                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
+                                            <input th:field="*{AccountProfileDto.dateOfBirth}" type="date" class="form-control" id="val-password" name="dateOfBirth" placeholder="Nhập email của bạn..">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('AccountProfileDto.dateOfBirth')}" th:errors="*{AccountProfileDto.dateOfBirth}"></span>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" for="val-currency">Quốc tịch<span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <select th:field="*{nationality}" class="form-control" id="val-skill" name="val-skill">
+                                            <select th:field="*{AccountProfileDto.nationality}" class="form-control" id="val-skill" name="val-skill">
                                                 <option value="">Please select</option>
                                                 <option value="VN">Việt Nam</option>
                                                 <option value="USA">American</option>
@@ -160,14 +160,14 @@
                                                 <option value="TD">ThaiLand</option>
                                                 <option value="IA">Indonesia</option>
                                             </select>
-                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('AccountProfileDto.nationality')}" th:errors="*{AccountProfileDto.nationality}"></span>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" for="val-currency">Giới tính
                                         </label>
                                         <div class="col-lg-6">
-                                            <select th:field="*{gioitinh}" class="form-control" id="val-skill" name="val-skill">
+                                            <select th:field="*{AccountProfileDto.gioitinh}" class="form-control" id="val-skill" name="val-skill">
                                                 <option value="">Please select</option>
                                                 <option value="Nam">Nam</option>
                                                 <option value="Nu">Nữ</option>
@@ -178,27 +178,27 @@
                                         <label class="col-lg-4 col-form-label" for="val-currency">Trạng thái<span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <select th:field="*{status}" class="form-control" id="val-skill" name="val-skill">
+                                            <select th:field="*{AccountProfileDto.status}" class="form-control" id="val-skill" name="val-skill">
                                                 <option value="">Please select</option>
                                                 <option value="ACTIVE">Active</option>
                                                 <option value="INACTIVE">Inactive</option>
                                             </select>
-                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></span>
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('AccountProfileDto.status')}" th:errors="*{AccountProfileDto.status}"></span>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" for="val-suggestions">Email <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input th:field="*{email}" type="email" class="form-control" id="val-password" name="email" placeholder="Nhập email của bạn..">
+                                            <input th:field="*{AccountProfileDto.email}" type="email" class="form-control" id="val-password" name="email" placeholder="Nhập email của bạn..">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" for="val-currency">Phone <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-lg-6">
-                                            <input th:field="*{phone}" type="text" class="form-control" id="val-currency" name="phoneNumber" placeholder="0909442487">
-                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                                            <input th:field="*{AccountProfileDto.phone}" type="text" class="form-control" id="val-currency" name="phoneNumber" placeholder="0909442487">
+                                            <span  class="text-danger" style="color: red;"  th:if="${#fields.hasErrors('AccountProfileDto.phone')}" th:errors="*{AccountProfileDto.phone}"></span>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -206,7 +206,7 @@
                                         </label>
                                         <div class="col-lg-6">
                                             <input  type="file" onchange="readURL(this);" class="form-control" id="val-confirm-password" name="image">
-                                            <img id="image" th:src="@{|/images/staff/*{logo}}">
+                                            <img id="image" th:src="@{|/images/staff/*{AccountProfileDto.logo}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">

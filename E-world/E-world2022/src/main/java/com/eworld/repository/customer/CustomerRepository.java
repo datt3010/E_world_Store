@@ -31,10 +31,9 @@ public interface CustomerRepository extends JpaRepository<Account, Integer>,Cust
 	public void changeStatus(@Param(value = "status")UserStatus status, @Param(value = "accountId") Integer id);
 
 	@Query("SELECT a FROM Account a INNER JOIN Order o ON o.account.id = a.id"
-	     + " INNER JOIN AccountProfile ac on ac.accountId = a.id"
-	     +" WHERE MONTH(o.createdAt) = :month AND o.account.id IN"
+	     +" WHERE MONTH(o.createdAt) = MONTH(GETDATE()) AND o.account.id IN"
 	     +" (SELECT DISTINCT o.account.id FROM Order o)"
-	     +" GROUP BY a.id, ac.address, a.createAt, ac.dateOfBirth, ac.email, ac.firstName, ac.gioitinh, ac.image, ac.lastName, ac.nationality, a.password, ac.phone, ac.status, a.username"
+	     +" GROUP BY a.id, a.accountProfile.address, a.createAt, a.accountProfile.dateOfBirth, a.accountProfile.email, a.accountProfile.firstName, a.accountProfile.gioitinh, a.accountProfile.image, a.accountProfile.lastName, a.accountProfile.nationality, a.password, a.accountProfile.phone, a.accountProfile.status, a.username"
 	     +" ORDER BY SUM(o.totalPrice) DESC")
 	public List<Account> listAccountTotalPrice(@Param(value = "month") Integer month);
 

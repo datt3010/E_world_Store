@@ -44,8 +44,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
+                    <div  th:if="${totalItems != 0}"  class="card">
+                        <div  class="card-body">
                             <form th:action="@{/admin/liststaff/page/1}" method="get">
                                 <div class="form-group">
                                     <input name="keyword" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">
@@ -58,8 +58,8 @@
                                 <table class="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th scope="col"><a th:href="@{'/admin/liststaff/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Mã khách hàng</a></th>
-                                        <th scope="col"><a th:href="@{'/admin/liststaff/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Tên khách hàng</a></th>
+                                        <th scope="col"><a th:href="@{'/admin/liststaff/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Mã nhân viên</a></th>
+                                        <th scope="col"><a th:href="@{'/admin/liststaff/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Tên nhân viên</a></th>
                                         <th scope="col">Ngày sinh</th>
                                         <th scope="col"><a th:href="@{'/admin/liststaff/page/' + ${currentPage} + '?sortField=gioitinh&sortDir=' + ${reverseSortDir} +${keyword !=null ? '&keyword=' + keyword : ''}}">Giới tính</a></th>
                                         <th scope="col"> Ảnh</th>
@@ -117,6 +117,12 @@
                                 <span style=" padding-left:10px; padding-top:8px;" th:unless="${currentPage < totalPages}">Next</span>
                             </ul>
                         </nav>
+                    </div>
+                    <div th:if="${totalItems == 0}" class="jumbotron">
+                        <h1 class="display-4">What wrong!</h1>
+                        <p class="lead">There is nothing staff </p>
+                        <hr class="my-4">
+                        <a class="btn btn-primary btn-lg" th:href="@{/admin/liststaff}" role="button">Try again</a>
                     </div>
                 </div>
             </div>
