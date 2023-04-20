@@ -46,6 +46,7 @@
                 <div class="col-12">
                     <div  th:if="${totalItems != 0}"  class="card">
                         <div  class="card-body">
+                            <a th:href="@{/admin/export/excel}">Export to excel</a>
                             <form th:action="@{/admin/liststaff/page/1}" method="get">
                                 <div class="form-group">
                                     <input name="keyword" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...">

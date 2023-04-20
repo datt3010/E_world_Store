@@ -21,4 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer>, OrderCus
 
     @Query("SELECT SUM(o.totalPrice) FROM Order o WHERE DAY(o.createdAt) = DAY(GETDATE()) AND o.status LIKE :status")
     public Long sumRevenueByToday(@Param(value = "status")OrderStatus status);
+
+    @Query("FROM Order o WHERE DAY(o.createdAt) = DAY(GETDATE()) AND o.status LIKE :status")
+    List<Order> findAllOrder(@Param(value ="status") OrderStatus status);
 }

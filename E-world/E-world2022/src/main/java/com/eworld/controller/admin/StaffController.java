@@ -1,9 +1,12 @@
 package com.eworld.controller.admin;
 
+import com.eworld.excel.stuff.ExcelListStaff;
 import com.eworld.dto.staff.StaffDto;
 import com.eworld.dto.staff.StaffInput;
 import com.eworld.dto.staff.StaffUpdate;
+import com.eworld.entity.Account;
 import com.eworld.filter.StaffFilter;
+import com.eworld.repository.customer.CustomerRepository;
 import com.eworld.service.StaffService;
 import com.eworld.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +21,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("admin")
@@ -28,6 +36,9 @@ public class StaffController {
     private StaffService staffService;
     @Autowired
     UploadService uploadService;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @RequestMapping("/liststaff")
     public String listByKeyWord(Model model, @RequestParam(name="keyword", required = false) String keyword) {
@@ -119,6 +130,19 @@ public class StaffController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
 
         return "admin/staff/ListStaff";
+    }
+
+    @GetMapping("/export/excel")
+    public void exportToExcel(HttpServletResponse response) throws IOException{
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateTime = dateFormatter.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+        List<Account> accountList = customerRepository.findAll();
+        ExcelListStaff excelListStaff = new ExcelListStaff(accountList);
+        excelListStaff.export(response);
     }
 
 }

@@ -21,4 +21,5 @@ public interface OrderService {
 	 Long sumRevenueByMonth(Integer month);
 
 	 Long sumRevenueByYear(Integer years);
+	 List<OrderDto> findAllOrder(OrderStatus status);
 }

@@ -16,6 +16,7 @@ import reactor.core.publisher.Mono;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 @Service
@@ -70,6 +71,21 @@ public class TwilioServiceImpl implements TwilioService {
         Message message = Message.creator(to,from,otpMessage).create();
         return Mono.just(UserContext.builder().account(account).build());
     }
+
+    @Override
+    public Mono<List<Account>> sendNotify() {
+        PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
+        String body,phoneFormat;
+        List<Account> accountList = customerRepository.findAll();
+        for(Account account :accountList){
+             phoneFormat = "+84" +account.getAccountProfile().getPhone().substring(1);
+             PhoneNumber to = new PhoneNumber(phoneFormat);
+             body = "Hi " + account.getAccountProfile().getFirstName() + " Eworld đang có chương trình khuyến mãi";
+            Message message = Message.creator(to,from,body).create();
+        }
+        return Mono.just(accountList);
+    }
+
 
     private String generateOTP(){
         return new DecimalFormat("000000").format(new Random().nextInt(999999));

@@ -100,4 +100,10 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.sumRevenueByYear(years);
 	}
 
+	@Override
+	public List<OrderDto> findAllOrder(OrderStatus status) {
+		List<OrderDto> list = OrderProjector.convertToPageDto(orderRepository.findAllOrder(OrderStatus.SUCCESSFULLY));
+		return list;
+	}
+
 }
