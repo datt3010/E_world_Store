@@ -8,35 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductProjector {
-	
-	public static ProductDto convertToPageDto(Product entity) {
-		return ProductDto.builder()
-				.createdAt(entity.getCreatedAt())
-				.updatedAt(entity.getUpdatedAt())
-				.id(entity.getId())
-				.name(entity.getName())
-				.quantity(entity.getQuantity())
-				.description(entity.getDescription())
-				.urlVideo(entity.getUrlVideo())
-				.ngaybaohanh(entity.getNgaybaohanh())
-				.views(entity.getViews())
-				.price(entity.getPrice())
-				.status(entity.getStatus())
-				.category(CategoryDto.builder()
-						.id(entity.getCategory().getId())
-						.name(entity.getCategory().getName())
-						.logo(entity.getCategory().getLogo())
-						.status(entity.getCategory().getStatus())
-						.build())
-				.productImages(entity.getProductImages())
-				.orderDetails(entity.getOrderDetails())
-				.build();
-					
-	}
-	
+
 	public static List<ProductDto> convertToPageDto(List<Product> entities){
 		return entities.stream()
-				.map(e -> convertToPageDto(e))
+				.map(e -> convertToDetailDto(e))
 				.collect(Collectors.toList());
 				
 	}
@@ -67,6 +42,7 @@ public class ProductProjector {
 					.status(entity.getStatus())
 					.views(entity.getViews())
 					.productImages(entity.getProductImages())
+					.orderDetails(entity.getOrderDetails())
 					.category(CategoryDto.builder()
 						.id(entity.getCategory().getId())
 						.name(entity.getCategory().getName())

@@ -11,17 +11,8 @@ public class CategoryProjector {
 	
 	public static List<CategoryDto> convertToPageDto(List<Category> entities){
 			return entities.stream()
-					.map(e ->  convertToPageDto(e))
+					.map(e ->  convertToDetailDto(e))
 					.collect(Collectors.toList());
-	}
-	
-	public static CategoryDto convertToPageDto(Category entity) {
-		return CategoryDto.builder()
-				.id(entity.getId())
-				.name(entity.getName())
-				.logo(entity.getLogo())
-				.status(entity.getStatus())
-				.build();
 	}
 	
 	public static CategoryDto convertToDetailDto(Category entity) {

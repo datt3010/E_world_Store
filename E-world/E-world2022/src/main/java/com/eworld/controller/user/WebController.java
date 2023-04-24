@@ -2,6 +2,7 @@ package com.eworld.controller.user;
 
 import com.eworld.configuration.security.UserContext;
 import com.eworld.configuration.security.UserContextService;
+import com.eworld.contstant.ProductStatus;
 import com.eworld.dto.category.CategoryDto;
 import com.eworld.dto.product.ProductDto;
 import com.eworld.filter.CategoryFilter;
@@ -66,6 +67,7 @@ public class WebController {
 				.keyword(keyword)
 				.categoryId(categoryId)
 				.brandId(brandId)
+				.status(ProductStatus.ACTIVE)
 				.build();
 		Page<ProductDto> listProduct = productService.findPaging(filter,pageable);
 		model.addAttribute("brandId", brandId);

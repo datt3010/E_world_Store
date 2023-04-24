@@ -1,10 +1,10 @@
 package com.eworld.repository.order;
 
+import com.eworld.entity.OrderDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.eworld.entity.OrderDetail;
+import java.util.List;
 
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Integer> {
-
-    OrderDetail findByOrderId(Integer orderId);
+    List<OrderDetail> findByOrderId(Integer orderId);
 }

@@ -1,6 +1,5 @@
 package com.eworld.service.impl;
 
-import com.eworld.configuration.security.UserContext;
 import com.eworld.contstant.OrderStatus;
 import com.eworld.contstant.UserStatus;
 import com.eworld.dto.customer.CustomerDto;
@@ -86,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		order.setStatus(status);
 		orderRepository.save(order);
-		OrderDto dto = OrderProjector.convertToPageDto(order);
+		OrderDto dto = OrderProjector.convertToDetailDto(order);
 		return dto;
 	}
 

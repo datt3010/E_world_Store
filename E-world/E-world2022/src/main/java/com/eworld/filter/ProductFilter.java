@@ -1,5 +1,6 @@
 package com.eworld.filter;
 
+import com.eworld.contstant.ProductStatus;
 import lombok.Builder;
 import lombok.Setter;
 import lombok.Value;
@@ -14,4 +15,6 @@ public class ProductFilter {
 	private Integer categoryId;
 
 	private  Integer brandId;
+
+	private ProductStatus status;
 }

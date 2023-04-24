@@ -21,4 +21,6 @@ public class OrderDetailDto {
 	private OrderDto order;
 
 	private Product product;
+
+	private Integer orderId;
 }

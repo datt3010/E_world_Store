@@ -43,7 +43,7 @@ public class PrintListOrder implements BaseExcel {
         createCell(row, 1, "Địa chỉ đơn hàng", style);
         createCell(row, 2, "Phương thức thanh toán", style);
         createCell(row, 3, "tổng bill", style);
-        createCell(row,4,"Người đặt hàng", style);
+        createCell(row, 4,"Người đặt hàng", style);
         createCell(row, 5, "Số điện thoại của đơn hàng", style);
     }
 
@@ -89,7 +89,7 @@ public class PrintListOrder implements BaseExcel {
         String filedownload ="C:\\Users\\ACER\\Downloads";
         writeHeaderLine();
         writeDataLines();
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
         String currentDateTime = dateFormatter.format(new Date());
         File file = new File(filedownload,"listOrder_" + currentDateTime+".xlsx");
         if(file.exists()){
